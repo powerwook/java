@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/review.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/home_modal.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <div class="layout-content">
+        	
+        	<!-- Header -->
+            <header class="board-header">
+                <nav class="board-nav">
+                    <button id="modal_button" type="button" style="background-color:#FFFFFF;"> 
+                        <img src="/img/menu.svg" class="menu-image">
+                    </button>
+                    <a href="home.html" class="main-logo">
+                        <h1>BELLTOKER</h1>
+                        <!--<img src="/img/main.jpg" class="main-logo-image">-->
+                    </a>
+
+                    <div class="header-right">
+                        <a href="search.html" class="header-link">
+                            <img src="/img/search.svg" class="header-image1">
+                        </a>
+
+                        <a href="mypage.html" class="header-link">
+                            <img src="/img/profile.svg" class="header-image2">
+                        </a>
+                    </div>
+                </nav>
+            </header>
+            <!-- Header -->
+            
+            <div class="review-container">
+	            <div class="review-title">
+	                <h3>&nbsp;내가 쓴 리뷰</h3>
+	                
+	                <div class="review-button-area">
+	                	<button type="button" class="review-button">선택삭제</button>/ 
+	            		<button type="button" class="review-button">전체삭제</button>
+	                </div>
+	            
+	            </div>
+	            <div class="review-content">
+	            	<div class="review-content-detail">
+		            	<strong>Nickname</strong>
+		            	<small>2022-05-11 23:00</small>
+		            	<div>
+			            	<span>당신의 뜻대로 싸우겠소. 참견하지 마시오. </span>
+			            	<button type="button" class="delete-button">삭제</button>
+		            	</div>
+	            	</div>
+	            	<div class="review-content-detail">
+		            	<strong>Nickname</strong>
+		            	<small>2022-05-11 23:00</small>
+		            	<div>
+			            	<span>댓글 내용tQwtqwtqtㅣLife is 떽스!</span>
+			            	<button type="button" class="delete-button">삭제</button>
+		            	</div>
+	            	</div>
+	            	<div class="review-content-detail">
+		            	<strong>Nickname</strong>
+		            	<small>2022-05-11 23:00</small>
+		            	<div>
+			            	<span>댓글 31ㄹ31ㄹ31ㄹ131ㄹ31ㄹ31q</span>
+			            	<button type="button" class="delete-button">삭제</button>
+			           	</div>
+	            	</div>
+	            	<div class="review-content-detail">
+		            	<strong>Nickname</strong>
+		            	<small>2022-05-11 23:00</small>
+		            	<div>
+			            	<span>ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ</span>
+			            	<button type="button" class="delete-button">삭제</button>
+			            </div>
+	            	</div>
+	            	
+	            </div>
+	    	</div>
+
+
+            <footer class="footer">
+                <div>
+                    <a href="">
+                        <img src="/img/instagram.svg">
+                    </a>
+                    <a href="">
+                        <img src="/img/facebook.svg">
+                    </a>
+                    <a href="">
+                        <img src="/img/twitter.svg">
+                    </a>
+                    <p> 밸런스의 대장! 밸토커! </p>
+                    <p>Copyright © Your Website 2022</p>
+                </div>
+            </footer>
+
+           
+            <!-- 홈 모달 -->
+           <nav id="nav_bar" class="home-nav-bar">
+                <div class="home-login">
+                    <a href="login.html">로그인</a>
+                </div>
+                <div class="home-tab"></div>
+                <div class="home-board">
+                    <div class="home-board-menu">
+                        <img class="home-board-img" src="img/down-arrow.png" >
+                        <h3>게시판</h3>
+                    </div>
+                    <ul>
+                        <li>연애</li>
+                        <li>음식</li>
+                        <li>재미</li>
+                        <li>모두보기</li>
+                    </ul>
+                </div>
+                <div class="home-tab"></div>
+                <div class="home-my-page">
+                    <a class="home-mypage-link" href="mypage.html">나의 밸런스</a>
+                </div>
+            </nav>
+        </div>
+        <div id="modal_layout" class="home-modal-layout"></div>
+</div>
+
+
+</body>

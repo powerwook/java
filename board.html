@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/board.css">
+	<link rel="stylesheet" href="/css/home.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/board.js"></script>
+	<script src="js/home_modal.js"></script>
+</head>
+
+
+<body>
+    <div class="layout">
+        <div class="layout-content">        	
+        	<!-- Header -->
+            <header class="board-header">
+                <nav class="board-nav">
+                    <button id="modal_button" type="button" style="background-color:#FFFFFF;"> 
+                        <img src="/img/menu.svg" class="menu-image">
+                    </button>
+                    <a href="home.html" class="main-logo">
+                        <h1>BELLTOKER</h1>
+                        <!--<img src="/img/main.jpg" class="main-logo-image">-->
+                    </a>
+
+                    <div class="header-right">
+                        <a href="" class="header-link">
+                            <img src="/img/search.svg" class="header-image1">
+                        </a>
+
+                        <a href="" class="header-link">
+                            <img src="/img/profile.svg" class="header-image2">
+                        </a>
+                    </div>
+                </nav>
+            </header>
+            <!-- Header -->
+            
+            <div class="board-title">
+            	<h1>wlsrn</h1>
+            	<br>
+            	</div>
+            	<div class="container" id="voting-box">
+				  <div class="left" onclick="addleft()">
+				    <div class="text">
+				      <span class="option-size" id="size-one"></span>
+				      <br>
+				      <span class="option-title" id="option-one"></span>                
+				    </div>
+				  </div>
+				  <div class="right" onclick="addright()">
+				    <div class="text">
+				      <span class="option-size" id="size-two"></span>
+				      <br>
+				      <span class="option-title" id="option-two"></span>
+				    </div>
+				  </div>
+				</div>                       
+                       
+            
+            <!-- Footer -->
+			<footer class="footer">
+                <div>
+                    <a href="">
+                        <img src="/img/instagram.svg">
+                    </a>
+                    <a href="">
+                        <img src="/img/facebook.svg">
+                    </a>
+                    <a href="">
+                        <img src="/img/twitter.svg">
+                    </a>
+                    <p> 밸런스의 대장! 밸토커! </p>
+                    <p>Copyright © Your Website 2022</p>
+                </div>
+            </footer>
+              <!-- 홈 모달 -->
+           <nav id="nav_bar" class="home-nav-bar">
+				<div class="home-login">
+					<a href="login.html">로그인</a>
+				</div>
+				<div class="home-tab"></div>
+				<div class="home-board">
+					<div class="home-board-menu">
+						<img class="home-board-img" src="img/down-arrow.png" >
+						<h3>게시판</h3>
+					</div>
+					<ul>
+						<li>연애</li>
+						<li>음식</li>
+						<li>재미</li>
+						<li>모두보기</li>
+					</ul>
+				</div>
+				<div class="home-tab"></div>
+				<div class="home-my-page">
+					<a class="home-mypage-link" href="mypage.html">나의 밸런스</a>
+				</div>
+        	</nav>
+        </div>
+		<div id="modal_layout" class="home-modal-layout"></div>
+    </div>
+</body>
+</html>
