@@ -19,8 +19,8 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-application.properties
-application-oauth.properties
+/src/main/resources/application.properties
+/src/main/resources/application-oauth.properties
 .idea
 *.iws
 *.iml
