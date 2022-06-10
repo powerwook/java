@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+	<meta charset="utf-8">
+	<title>BOOKMARK ADD</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <nav>
+        <ul class="nav nav-tabs nav-justified">
+            <li role="presentation" ><a href="/list">LIST</a></li>
+            <li role="presentation"class="active"><a href="/add">ADD</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h1>북마크 추가</h1>
+
+        
+        <form method="post"action="/">
+            <div class="form-group">
+                <label for="site">site :</label>
+                <input type="text" id="site" name="site" class="form-control">    
+            </div>
+
+            <div class="form-group">
+                <label for="memo">memo :</label>
+                <textarea id="memo" name="memo" class="form-control" row="3" cols="50" ></textarea>    
+            </div>
+            <div>
+                <button class="btn btn-success" type="button" id="btn">add bookmark</button>
+            </div>
+        </form>
+
+    </div>
+
+    <script>
+        // A $( document ).ready() block.
+        $( document ).ready(function() {
+            console.log( "ready!" );
+        
+            $('#btn').click(function(){
+                if($('#site').val()==""){
+                    alert('사이트를 입력해주세요');
+                    $('#site').focus();
+                    return false;
+                }
+                if($('#memo').val()==""){
+                    alert('메모를 입력해주세요');
+                    $('#memo').focus();
+                    return false;
+                }
+
+                
+                $.ajax({
+                    type: "POST", //요청 메소드 방식
+                    url:"/api/post",
+                    dataType:"html", //서버가 요청 URL을 통해서 응답하는 내용의 타입
+                    data: {
+                        site:$('#site').val(),
+                        memo:$('#memo').val()
+                    },
+                    success : function(rtn){
+                        if(rtn=='1'){
+                            alert('입력되었습니다.');
+                            location.reload();
+                        }
+                    },
+        
+                    error : function(a, b, c){
+                        //통신 실패시 발생하는 함수(콜백)
+                        alert("Error!");
+                    }
+                });
+        
+            })
+        });
+        </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/mypage.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/home_modal.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <div class="layout-content">
+        	
+        	<!-- Header -->
+            <header class="board-header">
+                <nav class="board-nav">
+                    <button id="modal_button" type="button" style="background-color:#FFFFFF;"> 
+                        <img src="/img/menu.svg" class="menu-image">
+                    </button>
+                    <a href="/" class="main-logo">
+                        <h1>BELLTOKER</h1>
+                        <!--<img src="/img/main.jpg" class="main-logo-image">-->
+                    </a>
+
+                    <div class="header-right">
+                        <a href="/search" class="header-link">
+                            <img src="/img/search.svg" class="header-image1">
+                        </a>
+
+                        <a href="/mypage" class="header-link">
+                            <img src="/img/profile.svg" class="header-image2">
+                        </a>
+                    </div>
+                </nav>
+            </header>
+            <!-- Header -->
+            
+
+            <div class="board-content">
+                <h1 class="board-content-head">
+                    Today's
+                    <span class="span-red">HOT</span>
+                </h1>
+                <div class="recommend-list">
+                    <div class="inner">
+                        <br><br><br><br><br><br>
+                        <p></p>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="category">
+                <h4 class="title">전체 카테고리</h4>
+                <ul class="all-category">
+                    <li><a href="/search.html?q=연애·심리" onclick="setPlatformGtag('연애', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-heart2.png" class="category-icon">연애</a></li>
+                    <li><a href="/search.html?q=퀴즈·능력고사" onclick="setPlatformGtag('퀴즈·능력고사', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-quiz2.png" class="category-icon">퀴즈</a></li>
+                    <li><a href="/search.html?q=짤뽑기" onclick="setPlatformGtag('짤뽑기', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-draw2.png" class="category-icon">랜덤</a></li>
+                    <li><a href="/search.html?q=유형테스트" onclick="setPlatformGtag('유형테스트', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-user2.png" class="category-icon">유형</a></li>
+                    <li><a href="/search.html?q=미궁·방탈출" onclick="setPlatformGtag('미궁·방탈출', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-clock2.png" class="category-icon">시간</a></li>
+                    <li><a href="/sn/intro.html" onclick="setPlatformGtag('스낵테스트', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-snack2.png" class="category-icon">음식</a></li>
+                </ul>
+            </div>
+
+
+            <footer class="footer">
+                <div>
+                    <a href="">
+                        <img src="/img/instagram.svg">
+                    </a>
+                    <a href="">
+                        <img src="/img/facebook.svg">
+                    </a>
+                    <a href="">
+                        <img src="/img/twitter.svg">
+                    </a>
+                    <p> 밸런스의 대장! 밸토커! </p>
+                    <p>Copyright © Your Website 2022</p>
+                </div>
+            </footer>
+
+           <!-- 홈 모달 -->
+           <nav id="nav_bar" class="home-nav-bar">
+            <div class="home-login">
+            	
+                 <button th:if="${user}" id="home_logout" type="button" onclick="location.href='/logout'">로그아웃</button>
+                <a th:unless="${user}" href="/login">로그인</a>
+            </div>
+            <div class="home-tab"></div>
+            <div class="home-board">
+                <div class="home-board-menu">
+                    <img class="home-board-img" src="img/down-arrow.png" >
+                    <h3>게시판</h3>
+                </div>
+                <ul>
+                    <li>연애</li>
+                    <li>음식</li>
+                    <li>재미</li>
+                    <li>모두보기</li>
+                </ul>
+            </div>
+            <div class="home-tab"></div>
+            <div class="home-my-page">
+                <a class="home-mypage-link" href="/mypage">나의 밸런스</a>
+            </div>
+        </nav>
+	    <div class="mypage-logout-modal" id="mypage_logout_modal">
+	         <form action="" class="mypage-logoutform">
+	              <div class="mypage-logout-div">
+	                  <span class="mypage-logout-text">로그아웃 하시겠습니까?</span>
+	              </div>
+	              <div class="mypage-button-group">
+	                  <button class="mypage-logout-button">취소</button>
+	                  <button id="mypage_logout_button" class="mypage-logout-button" type="button" onclick="location.href='/logout'">확인</button>
+	              </div>
+	          </form>
+	    </div>
+    </div>
+
+    <div id="modal_layout" class="home-modal-layout"></div>
+</div>
+
+
+</body>

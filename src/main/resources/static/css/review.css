@@ -1,0 +1,48 @@
+.review-container {
+	min-height : 72vh;
+}
+
+.review-title {
+	margin : 20px auto 20px auto;
+}
+
+.review-button-area {
+	float : right;
+}
+
+.review-button {
+	background-color : #FFFFFF;
+	margin-right : 10px;
+}
+
+.delete-button {
+	background-color : #FFFFFF;
+	display : inline-block;
+	float : right;
+	margin-right : 10px;
+}
+
+
+.review-content {
+	padding-top : 10px;
+	width : 98%;
+	display : flex;
+    flex-wrap: wrap;
+    border-collapse : collapse;
+}
+
+.review-content-detail{
+	width : 100%;
+    border : 1px solid lightgray;
+    border-radius : 10px;
+    padding : 3px;
+    word-break:normal;
+	
+}
+
+.review-content-detail small {
+    margin-right : 15px;
+    float : right;
+}
+
+

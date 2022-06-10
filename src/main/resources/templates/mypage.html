@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/home.css">
+        <link rel="stylesheet" href="/css/mypage.css">
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="/js/mypage.js"></script>
+       	<script type="text/javascript">
+       	$(document).ready(function(){
+			$("#mypage_form").submit(function (event){
+				event.preventDefault();
+				fire_ajax_submit();
+			});
+		});
+	
+		
+		function fire_ajax_submit(){
+			let search={}
+			search["nickname"]=$("#mypage_edit_nickname").val();
+			let pencilImg = document.getElementById("mypage_pencil");
+			console.log(pencilImg.src);
+			if(pencilImg.src==="https://cdn.poomang.com/icons/ico_edit_txt.svg"){
+			$.ajax({
+				type:"POST",
+				contentType:"application/json",
+				url:"/mypage",
+				data:JSON.stringify(search),
+				dataType:'json',
+				cache:false,
+				timeout:5000,
+				success:function(data){
+				},
+				error:function(e){
+					console.log(e.responseText);
+				}
+			});
+			}
+		}
+       	</script>
+</head>
+<body>
+    <div class="layout">
+        <div id="layout_content" class="layout-content">
+        	
+        	<!-- Header -->
+            <header class="board-header">
+                <nav class="board-nav">
+                    <button type="button" style="background-color:#FFFFFF;"
+                    id="modal_button">
+                        <a href="javascript:history.back(-1)"> <img src="/img/left-arrow.png" id="menu_image" class="menu-image"></a>
+                    </button>
+                    <h4 class="mypage-title">프로필 수정</h4>
+                </nav>
+            </header>
+        <!-- Header -->
+            <div class="home-tab"></div>
+            <div class="mypage-profile">
+                <div class="mypage-profile-box">
+                    <img class="mypage-profile-img" src="img/plamingo-my.png" alt="fsdgsdgs님의 사진">
+                    <label for="pic_upload" class="pic-upload">
+                        <input class="mypage-profile-edit" type="file" name="pic_upload" id="pic_upload">
+                        <img class="mypage-camera-img" src="img/camera.png">
+                    </label>
+                </div>
+                <div class="mypage-edit">
+                	<form id="mypage_form" action="/mypage" method="POST">
+                    	<input id="mypage_edit_nickname" class="mypage-edit-nickname" name="nickname" type="text" placeholder="익명의 망이" th:value="${user?.nickname}"
+                    	onchange="this.value">
+                    <button id="mypage_edit_button" class="mypage-edit-button" type="submit">
+                        <img id="mypage_pencil" class="mypage-pencil" src="https://cdn.poomang.com/icons/ico_edit_txt.svg">
+                    </button>
+                    </form>
+                </div>
+            </div>
+            <!--profiile-edit-->
+            <div class="mypage-edit-box">
+                <div class="mypage-review" id="mypage-review">
+                    <a href="/mypage/review" class="mypage-span">내가 쓴 댓글 보기</a>
+                </div>
+                <div class="home-tab"></div>
+                <div class="mypage-logout" id="mypage_logout">
+                    <span class="mypage-span">로그아웃</span>
+                </div>
+                <div class="home-tab"></div>
+                <div class="mypage-member-out" id="mypage_member_out">
+                    <span class="mypage-span">회원탈퇴</span>
+                </div>
+                <div class="home-tab"></div>
+            </div>
+            <div class="mypage-logout-modal" id="mypage_logout_modal">
+                <form action="" class="mypage-logoutform">
+                    <div class="mypage-logout-div">
+                        <span class="mypage-logout-text">로그아웃 하시겠습니까?</span>
+                    </div>
+                    <div class="mypage-button-group">
+                        <button class="mypage-logout-button">취소</button>
+                        	<button id="mypage_logout_button" class="mypage-logout-button" type="button" onclick="location.href='/logout'">확인</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="mypage-logout-modal" id="mypage_member_modal">
+                <form th:object="${user}" id="mypage_signout_form" class="mypage-logoutform" action="/signout" method="POST">
+                    <div class="mypage-memberout-div">
+                        <span class="mypage-memberout-text">회원탈퇴 하시겠습니까?</span>
+                    </div>
+                        <span class="mypage-memberout-span">
+                            -한 번 삭제된 정보는 복구가 불가능합니다.<br>
+                        </span>
+                    <input type="checkbox" id="caution">
+                    <label style="font-size : 13px" for="caution">주의사항을 숙지하였습니다.</label>
+                    <div class="mypage-button-group">
+                    <input type="hidden" name="signout" th:field="*{providerId}" value="">
+                        <button class="mypage-logout-button" onclick="location.href='/mypage'" type="button">취소</button>
+                        <button id="mypage_signout_button" class="mypage-logout-button" type="button">확인</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="modal_layout" class="home-modal-layout"></div>
+    </div>
+</body>
+</html>

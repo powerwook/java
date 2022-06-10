@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'SuncheonB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/SuncheonB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body{
+    font-family: "SuncheonB";
+    font-weight : bold;
+}
+.mypage-title{
+    margin: auto;
+    font-weight : bold;
+}
+.mypage-profile-edit{
+    visibility: hidden;
+    width:0%;
+    height: 0%;
+}
+.mypage-profile-box{
+    position: relative;
+    background-color: pink;
+    width: 10rem;
+    height:10rem;
+    margin: auto;
+    margin-top: 30px;
+}
+.mypage-profile{
+    width: 100%;
+    height: 130px;
+    padding-left: 30px;
+    position: relative;
+}
+
+.mypage-camera-img{
+    width:15%;
+    position: absolute;
+    height:auto;
+    bottom:0px;
+    right:3px;
+}
+.mypage-edit{
+    display:flex;
+    justify-content: center;
+    margin : auto;
+}
+.mypage-pencil{
+    display: block;
+    width: 20px;
+    
+    height: auto;
+}
+.mypage-edit-button{
+    margin-left: 0px;
+}
+.mypage-edit-nickname{
+    padding-left : 20px;
+    text-align: center;
+    width: 120px;
+    overflow: hidden;
+}
+
+.mypage-edit-box{
+    height: auto;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.mypage-review{
+    margin-bottom:10px;
+}
+.mypage-logout{
+    margin: 10px 0px 10px 0px;
+}
+.mypage-member-out{
+    margin:10px 0px 10px 0px;
+}
+input:focus{
+    outline: none;
+}
+button{
+    outline: none;
+}
+.pic-upload{
+    position: absolute;
+    top:0px;
+    left:0px;
+    width: 10rem;
+    height: 10rem;
+}
+.mypage-logout-modal{
+    background-color: 	white;
+    position: absolute;
+    top:25%;
+    left:15%;
+    display: none;
+    width:70%;
+    height:180px;
+    z-index: 100;
+    color:black;
+}
+.mypage-logout-div {
+    text-align: center;
+    margin : 15% auto 50px auto;
+}
+
+
+.mypage-button-group {
+    margin : auto auto;
+    text-align: center;
+}
+
+.mypage-logout-button{
+    padding : 0 20px 0 20px;
+    background-color: white;
+}
+
+.mypage-span{
+    font-weight: bold;
+}
+
+.mypage-memberout-text {
+    font-size : 20px;
+}
+
+.mypage-memberout-div {
+    text-align: center;
+    margin : 15px auto auto auto;
+}
+
+.mypage-memberout-span{
+    display: block;
+    margin : 15px auto 10px 15px;
+    color : rgba(49, 49, 49, 0.397);
+    font-size : 12px;
+}
+.mypage-logoutform input[type=checkbox]{
+    margin : auto auto 30px 15px;
+}
+.menu-image{
+    width:20px;
+}

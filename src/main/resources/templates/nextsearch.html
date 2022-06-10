@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <link rel="stylesheet" media="screen" href="/css/search.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="layout">
+        <div class="layout-content">
+            <header class="search">
+                <form>
+                    <input class="search-field" placeholder="Search" type="text"/>
+                    <a href="/search">
+                    <img class="search-icon" src="/img/search.svg" alt="검색아이콘"/>
+                    </a>
+                    <button class="cancel-btn">Cancel</button>
+                    <a href="javascript:history.back(-1)">
+                    <img class="left-arrow" src="/img/leftarrow.svg" alt="검색아이콘"/>
+                    </a> 
+                </form>
+           <div th:each="board : ${boards}" class="review-content-detail">
+		            	<small th:text="${board.boardId}"></small>
+		            	<h1 th:text="${board.boardSubtitle1}" ></h1>
+		            	<h1 th:text="${board.boardSubtitle2}"></h1>
+	        </div>
+            </header>
+            <ul class="wrapper">
+                <li class="item"></li>
+                <li class="item"></li>
+                <li class="item"></li>
+                <li class="item"></li>
+                <li class="item"></li>
+            </ul>
+        </div>
+    </div>  
+</body>
+</html>
