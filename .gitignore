@@ -1,5 +1,3 @@
-### api key ###
-. properties
 
 HELP.md
 .gradle
@@ -21,6 +19,8 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
+application.properties
+application-oauth.properties
 .idea
 *.iws
 *.iml
