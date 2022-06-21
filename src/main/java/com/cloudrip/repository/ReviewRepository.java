@@ -1,13 +1,15 @@
-package com.cloudrip.repository;
+package com.cloudrip.repositories;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
+import com.cloudrip.domain.Board;
 import com.cloudrip.domain.Review;
 
-
 public interface ReviewRepository extends JpaRepository<Review, Long>{
-	public Review findByReviewId(Long reviewId);
+	
+	List<Review> findAll();
+	
+//	List<Review> findByBoard(Board Board);
 }
