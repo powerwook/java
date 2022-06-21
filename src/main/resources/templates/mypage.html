@@ -24,7 +24,6 @@
 			let search={}
 			search["nickname"]=$("#mypage_edit_nickname").val();
 			let pencilImg = document.getElementById("mypage_pencil");
-			console.log(pencilImg.src);
 			if(pencilImg.src==="https://cdn.poomang.com/icons/ico_edit_txt.svg"){
 			$.ajax({
 				type:"POST",
@@ -42,6 +41,43 @@
 			});
 			}
 		}
+		
+		function imageChoose(obj) {
+			let f = obj.files[0];
+
+			if (!f.type.match("image.*")) {
+				alert("이미지를 등록해야 합니다.");
+				return;
+			}
+
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				$("#imageUploadPreview").attr("src", e.target.result);
+				$("#mypage_profile_box").css("backgroundColor","white");
+				$("#imageUploadPreview").css("height","inherit");
+				
+				let form =$("#mypage_image_form")[0];
+				let data = new FormData(form);				
+				$.ajax({
+					type:"POST",
+					enctype:"multipart/form-data",
+					url:"/mypage/image",
+					data:data,
+					processData:false,
+					contentType:false,
+					cache:false,
+					timeout:1000,
+					success:function(data){
+						console.log(data);
+					},
+					error:function(e){
+						console.log(e);
+					}
+				});
+			}
+			reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
+		}
+
        	</script>
 </head>
 <body>
@@ -61,13 +97,20 @@
         <!-- Header -->
             <div class="home-tab"></div>
             <div class="mypage-profile">
-                <div class="mypage-profile-box">
-                    <img class="mypage-profile-img" src="img/plamingo-my.png" alt="fsdgsdgs님의 사진">
+            <form id="mypage_image_form" class="mypage-image-form" enctype="multipart/form-data">
+                <div id="mypage_profile_box" class="mypage-profile-box">
+                    <img th:if="${image}" id="imageUploadPreview" class="mypage-profile-img" th:src="|/upload/${image.postImageUrl}|" alt="fsdgsdgs님의 사진">
+                    <img th:unless="${image}" id="imageUploadPreview" class="mypage-profile-img" src="/img/plamingo-my.png" alt="fsdgsdgs님의 사진">
+                	
                     <label for="pic_upload" class="pic-upload">
-                        <input class="mypage-profile-edit" type="file" name="pic_upload" id="pic_upload">
-                        <img class="mypage-camera-img" src="img/camera.png">
                     </label>
+                    
+                        <input class="mypage-profile-edit" type="file" name="file" id="pic_upload" onchange="imageChoose(this)" />
+                        
+                        <img class="mypage-camera-img" src="img/camera.png"/>
+                    <h1 th:field="${image}"></h1>
                 </div>
+                </form>
                 <div class="mypage-edit">
                 	<form id="mypage_form" action="/mypage" method="POST">
                     	<input id="mypage_edit_nickname" class="mypage-edit-nickname" name="nickname" type="text" placeholder="익명의 망이" th:value="${user?.nickname}"

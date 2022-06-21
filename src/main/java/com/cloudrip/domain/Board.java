@@ -18,15 +18,18 @@ import javax.persistence.Table;
 import javax.transaction.Transactional;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name="board")
+@ToString(exclude="reviews")
 @Transactional
 public class Board {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="board_id")
 	private Long boardId;
 	
 	@ManyToOne

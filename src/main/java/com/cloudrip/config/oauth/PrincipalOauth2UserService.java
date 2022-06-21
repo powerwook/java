@@ -1,7 +1,12 @@
 package com.cloudrip.config.oauth;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.Map;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -67,6 +72,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 			userRepository.save(userEntity);
 		}else {
 			System.out.println("당신은 이미 로그인을 한 적이 있습니다.");
+			
 		}
 		return new PrincipalDetails(userEntity, oAuth2User.getAttributes());
 	}

@@ -3,11 +3,17 @@ package com.cloudrip.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cloudrip.domain.Board;
 import com.cloudrip.domain.Review;
+import com.cloudrip.domain.User;
 import com.cloudrip.repository.ReviewRepository;
+
+import lombok.NoArgsConstructor;
 
 @Service
 public class ReviewService {
@@ -15,17 +21,18 @@ public class ReviewService {
 	@Autowired
 	private ReviewRepository reviewRepository;
 	
-	public void create(Long board_id,Long review_id,
-			String review_content,String review_debate,Long review_hit,
-			String nickname) {
+	@Transactional
+	public void create(Board board) {
 		Review review = new Review();
-		review.setBoardId(board_id);	
-		review.setReviewId(review_id);	
-		review.setReviewContent(review_content);	
-		review.setReviewDebate(review_debate);	
-		review.setReviewHit(review_hit);	
+		System.out.println("board객체:"+board);
+		review.setReviewContent("review입니다");
+		review.setReviewHit(0l);
 		review.setReviewRegdate(LocalDate.now());
-		reviewRepository.save(review);
+		review.setReviewDebate("찬성");
+		review.setBoard(board);
+		
+		
+		reviewRepository.saveAndFlush(review);
 		}
 	
 	public List<Review> findAllReview() {

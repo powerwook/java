@@ -87,29 +87,21 @@
 
            <!-- 홈 모달 -->
            <nav id="nav_bar" class="home-nav-bar">
-            <div class="home-login">
-            	
-                 <button th:if="${user}" id="home_logout" type="button" onclick="location.href='/logout'">로그아웃</button>
-                <a th:unless="${user}" href="/login">로그인</a>
-            </div>
-            <div class="home-tab"></div>
-            <div class="home-board">
-                <div class="home-board-menu">
-                    <img class="home-board-img" src="img/down-arrow.png" >
-                    <h3>게시판</h3>
-                </div>
-                <ul>
-                    <li>연애</li>
-                    <li>음식</li>
-                    <li>재미</li>
-                    <li>모두보기</li>
-                </ul>
-            </div>
-            <div class="home-tab"></div>
-            <div class="home-my-page">
-                <a class="home-mypage-link" href="/mypage">나의 밸런스</a>
-            </div>
-        </nav>
+	            <div class="home-login">
+	                 <button class="home-logout" th:if="${user}" id="home_logout" type="button" onclick="location.href='/logout'">로그아웃</button>
+	                <a th:unless="${user}" href="/login">로그인</a>
+	            </div>
+	            <div class="home-tab"></div>
+	            <div class="home-board">
+	                <ul>
+	                    <li><a href="/search">검색하기</a></li>
+	                </ul>
+	            </div>
+	            <div class="home-tab"></div>
+	            <div class="home-my-page">
+	                <a class="home-mypage-link" href="/mypage">나의 밸런스</a>
+	            </div>
+        	</nav>
 	    <div class="mypage-logout-modal" id="mypage_logout_modal">
 	         <form action="" class="mypage-logoutform">
 	              <div class="mypage-logout-div">
