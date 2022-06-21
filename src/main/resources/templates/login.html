@@ -43,7 +43,7 @@
             
             <div class="login-content">
                 <div class="login-area">
-                    <button class="login-button-naver" type="submit">
+                    <button id="login_button_naver" class="login-button-naver" type="submit">
                         <span class="login-span1">
                             <div class="login-span-div">
                                 <img src="http://static.nid.naver.com/oauth/button_w.PNG" class="login-image">
@@ -52,7 +52,7 @@
                         <a href="/oauth2/authorization/naver" class="login-span2">네이버로 계속하기</a>
                         <span class="login-span1"> </span>
                     </button>
-                    <button class="login-button-kakao" type="submit">
+                    <button id="login_button_kakao" class="login-button-kakao" type="submit">
                         <span class="login-span1">
                             <div class="login-span-div">
                                 <img src="https://cdn.poomang.com/assets/imgs/kakaotalk.png">
@@ -62,7 +62,7 @@
                         <a href="/oauth2/authorization/kakao" class="login-span3">카카오톡으로 계속하기</a>
                         <span class="login-span1"> </span>
                     </button>
-                    <button class="login-button-google" onclick="location.href='javascript:void(0)'" type="submit">
+                    <button id="login_button_google" class="login-button-google" onclick="location.href='javascript:void(0)'" type="submit">
                         <span class="login-span1">
                             <div class="login-span-div">
                                 <img src="https://cdn.poomang.com/assets/imgs/google.png">
@@ -110,15 +110,8 @@
             </div>
             <div class="home-tab"></div>
             <div class="home-board">
-                <div class="home-board-menu">
-                    <img class="home-board-img" src="img/down-arrow.png" >
-                    <h3>게시판</h3>
-                </div>
                 <ul>
-                    <li>연애</li>
-                    <li>음식</li>
-                    <li>재미</li>
-                    <li>모두보기</li>
+                <li><a href="/search">검색하기</a></li>
                 </ul>
             </div>
             <div class="home-tab"></div>

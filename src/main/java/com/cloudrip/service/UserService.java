@@ -26,20 +26,20 @@ public class UserService {
 //	,user.getEmail(),user.getRoles()
 //	,user.getUserRegdate(),user.getUsername())
 	
-	public void create(String provider,String provider_id,
-			String nickname,String password,String email,
-			String roles,String username) {
-		User user= new User();
-		user.setEmail(email);
-		user.setProvider(provider);
-		user.setProviderId(provider_id);
-		user.setUserRegdate(LocalDate.now());
-		user.setNickname(nickname);
-		user.setRoles("ROLE_USER");
-		user.setPassword(passwordEncoder.encode(password));
-		user.setUsername(username);
-		this.userRepository.save(user);
-	}
+//	public void create(String provider,String provider_id,
+//			String nickname,String password,String email,
+//			String roles,String username) {
+//		User user= new User();
+//		user.setEmail(email);
+//		user.setProvider(provider);
+//		user.setProviderId(provider_id);
+//		user.setUserRegdate(LocalDate.now());
+//		user.setNickname(nickname);
+//		user.setRoles("ROLE_USER");
+//		user.setPassword(passwordEncoder.encode(password));
+//		user.setUsername(username);
+//		this.userRepository.save(user);
+//	}
 	public List<User> getList(){
 		return userRepository.findAll();
 	}

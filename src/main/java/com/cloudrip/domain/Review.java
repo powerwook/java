@@ -13,32 +13,35 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.transaction.Transactional;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name="review")
-@IdClass(ReviewIds.class)
+//@IdClass(ReviewIds.class)
 @Transactional
+@NoArgsConstructor
 public class Review {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="reviewId")
+	@Column(name="review_id")
 	private Long reviewId;
 	
 	
-	@Id
-	@Column(name="boardId")
-	private Long boardId;
+//	@Id
+//	@Column(name="board_id")
+//	private Long boardId;
 	
 	@ManyToOne
-	@JoinColumn(name="boardId",referencedColumnName = "boardId",insertable=false, updatable=false)
+	@JoinColumn(name="board_id")
 	private Board board;
 	
 	@ManyToOne
 	@JoinColumn(name="nickname")
-	private User user;
+	private User userNickname;
 	
 	private String reviewContent;
 	
@@ -48,5 +51,6 @@ public class Review {
 	
 	@Column(nullable=false)
 	private String reviewDebate;
+
 	
 }

@@ -10,7 +10,19 @@
     <link rel="stylesheet" href="/css/review.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/home_modal.js"></script>
-     	<script type="text/javascript">
+    <script th:inline="javascript">
+    function reviewDelete(reviewId){
+		ws = new WebSocket("ws://" + location.host + "/mypage/review");
+		ws.onmessage =function(){
+			reviewButton=$("[reviewId="+reviewId+"]").parent("div").parent("div");
+			reviewButton.remove();
+		}
+		ws.onopen =() => ws.send(
+			reviewId
+		);
+	}
+    </script>
+     	<!--  <script type="text/javascript">
        		function update( reviewId ,event){
 				event.preventDefault();
 			$.ajax({
@@ -29,6 +41,7 @@
 			
 		};
 		</script>
+		-->
 </head>
 <body>
     <div class="layout">
@@ -69,22 +82,20 @@
 	            
 	            </div>
 	            <form id="review_form">
-		            <div class="review-content">
-		            	<div th:each="review : ${reviews}" class="review-content-detail">
+		            <div id="review_content" class="review-content">
+		            	<div id="review_content_detail" th:if="${review}" th:each="review : ${reviews}" class="review-content-detail">
 			            	<strong>Nickname</strong>
-			            	<small th:text="|보드번호 : ${review.boardId}|"></small>
+			            	<small th:text="|보드번호 : ${review.board.boardId}|"></small>
 			            	<small th:text="${review.reviewRegdate}"></small>
-			            	<div>
-				            	<span th:text="${review.reviewContent}"></span>
-				            	<button type="submitp" class="delete-button"
-				            	th:reviewId="${review.reviewId}"
-		            	th:onclick="update(this.getAttribute('reviewId'),event)">삭제</button>
+			            	<div id="review_id_div">
+		            			<input type="hidden" id="review_id" th:value="${review.reviewId}" />
+				            	<span th:text="|${review.reviewId}번째${review.reviewContent}|"></span>
+				            	<button th:reviewId="${review.reviewId}" type="button" class="delete-button"
+				            	th:onclick="reviewDelete(this.getAttribute('reviewId'))">삭제</button>
 			            	</div>
 	            		</div>
             		</div>
 	            </form>
-	            	
-	            
 	            
 	    	</div>
 
@@ -113,15 +124,8 @@
                 </div>
                 <div class="home-tab"></div>
                 <div class="home-board">
-                    <div class="home-board-menu">
-                        <img class="home-board-img" src="/img/down-arrow.png" >
-                        <h3>게시판</h3>
-                    </div>
                     <ul>
-                        <li>연애</li>
-                        <li>음식</li>
-                        <li>재미</li>
-                        <li>모두보기</li>
+                        <li><a href="/search">검색하기</a></li>
                     </ul>
                 </div>
                 <div class="home-tab"></div>
