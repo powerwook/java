@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/form.css">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="js/home_modal.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+	crossorigin="anonymous"></script>
+
+</head>
+
+
+<body>
+	<div class="layout">
+	<div class="layout-content">
+		<!-- Header -->
+		<header class="board-header">
+			<nav class="board-nav">
+				<button id="modal_button" type="button"
+					style="background-color: #FFFFFF;">
+					<img src="/img/menu.svg" class="menu-image">
+				</button>
+				<a href="home" class="main-logo">
+					<h1>BELLTOKER</h1> <!--<img src="/img/main.jpg" class="main-logo-image">-->
+				</a>
+
+				<div class="header-right">
+					<a href="/search" class="header-link"> <img
+						src="/img/search.svg" class="header-image1">
+					</a> <a href="mypage" class="header-link"> <img
+						src="/img/profile.svg" class="header-image2">
+					</a>
+				</div>
+			</nav>
+		</header>
+		<!-- Header -->
+
+		<!-- Select -->
+		<form action="#" th:action="@{/list/form}" th:object="${board}" method="post">
+			<!-- 
+			<div class="form-group">
+				<label for="boardSubtitle1">주제1</label> <input type="text"
+					class="form-control" id="boardSubtitle1" th:field="*{boardSubtitle1}">
+			</div>
+			<div class="form-group">
+				<label for="boardSubtitle2">주제2</label> <input type="text"
+					class="form-control" id="boardSubtitle2" th:field="*{boardSubtitle2}">
+			</div>
+			<div class="text-right">
+				<a type="button" class="btn btn-primary" th:href="@{/list}">취소</a>
+				<button type="submit" class="btn btn-primary">작성</button>
+			</div>
+			-->
+
+		<div class="board-title">
+			<img class="title-image2" src="/img/form.png" alt="My Image2">
+			<input type="text"
+					class="form-control inputbox1" id="boardSubtitle1" th:field="*{boardSubtitle1}">
+			<br>
+			<input type="text"
+					class="form-control inputbox2" id="boardSubtitle2" th:field="*{boardSubtitle2}">
+		</div>
+		<div class="container" id="voting-box">
+			<div class="left" onclick="addleft()">
+				<div class="text">
+					<span class="option-size" id="size-one"></span> <br> <span
+						class="option-title" id="option-one"></span>
+				</div>
+			</div>
+			<div class="right" onclick="addright()">
+				<div class="text">
+					<span class="option-size" id="size-two"></span> <br> <span
+						class="option-title" id="option-two"></span>
+				</div>
+			</div>
+		</div>
+			<div class="form-group">
+				<label for="boardContent">내용</label>
+				<textarea class="form-control " id="boardContent" rows="3" th:field="*{boardContent}"></textarea>
+			</div>
+			<div class="text-right">
+				<a type="button" class="btn btn-primary" th:href="@{/list}">취소</a>
+				<button type="submit" class="btn btn-primary">작성</button>
+			</div>
+		</form>
+
+
+		<div class="share">
+			<button type="button" id="shareTw" class="btn_comm">트위터로
+				공유하기</button>
+			<button type="button" id="shareFb" class="btn_comm">페이스북으로
+				공유하기</button>
+			<button type="button" id="shareKt" class="btn_comm">카카오톡으로
+				공유하기</button>
+		</div>
+		<!-- Select -->
+		<!-- chat -->
+		<div class="type-message">
+			<div class="btn-group btn-group-chat-radio" data-toggle="buttons">
+				<label class="btn btn-default btn-default2" id="option1"> <input
+					type="radio" name="options" value="찬성" onclick="changecolor1();">
+					찬성
+				</label> <label class="btn btn-default btn-default2" id="option2"> <input
+					type="radio" name="options" value="반대" onclick="changecolor1();">
+					반대
+				</label>
+			</div>
+			<div class="type-message__input">
+				<input type="text"> <i class="fa fa-smile-o fa-lg"></i> <span
+					class="record-message">enter </span>
+			</div>
+		</div>
+		<main class="chat">
+			<div class="date-divider">
+				<span class="date-divider__text">Wednesday, August 2, 2017</span>
+			</div>
+
+
+			<!-- best review -->
+			<div class="chat__message chat__message-best">
+				<span class="chat__message-body"> BEST!!! </span>
+			</div>
+
+
+			<div class="chat__message chat__message-from-me">
+				<span class="chat__message-time">17:55</span> <span
+					class="chat__message-body"> Hello! This is a test message. </span>
+			</div>
+			<div class="chat__message chat__message-to-me">
+				<img src="/image/avatar.png" alt="" class="chat-message-avatar">
+				<div class="chat__message-center">
+					<h3 class="chat__message-username">LYNN</h3>
+					<span class="chat__message-body"> And this is an answer. </span>
+				</div>
+				<span class="chat__message-time">19:35</span>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="footer">
+			<div>
+				<a href=""> <img src="/img/instagram.svg">
+				</a> <a href=""> <img src="/img/facebook.svg">
+				</a> <a href=""> <img src="/img/twitter.svg">
+				</a>
+				<p>밸런스의 대장! 밸토커!</p>
+				<p>Copyright © Your Website 2022</p>
+			</div>
+		</footer>
+
+	</div>
+
+	<!-- home modal -->
+
+	<nav id="nav_bar" class="home-nav-bar">
+		<div class="home-login">
+			<a href="/board/login">로그인</a>
+		</div>
+		<div class="home-tab"></div>
+		<div class="home-board">
+			<div class="home-board-menu">
+				<img class="home-board-img" src="/img/down-arrow.png">
+				<h3>게시판</h3>
+			</div>
+			<ul>
+				<li>연애</li>
+				<li>음식</li>
+				<li>재미</li>
+				<li>모두보기</li>
+			</ul>
+		</div>
+		<div class="home-tab"></div>
+		<div class="home-my-page">
+			<a class="home-mypage-link" href="mypage">나의 밸런스</a>
+		</div>
+	</nav>
+	</div>
+	<div id="modal_layout" class="home-modal-layout"></div>
+	</div>
+
+	<!-- home modal --> <script>
+		window.onload = setup();
+		var pointA;
+		var pointB;
+		var totalVotes = pointA + pointB;
+		function addleft() {
+			pointB += 1;
+			totalVotes += 1;
+			updatePoints();
+			console.log(pointA + ' ' + pointB);
+		}
+		function addright() {
+			pointA += 1;
+			totalVotes += 1;
+			updatePoints();
+			console.log(pointA + ' ' + pointB);
+		}
+		function updatePoints() {
+			var percentA = (pointA / totalVotes) * 100;
+			var percentB = (pointB / totalVotes) * 100;
+			var size = percentA + "% " + percentB + "%";
+			document.getElementById("size-one").innerHTML = Math
+					.round(percentB)
+					+ '%';
+			document.getElementById("size-two").innerHTML = Math
+					.round(percentA)
+					+ '%';
+			document.getElementById("voting-box").style.gridTemplateColumns = percentA
+					+ "% " + percentB + "%";
+			document.getElementById("total-votes").innerHTML = "Total Votes Casted: "
+					+ totalVotes;
+			document.getElementById("total-left").innerHTML = "Option B: "
+					+ pointB;
+			document.getElementById("total-right").innerHTML = "Option A: "
+					+ pointA;
+			document.getElementById("host-name").innerHTML = "Hosted by: pragyakar";
+		}
+		function setup() {
+			pointA = 1;
+			pointB = 1;
+			totalVotes = pointA + pointB;
+			document.getElementById("option-one").innerHTML = "Option B";
+			document.getElementById("option-two").innerHTML = "Option A";
+			updatePoints();
+		}
+
+		// 찬성 반대 컬러 변경 
+		function changecolor1() {
+
+			var val = $("input[name='options']:checked").val();
+
+			if (val == "찬성") {
+				$('#option1').css('color', 'blue');
+				$('#option2').css('color', 'black');
+			} else if (val == "반대") {
+				$('#option1').css('color', 'black');
+				$('#option2').css('color', 'red');
+			}
+
+		}
+	</script>
+</body>
+
+
+
+
+</html>
