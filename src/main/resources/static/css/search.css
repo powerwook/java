@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Luckiest+Guy);
 
+html { 
+  height:100%;
+  background-color: rgba(167, 160, 160, 0.589);
+}
 
 
 body {
@@ -14,9 +18,14 @@ body {
   background-color: white;
 }
 
+h4 { 
+	margin-left: 20px;
+	font-size: 30px;
+}
+
 address, article, aside, audio, body, button, canvas, caption, cite, 
 code, dd, del, div, dl, dt, em, fieldset, figcaption, figure, footer, 
-form, h1, h2, h3, h4, h5, h6, header, html, img, input, ins, label, 
+form, h1, h2, h3, h5, h6, header, html, img, input, ins, label, 
 legend, li, mark, nav, ol, p, pre a, section, span, strong, summary, 
 table, tbody, td, textarea, tfoot, th, thead, time, tr, ul, video {
     margin: 0;
@@ -25,13 +34,14 @@ table, tbody, td, textarea, tfoot, th, thead, time, tr, ul, video {
     vertical-align: baseline;
 }
 
+
 .layout {
-  height : 100%;
+  height : 100vh;
 }
 
 .layout-content {
   max-width : 500px;
-  min-height: 100%;
+  min-height: 100vh;
   margin: 0 auto;
   background-color : white;
   padding-top: 0.1px;
@@ -69,6 +79,7 @@ input::placeholder {
   color: palevioletred;
   text-align: center;
 }
+
 .search {
     margin: 20px;
     position: relative;
@@ -116,7 +127,9 @@ input::placeholder {
     right: 27px;
     top: 13px;
     opacity: 0.3;
+    margin-bottom: 23px;
 }
+
 .search .left-arrow {
   position: absolute;
   left: 12px;
@@ -132,42 +145,47 @@ input::placeholder {
   flex-wrap: wrap;
   -webkit-box-orient: horizontal;
   -webkit-box-align: center;
-  padding: 8px 11px;
-  margin: 0px 0px 0 0;
-  
+  padding: 8px 8px;
+  margin-left: 5px;
+
 }
 
 .list .love {
   background : rgba(167, 160, 160, 0.589);
   padding:7px 13px 7px 13px;
-  margin:0px 13px 0px 13px;
+  margin:10px 13px 0px 13px;
   color: #000;
   border-radius: 10px;
+  width: 14%;
  
 }
-.list .love:nth-child(1){
-  margin-left: 30px;
-}
+/* .list .love:nth-child(1){
+  
+} */
+
 .list a{
   text-decoration: none;
   color: black;
   cursor: pointer;
+ 
+  margin-left: 3px;
 }
 
 .item {
   background-image: cover;
   border:  1px solid rgba(167, 160, 160, 0.5);
-
+  text-align: center;
+  line-height: 130px;
 }
 
 .wrapper{
   font-size: 0;
   display: grid;
-  grid-template-columns: 100%;
+  grid-template-columns: 40% 20% 40%;
   grid-auto-rows: minmax(150px, auto);
   grid-column-gap: 0px;
   grid-row-gap: 18px;
-  padding: 50px;
+  padding: 24px;
   
 }
 
@@ -181,13 +199,13 @@ input::placeholder {
 }
 
 .wrapper .item:nth-child(1) {
-  background-image: url("/img/1.png");
+  background-image: url("");
 }
 .wrapper .item:nth-child(2) {
-  background-image: url("/img/100억원수vs100억빛이상형.png");
+  background-image: url();
 }
 .wrapper .item:nth-child(3) {
-  background-image: url("/img/양치vs.샤워.png");
+  background-image: url();
 }
 .wrapper .item:nth-child(4) {
   background-image: url("/img/4.PNG");
