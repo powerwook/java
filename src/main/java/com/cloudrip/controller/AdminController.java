@@ -11,8 +11,8 @@ public class AdminController {
 		return "add";
 	}
 	
-	@GetMapping("/list")
-	public String list() {
-		return "list";
-	}
+//	@GetMapping("/list")
+//	public String list() {
+//		return "list";
+//	}
 }

@@ -41,18 +41,24 @@
             	</a>       
             	</div>
             </div>
-            <form action="#" th:action="@{/list/form}" th:object="${board}" method="post">
-            <ul class="wrapper" >
-                <li class="item" th:each="board : ${boards}"
-                	onclick="location.href='/board'" >
-                	<div class="div1" th:text="${board.boardSubtitle1}"></div>
-                	<div class="div2" th:text="${board.boardSubtitle2}"></div>
-                </li>
-
-                
-            </ul>
-            </form>
+           
+            <ul class="wrapper">
+            		
+		            <li class="item" th:each="board : ${boards}" id="boardList" th:boardId="${board.boardId}" th:onclick="boardpage(this.getAttribute('boardId'));">
+		                	<div class="div1" th:text="${board.boardSubtitle1}"></div>
+		                	<div class="div2" th:text="${board.boardSubtitle2}"></div>
+		            </li>
+           	</ul>
+            
         </div>
     </div>  
 </body>
+<script>
+	function boardpage(boardId) {
+		location.href="/board/"+boardId;
+	}
+		
+	
+</script>
+
 </html>

@@ -1,6 +1,7 @@
 package com.cloudrip.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,16 +42,17 @@ public class Review {
 	
 	@ManyToOne
 	@JoinColumn(name="nickname")
-	private User userNickname;
+	private User nickname;
 	
 	private String reviewContent;
 	
-	private LocalDate reviewRegdate;
+	private LocalDateTime reviewRegdate;
 	
 	private Long reviewHit;
 	
 	@Column(nullable=false)
 	private String reviewDebate;
 
+	private String reviewTime;
 	
 }

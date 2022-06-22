@@ -29,7 +29,7 @@ public class ListController {
 		System.out.println(auth.getAuthorities()); // 가지고 있는 모든 롤을 출
 		boolean hasAdmin = false; // 셋팅값 기본
 		for (GrantedAuthority authority : auth.getAuthorities()) { 
-			hasAdmin = authority.getAuthority().equals("ROLE_ADMIN");
+			hasAdmin = authority.getAuthority().equals("ROLE_USER");
 			if(hasAdmin) {
 				break;
 			}
@@ -41,13 +41,13 @@ public class ListController {
 	}
 	
 	@GetMapping("/list/form")
-	public String form(Model model) {
+	public String listFormGet(Model model) {
 		model.addAttribute("board", new Board());
 		return "form";
 	}
 	@PostMapping("/list/form")
-	public String greetingSubmit(@ModelAttribute Board board) {
-		boardService.save(board);
+	public String insertBoard(@ModelAttribute Board board) {
+		boardService.insertBoard(board);
 		return "redirect:/list";
 	}
 }

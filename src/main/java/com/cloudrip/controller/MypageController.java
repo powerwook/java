@@ -110,7 +110,7 @@ public class MypageController {
 	@GetMapping("/review")
 	public String mypageReview(Model model,Review review) {
 		log.info("나는 log.info입니다"+"@ChatController,chat GET()");
-		List<Review> reviews=reviewService.findAllReview();
+		List<Review> reviews=reviewService.findAll();
 		System.out.println(reviews);
 		model.addAttribute("reviews",reviews);
 		return "review";
@@ -130,7 +130,7 @@ public class MypageController {
 	public String mypageReviewPost(@PathVariable("reviewId") Long reviewId,Model model) {
 		System.out.println("reviewId"+reviewId);
 			reviewService.deleteReview(reviewId);
-			List<Review> reviews=reviewService.findAllReview();
+			List<Review> reviews=reviewService.findAll();
 			model.addAttribute("reviews",reviews);
 			return "review";
 	}

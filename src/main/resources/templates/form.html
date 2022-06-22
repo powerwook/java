@@ -43,7 +43,7 @@
 		<!-- Header -->
 
 		<!-- Select -->
-		<form action="#" th:action="@{/list/form}" th:object="${board}" method="post">
+		<form th:action="@{/list/form}" th:object="${board}" method="post">
 			<!-- 
 			<div class="form-group">
 				<label for="boardSubtitle1">주제1</label> <input type="text"
@@ -58,7 +58,10 @@
 				<button type="submit" class="btn btn-primary">작성</button>
 			</div>
 			-->
-
+		<div>
+			<input type="text" class="" th:field="*{boardTitle}" placeholder="제목"/>
+		</div>
+		
 		<div class="board-title">
 			<img class="title-image2" src="/img/form.png" alt="My Image2">
 			<input type="text"

@@ -1,0 +1,327 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/board.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/home_modal.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <div class="layout-content">
+            <!-- Header -->
+            <header class="board-header">
+                <nav class="board-nav">
+                    <button id="modal_button" type="button" style="background-color:#FFFFFF;">
+                        <img src="/img/menu.svg" class="menu-image">
+                    </button>
+                    <a href="../" class="main-logo">
+                        <h1>BELLTOKER</h1>
+                        <!--<img src="/img/main.jpg" class="main-logo-image">-->
+                    </a>
+                    <div class="header-right">
+                        <a href="../search" class="header-link">
+                            <img src="/img/search.svg" class="header-image1">
+                        </a>
+                        <a href="../mypage" class="header-link">
+                            <img src="/img/profile.svg" class="header-image2">
+                        </a>
+                    </div>
+                </nav>
+            </header>
+            <!-- Header -->
+            <input type="hidden" th:value="${user.nickname}" id="user"/>
+            <!-- Select -->
+            <div class="board-title" id="board" th:object="${board}">
+                <input type="hidden" th:value="${board.boardId}" id="boardId"/>
+                <h1 th:text="${board.boardTitle}" style="text-align : center;"></h1>
+                <div class="board-content">
+                	<div class="board-subtitle1">
+                		<h2 th:text="${board.boardSubtitle1}"></h2>
+                	</div>
+                	<div class="vsImage">
+                		<h2>VS</h2>
+                	</div>
+                	<div class="board-subtitle2">
+                		<h2 th:text="${board.boardSubtitle2}"></h2>
+                	</div>
+                </div>
+            </div>
+            <div class="board-contents">
+            	<p th:text="${board.boardContent}"></p>
+            </div>
+            <div class="container" id="voting-box">
+              <div class="left" onclick="addleft()">
+                <div class="text">
+                  <span class="option-size" id="size-one"></span>
+                  <br>
+                  <span class="option-title" id="option-one"></span>
+                </div>
+              </div>
+              <div class="right" onclick="addright()">
+                <div class="text">
+                  <span class="option-size" id="size-two"></span>
+                  <br>
+                  <span class="option-title" id="option-two"></span>
+                </div>
+              </div>
+            </div>
+            <div class="share" >
+                <button type="button" id="shareTw" class="btn_comm">트위터로 공유하기</button>
+                <button type="button" id="shareFb" class="btn_comm">페이스북으로 공유하기</button>
+                <button type="button" id="shareKt" class="btn_comm">카카오톡으로 공유하기</button>
+            </div>
+            <div>
+            	<button type="button" id="writeReview" onclick="reviewFocus()">댓글 쓰러 가기</button>
+            </div>
+            
+            
+		<!-- Select -->
+		<main class="chat" id="chat">
+            <div class="date-divider">
+              <span class="date-divider__text">Friday, June 17, 2022</span>
+            </div>
+            <!-- best review -->
+            <div class="chat__message chat__message-best">
+              <span class="chat__message-body-best">
+               BEST!!!
+              </span>
+            </div>
+			<div id="chatdiv" class="chatdiv">
+	            <div th:each="review : ${reviewList}" id="board_review">
+		            <div th:if="${review.reviewDebate == 'props'}" class="chat__message chat__message-from-me">
+			            <span class="chat__message-time" th:text="${review.reviewTime}"></span>
+			            <div class="chat__message-center">
+				            <h3 class="chat__message-cors" th:text="${review.nickname.nickname}"></h3>
+				            <span class="chat__message-body" th:text="${review.reviewContent}"></span>
+		            	</div>
+	            	</div>
+	            	
+		        	<div th:if="${review.reviewDebate == 'cors'}" class="chat__message chat__message-to-me">
+		               <!-- <img src="/image/avatar.png" alt="" class="chat-message-avatar"> -->
+		            	<div class="chat__message-center">
+			               	<h3 class="chat__message-username" th:text="${review.nickname.nickname}"></h3>
+			               	<span class="chat__message-body" th:text="${review.reviewContent}"></span>
+		               </div>
+		               <span class="chat__message-time" th:text="${review.reviewTime}"></span>
+		      		</div>
+            	</div>
+            </div>
+          </main>
+       	<!-- chat -->
+         	
+        <!--<form th:action="@{/board/review}" th:object="${review}" method="post"> -->
+        <div class="type-message">
+        	<div class="btn-group btn-group-chat-radio" data-toggle="buttons">
+            	<label class="btn btn-default btn-default2" id="option1">
+                	<input type="radio" id="options" name="options" value="cors" onclick="changecolor1();"/> 반대
+            	</label>
+            	<label class="btn btn-default btn-default2" id="option2">
+            		<input type="radio" id="options" name="options" value="props" onclick="changecolor1();"/> 찬성
+            	</label>
+        	</div>
+        	<div class="type-message__input">
+            	<input type="text" id="reviewContent" name="reviewContent" autocomplete="off">
+            		<i class="fa fa-smile-o fa-lg"></i>
+            	<button type="button" id="reviewInsert">
+            		<span class="record-message">enter</span>
+            	</button>
+        	</div>
+        </div>
+        <!--</form>-->
+
+		<!-- Footer -->
+		<footer class="footer">
+			<div>
+				<a href=""> <img src="/img/instagram.svg">
+				</a> <a href=""> <img src="/img/facebook.svg">
+				</a> <a href=""> <img src="/img/twitter.svg">
+				</a>
+				<p>밸런스의 대장! 밸토커!</p>
+				<p>Copyright © Your Website 2022</p>
+			</div>
+		</footer>
+	</div>
+
+	<!-- home modal -->
+
+	<nav id="nav_bar" class="home-nav-bar">
+		<div class="home-login">
+			<a href="/board/login">로그인</a>
+		</div>
+		<div class="home-tab"></div>
+		<div class="home-board">
+			<div class="home-board-menu">
+				<img class="home-board-img" src="/img/down-arrow.png">
+				<h3>게시판</h3>
+			</div>
+			<ul>
+				<li>연애</li>
+				<li>음식</li>
+				<li>재미</li>
+				<li>모두보기</li>
+			</ul>
+		</div>
+		<div class="home-tab"></div>
+		<div class="home-my-page">
+			<a class="home-mypage-link" href="mypage">나의 밸런스</a>
+		</div>
+	</nav>
+	</div>
+	<div id="modal_layout" class="home-modal-layout"></div>
+	</div>
+
+	<!-- home modal --> 
+	
+<script th:inline="javascript">
+      window.onload =  setup();
+      var pointA;
+      var pointB;
+      var totalVotes = pointA + pointB;
+      function addleft(){
+          pointB += 1;
+          totalVotes += 1;
+          updatePoints();
+          console.log(pointA + ' '+ pointB);
+      }
+      function addright(){
+          pointA += 1;
+          totalVotes += 1;
+          updatePoints();
+          console.log(pointA + ' '+ pointB);
+      }
+      function updatePoints(){
+          var percentA = (pointA / totalVotes) * 100;
+          var percentB = (pointB / totalVotes) * 100;
+          var size = percentA + "% " + percentB + "%";
+          document.getElementById("size-one").innerHTML = Math.round(percentB) + '%';
+          document.getElementById("size-two").innerHTML = Math.round(percentA) + '%';
+          document.getElementById("voting-box").style.gridTemplateColumns=  percentA + "% " + percentB + "%";
+          // document.getElementById("total-votes").innerHTML = "Total Votes Casted: " + totalVotes;
+          // document.getElementById("total-left").innerHTML = "Option B: " + pointB;
+          // document.getElementById("total-right").innerHTML = "Option A: " + pointA;
+          // document.getElementById("host-name").innerHTML = "Hosted by: pragyakar";
+      }
+      function setup() {
+          pointA = 1;
+          pointB = 1;
+          totalVotes = pointA + pointB;
+          document.getElementById("option-one").innerHTML = "Option B";
+          document.getElementById("option-two").innerHTML = "Option A";
+          updatePoints();
+      }
+  	
+      // 찬성 반대 컬러 변경
+      function changecolor1() {
+       let reviewDebate= $("input[name='options']:checked").val();
+      
+          if (reviewDebate=="props") {
+              $('#option1')
+              .css('color','black');
+              $('#option2')
+              .css('color','blue');
+          }
+          else if (reviewDebate=="cors") {
+              $('#option1')
+              .css('color','red');
+              $('#option2')
+              .css('color','black');
+          }
+      }
+     
+      function getId(id) {
+      	return document.getElementById(id);
+      }
+      
+      
+
+
+	$("#reviewContent").keydown(function(ev){
+		if(ev.keyCode == 13) {
+			// console.log(ev.keyCode);
+			send();
+		}
+	});
+	
+	reviewInsert.onclick = function(){
+		send();
+	}
+
+	function send(){
+		if($("input[name='options']:checked").val() == undefined){
+			alert("찬성,반대를 골라주세요");
+			location.reload();
+		}else if ($("#reviewContent").val().trim() == ''){
+			alert("댓글을 입력해주세요");
+			location.reload();
+		}else {
+			var review = {};
+			var boardId = $("#boardId").val()
+			review["board"] = $("#boardId").val();
+			review["reviewContent"] = $("#reviewContent").val();
+			review["reviewDebate"] = $("input[name='options']:checked").val();
+			review["nickname"] = $("#user").val();
+			var ws = new WebSocket("ws://" + location.host + "/board/" + boardId);
+			let reviewTemp = JSON.stringify(review);
+			ws.onopen = () => ws.send (reviewTemp);
+			ws.onmessage = function(review){
+				
+				let html="";
+				let jsonReview = review.data;
+				let contact = JSON.parse(jsonReview);
+				// console.log(contact);
+				
+				var datetime = new Date();
+	       		const hours = String(datetime.getHours()).padStart(2, "0");
+	      		const minutes = String(datetime.getMinutes()).padStart(2, "0");
+				// console.log(contact["reviewDebate"]);
+				console.log(contact["nickname"]);
+				
+				if (contact["reviewDebate"] == "props") {
+	    			html += "<div class='chat__message chat__message-from-me'>";
+	    			html += "<span class='chat__message-time'>"+hours+":"+minutes+"</span>";
+	    			html += "  <div class='chat__message-center'>";
+	    			html += "<h3 class='chat__message-cors'>"+contact["nickname"]+"</h3>";
+	    			html += "<span class='chat__message-body'>"+contact["reviewContent"]+"</span>";
+	    			html += "</div></div>";
+	    		}
+	    			
+		        if (contact["reviewDebate"] == "cors") {
+	    			html += "<div class='chat__message chat__message-to-me'>";
+	    			html += "<div class='chat__message-center'>";
+	    			html += "<h3 class='chat__message-username'>"+contact["nickname"]+"</h3>";
+	    			html += "<span class='chat__message-body'>"+contact["reviewContent"]+"</span>";
+	    			html += "</div>";
+	    			html += "<span class='chat__message-time'>"+hours+":"+minutes+"</span></div>";
+	    		}
+	    		let chatdiv = getId("chatdiv");
+	    		// console.log(chatdiv);
+	    		// console.log(html);
+	    		let boardReview = getId("board_review");
+	    		let chat = getId("chat");
+	    		if(boardReview==null){
+	    			$("#board_review").html(html);
+	    			location.reload();
+	    		}else {
+		    		// console.log(boardReview);
+		    		chat.insertAdjacentHTML("beforeend",html);
+				}
+				getId("reviewContent").value = '';
+				chat.scrollTop = chat.scrollHeight;
+			}
+		}
+	}
+	
+	function reviewFocus(){
+		document.getElementById("reviewContent").focus();
+	}
+</script>
+</body>
+
+
+
+
+</html>

@@ -22,12 +22,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Data
 @Entity
 @Table(name="user")
 @NoArgsConstructor
+@ToString(exclude="reviews")
 @Transactional
 public class User {
 	
@@ -53,7 +55,7 @@ public class User {
 	@Column(unique=true)
 	private String nickname;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userNickname")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "nickname")
 	private List<Review> reviews = new ArrayList<Review>();
 	
 	private LocalDate userRegdate;

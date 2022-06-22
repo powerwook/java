@@ -36,10 +36,10 @@ public class Board {
 	@JoinColumn(name="categoryId")
 	private Category category;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="board")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="board")
 	private List<Review> reviews = new ArrayList<Review>();
 	
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private String boardTitle;
 	
 	@Column(nullable=false)

@@ -1,4 +1,4 @@
-package com.cloudrip.services;
+package com.cloudrip.service;
 
 import java.util.Collections;
 import java.util.HashSet;
