@@ -19,7 +19,7 @@ body{
 }
 .mypage-profile-box{
     position: relative;
-    background-color: pink;
+    background-color: white;
     width: 10rem;
     height:10rem;
     margin: auto;
@@ -31,7 +31,9 @@ body{
     padding-left: 30px;
     position: relative;
 }
-
+.mypage-profile-img{
+	height:inherit;
+}
 .mypage-camera-img{
     width:15%;
     position: absolute;

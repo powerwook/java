@@ -32,7 +32,9 @@ public class NextSearchController {
 	@RequestMapping(value="",method=RequestMethod.GET)
 	public String form(@RequestParam("key") String categoryId, Model model) {			
 		if(categoryId=="") {
-			return "alert";
+			String msg = "검색어를 입력해주세요.";
+			model.addAttribute("msg",msg);
+			return "categoryAlert";
 		} 
 		else if(categoryId.chars().allMatch(Character :: isDigit)) { //숫자면 
 			Category category = categoryService.findByCategoryId(Long.parseLong(categoryId));
@@ -42,7 +44,11 @@ public class NextSearchController {
 		}
 		else {
 			Category category = categoryService.findByCategoryName(categoryId);
-			System.out.println(category);
+			if(category == null) {
+				String msg ="해당하는 카테고리가 없습니다.";
+				model.addAttribute("msg",msg);
+				return "categoryAlert";
+			}
 			List<Board> board = category.getBoards();
 			model.addAttribute("boards", board);
 			return "nextsearch";

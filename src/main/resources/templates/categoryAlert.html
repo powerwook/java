@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" media="screen" href="/css/search.css">
-    <script>
+    <script th:inline="javascript">
     window.onload=function(){
-		alert('검색어를 입력해주세요');
-		history.back();
+    	let msg = document.getElementById("msg").value;
+    	alert(msg);
+    	history.back();
     }
     	
 	</script>
 </head>
 <body>
+	<input id="msg" type= "hidden" name ="msg" th:value="${msg}"/>
 </body>
 </html>

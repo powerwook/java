@@ -69,15 +69,14 @@ public class MypageController {
 	@Autowired
 	private BoardService boardService;
 	
+	
 	@GetMapping("")
 	public String mypageGet(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		PrincipalDetails userDetails = (PrincipalDetails) principal;
 		User user = userDetails.getUser();
-		User user2 = userService.findByProviderId(user.getProviderId());
-		User newUser = userService.updateUserNickname(user2.getNickname());
-		Image image=newUser.getImage();
-		model.addAttribute("user",newUser);
+		Image image=user.getImage();
+		model.addAttribute("user",user);
 		model.addAttribute("image",image);
 		return "mypage";
 	}
@@ -99,10 +98,10 @@ public class MypageController {
 	
 	@RequestMapping(value="/image",method=RequestMethod.POST)
 	public ModelAndView mypage(
-			ModelAndView modelAndView,ImageUploadDto imageUploadDto) {
+			@RequestParam(value="file",required=false) MultipartFile multipartFile,ImageUploadDto imageUploadDto, ModelAndView modelAndView) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		PrincipalDetails userDetails = (PrincipalDetails) principal;
-		imageService.ImageUpload(imageUploadDto, userDetails);
+		imageService.ImageUpload(imageUploadDto, userDetails,multipartFile);
 		modelAndView.setViewName("redirect:/mypage");
 		return modelAndView;
 	}

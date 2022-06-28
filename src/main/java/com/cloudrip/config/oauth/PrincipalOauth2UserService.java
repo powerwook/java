@@ -53,7 +53,21 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 		String username = oAuth2UserInfo.getName();
 		String password = bCryptPasswordEncoder.encode("겟인데어"); 
 		String email = oAuth2UserInfo.getEmail();
-		String role = "ROLE_USER";
+		String role="";
+		System.out.println(username);
+		if(username.equals("강진호")) {
+			role ="ROLE_ADMIN";
+		}else if(username.equals("이진구")) {
+			role ="ROLE_ADMIN";
+		}else if(username.equals("고유찬")) {
+			role ="ROLE_ADMIN";
+		}else if(username.equals("김동규")) {
+			role ="ROLE_ADMIN";
+		}
+		else {
+			role = "ROLE_USER";
+		}
+		
 		User userEntity = userRepository.findByProviderId(providerId);
 		System.out.println(userEntity);
 		int randomint = (int) (Math.random()*100000);

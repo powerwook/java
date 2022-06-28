@@ -53,16 +53,13 @@
 			let reader = new FileReader();
 			reader.onload = (e) => {
 				$("#imageUploadPreview").attr("src", e.target.result);
-				$("#mypage_profile_box").css("backgroundColor","white");
-				$("#imageUploadPreview").css("height","inherit");
 				
-				let form =$("#mypage_image_form")[0];
-				let data = new FormData(form);				
+				let formData =$("#mypage_image_form")[0];
 				$.ajax({
 					type:"POST",
 					enctype:"multipart/form-data",
 					url:"/mypage/image",
-					data:data,
+					data:new FormData(formData),formData,
 					processData:false,
 					contentType:false,
 					cache:false,
@@ -99,7 +96,7 @@
             <div class="mypage-profile">
             <form id="mypage_image_form" class="mypage-image-form" enctype="multipart/form-data">
                 <div id="mypage_profile_box" class="mypage-profile-box">
-                    <img th:if="${image}" id="imageUploadPreview" class="mypage-profile-img" th:src="|/upload/${image.postImageUrl}|" alt="fsdgsdgs님의 사진">
+                    <img th:if="${image}" id="imageUploadPreview" class="mypage-profile-img" th:src="${image.postImageUrl}|" alt="fsdgsdgs님의 사진">
                     <img th:unless="${image}" id="imageUploadPreview" class="mypage-profile-img" src="/img/plamingo-my.png" alt="fsdgsdgs님의 사진">
                 	
                     <label for="pic_upload" class="pic-upload">

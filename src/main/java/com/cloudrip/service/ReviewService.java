@@ -70,15 +70,9 @@ public class ReviewService {
 		reviewRepository.saveAndFlush(review);
 		}
 	
-	@Transactional
 	public void deleteReview(Long reviewId) {
 		Review review = reviewRepository.findByReviewId(reviewId);
-		try {
-			System.out.println("---------------------------------");
 		reviewRepository.delete(review);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
 		System.out.println("나는 리뷰닷"+review);
 	}
 	

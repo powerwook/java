@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="/css/home.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/home_modal.js"></script>
+    
     <!-- 구글 api 사용을 위한 스크립트-->
     <!-- <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script> -->
 </head>
@@ -103,22 +105,7 @@
             </footer>
 
            
-              <!-- 홈 모달 -->
-           <nav id="nav_bar" class="home-nav-bar">
-            <div class="home-login">
-                <a href="/login">로그인</a>
-            </div>
-            <div class="home-tab"></div>
-            <div class="home-board">
-                <ul>
-                <li><a href="/search">검색하기</a></li>
-                </ul>
-            </div>
-            <div class="home-tab"></div>
-            <div class="home-my-page">
-                <a class="home-mypage-link" href="/mypage">나의 밸런스</a>
-            </div>
-        </nav>
+         <nav th:replace="modal/modalMenuBar :: modalFragment"></nav>
         </div>
         <div id="modal_layout" class="home-modal-layout"></div>
 </div>
