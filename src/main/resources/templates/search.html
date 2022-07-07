@@ -4,7 +4,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" media="screen" href="/css/search.css">
+    <link th:if="${categorys}" rel="stylesheet" media="screen" href="/css/search.css">
+    <link th:unless="${categorys}" rel="stylesheet" media="screen" href="/css/list.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -35,6 +36,13 @@
                 	</a>
                 </div>
             </div>
+            <ul class="wrapper">
+					<li class="item" th:each="board : ${boards}"
+						th:onclick="'location.href=\'../board/'+@{${board.boardId}}+'\''">
+						<div class="div1" th:text="${board.boardSubtitle1}"></div>
+						<div class="div2" th:text="${board.boardSubtitle2}"></div>
+			</li>
+            <!--
             <div th:each="board : ${boards}" class="review-content-detail">            	
 	            <ul class="wrapper">
 	                <li class="item"><h1 th:text="${board.boardSubtitle1}"></h1></li>
@@ -42,6 +50,7 @@
 	                <li class="item" ><h1 th:text="${board.boardSubtitle2}"></h1></li>      
 	            </ul>
 	        </div>
+	        -->
         </div>    
     </div>
 </body>

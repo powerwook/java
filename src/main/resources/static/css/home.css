@@ -68,7 +68,10 @@ table, tbody, td, textarea, tfoot, th, thead, time, tr, ul, video {
 .board-header {
     display :block;
 }
-
+.category-icon{
+	width:44px;
+	height:44px;
+}
 .board-nav {
     display : flex;
     margin : 0 auto;
@@ -129,7 +132,7 @@ img {
     margin : 0;
 }
 
-.board-content {
+.home-content {
     /* position : absolute;
     left : 35%;
     background-color: transparent;
@@ -147,12 +150,60 @@ img {
     
     
 }
-.board-content-head {
+
+.home-content-head {
     text-align: left;
     font-size: 28px;
     color: rgb(19, 18, 18);
     margin-top: 315px;
     margin-left: 10px;
+    padding:3px;
+}
+
+.inner {
+   display : flex;
+}
+
+.home_board {
+   display : flex;
+   flex-direction : column;
+   min-height : 150px;
+   
+   
+   
+}
+
+.home_board_link {
+   margin-left : 13px;
+   border : 0.3rem solid #222;
+   border-radius : 8px;
+   background-color : white;
+   width : 85px;
+   height : 150px;
+}
+
+.home_board_div {
+   padding : 10px 4px 10px 4px;
+   height : 100%;
+   position : relative;
+   white-space : normal;
+   word-break : normal;
+   display :flex;
+   flex-direction : column;
+   text-align : center;
+   justify-content : space-between;
+   overflow : hidden;
+}
+
+
+.versus {
+   font-style : Luckiest Guy;
+   font-size : 20px;
+}
+
+.home_board_bottom {
+   background-color : #f98080;
+   height : 30px;
 }
 
 .span-red {

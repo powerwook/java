@@ -1,6 +1,16 @@
 package com.cloudrip.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,9 +21,16 @@ import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -107,11 +124,11 @@ public class MypageController {
 	}
 	
 	@GetMapping("/review")
-	public String mypageReview(Model model,Review review) {
-		log.info("나는 log.info입니다"+"@ChatController,chat GET()");
-		List<Review> reviews=reviewService.findAll();
-		System.out.println(reviews);
-		model.addAttribute("reviews",reviews);
+	public String mypageReview(Model model,@AuthenticationPrincipal PrincipalDetails principalDetails) {
+		User user =  principalDetails.getUser();
+		User user2 = userService.findByProviderId(principalDetails.getUser().getProviderId());
+		
+		model.addAttribute("reviews",user2.getReviews());
 		return "review";
 	}
 	
@@ -125,16 +142,86 @@ public class MypageController {
 	}
 	
 	
-	@PutMapping(value="/review/{reviewId}")
-	public String mypageReviewPost(@PathVariable("reviewId") Long reviewId,Model model) {
-		System.out.println("reviewId"+reviewId);
-			reviewService.deleteReview(reviewId);
-			List<Review> reviews=reviewService.findAll();
-			model.addAttribute("reviews",reviews);
-			return "review";
+	@PostMapping("/review/deleteAll")
+	public String reviewDeleteAll(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+		reviewService.deleteReviewAll(principalDetails);
+		return "redirect:/mypage/review";
+		
 	}
 	
 	
+	@PostMapping("/filter")
+	public String reviewDeleteAll() {
+		MypageController mypageController = new MypageController();
+		List<Review> reviewList =reviewService.findAll();
+		ArrayList<JSONObject> jsonArrayList = new ArrayList<>();
+		try {
+			for (Review review : reviewList) {
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("document",review.getReviewContent());
+				jsonObject.put("id",review.getReviewId());
+				jsonArrayList.add(jsonObject);
+			}
+		}catch(JSONException e) {
+			e.printStackTrace();
+		}
+		JSONObject bellInJsonObject = new JSONObject();
+		bellInJsonObject.put("bell_in", jsonArrayList);
+		String result = null;
+		try {
+			result=mypageController.sendJSON(bellInJsonObject);
+			System.out.println(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		org.json.JSONObject outputJObject = new org.json.JSONObject(result);
+		JSONArray outputJArray = outputJObject.getJSONArray("bell_out");
+		System.out.println("============================");
+		for(int i=0; i<outputJArray.length(); i++) {
+			org.json.JSONObject obj = outputJArray.getJSONObject(i);
+			int label= obj.getInt("label");
+			int id = obj.getInt("id");
+			reviewService.updateFilter(new Long(id),new Long(label));
+		}
+		return "redirect:/mypage";
+	}
+	
+	
+	 public String sendJSON(JSONObject jObject) throws IOException{
+	        String inputLine=null;
+	        StringBuffer stringBuffer=new StringBuffer();
+
+	        URL url=new URL("http://3.39.179.14:8000/"); //URL객체 생성
+	            
+	        HttpURLConnection conn=(HttpURLConnection)url.openConnection(); //url주소를 가지고 Http 커넥션 객체 생성
+	            
+	        System.out.println(conn.toString());
+	        conn.setDoOutput(true);
+	        conn.setDoInput(true);
+	        conn.setRequestMethod("POST");
+	        conn.setRequestProperty("accept", "application/json");
+	        conn.setRequestProperty("Content-Type", "application/json");
+	        conn.setConnectTimeout(10000);
+	        conn.setReadTimeout(10000);
+	            
+	        //데이터 전송
+	        BufferedWriter bWriter=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(),"UTF-8"));
+//	        데이터쓰기
+	        bWriter.write(jObject.toString());
+//	        데이터 보내기
+	        bWriter.flush();
+	        //전송된 결과를 읽어옴
+	        BufferedReader bReader=new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+	        while((inputLine=bReader.readLine())!=null){
+	            stringBuffer.append(inputLine);
+	        }
+	        bWriter.close();
+	        bReader.close();
+	        conn.disconnect();
+// 			전송된 결과 반환
+	        return stringBuffer.toString();
+	    }//sendJSON()
 	
 	
 }

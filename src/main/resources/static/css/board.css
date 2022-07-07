@@ -201,7 +201,7 @@ img {
 }
 .chat-header,
 .chat-header a {
-  background-color: #a1c0d6;
+  background-color: #f98080;
   color: black;
 }
 .chat-header {
@@ -210,7 +210,7 @@ img {
 .chat {
   overflow-y : scroll;
   overflow-x : hidden;
-  background-color: #a1c0d6;
+  background-color: #f98080;
   height: 80vmin;
   padding-top: 15px;
   padding-left: 5px;
@@ -440,4 +440,16 @@ li{
 .chatdiv {
     display : flex;
     flex-direction : column;
+}
+
+
+
+.chat_filtered {
+   color : #999;
+}
+
+
+.chat_filtered img{
+   width : 16px;
+   height : 16px;
 }

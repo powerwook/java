@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <meta http-equiv="Content-Type" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -132,7 +132,15 @@
                     <span class="mypage-span">회원탈퇴</span>
                 </div>
                 <div class="home-tab"></div>
+                <div class="mypage-comment-filter" id="mypage_comment_filter"
+                sec:authorize="hasRole('ROLE_ADMIN')">
+                    <span class="mypage-span">악플 댓글 필터링</span>
+                </div>
+                <div class="home-tab"></div>
             </div>
+            
+            
+            <!-- logout modal -->
             <div class="mypage-logout-modal" id="mypage_logout_modal">
                 <form action="" class="mypage-logoutform">
                     <div class="mypage-logout-div">
@@ -145,6 +153,7 @@
                 </form>
             </div>
 
+            <!-- signout modal -->
             <div class="mypage-logout-modal" id="mypage_member_modal">
                 <form th:object="${user}" id="mypage_signout_form" class="mypage-logoutform" action="/signout" method="POST">
                     <div class="mypage-memberout-div">
@@ -162,6 +171,21 @@
                     </div>
                 </form>
             </div>
+            
+            <!-- comment-filter modal -->
+            <div class="mypage-logout-modal" id="mypage_filter_modal">
+                <form id="mypage_signout_form" class="mypage-logoutform" action="mypage/filter" method="POST">
+                    <div class="mypage-memberout-div">
+                        <span class="mypage-memberout-text">필터링 하시겠습니까?</span>
+                    </div>
+                    <div class="mypage-button-group">
+                        <button class="mypage-logout-button" onclick="location.href='/mypage'" type="button">취소</button>
+                        <button id="mypage_signout_button" class="mypage-logout-button" type="submit">확인</button>
+                    </div>
+                </form>
+            </div>
+            
+            
         </div>
         <div id="modal_layout" class="home-modal-layout"></div>
     </div>

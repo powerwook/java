@@ -157,7 +157,7 @@ input::placeholder {
 .item {
   background-image: cover;
   border:  1px solid rgba(167, 160, 160, 0.5);
-  cursor : pointer;
+
 }
 
 .wrapper{
@@ -176,8 +176,6 @@ input::placeholder {
 
 /* photo */
 .wrapper .item {          
-  /* calc */
-  
   background-size: cover;
   background-position: center;
   border-radius: 5px;

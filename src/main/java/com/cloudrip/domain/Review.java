@@ -42,7 +42,7 @@ public class Review {
 	
 	@ManyToOne
 	@JoinColumn(name="nickname")
-	private User nickname;
+	private User user;
 	
 	private String reviewContent;
 	
@@ -55,4 +55,11 @@ public class Review {
 
 	private String reviewTime;
 	
+	//삭제
+	@Column(columnDefinition = "bigint default 0")
+	private Long reviewEli;
+	
+	//필터
+	@Column(columnDefinition = "bigint default 0")
+	private Long reviewFlt;
 }

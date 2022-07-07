@@ -41,31 +41,40 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             <!-- Header -->
             
 
-            <div class="board-content">
-                <h1 class="board-content-head">
-                    Today's
+            <div class="home-content">
+                <h1 class="home-content-head">
+                    
                     <span class="span-red">HOT</span>
+                    BALANCE
                 </h1>
                 <div class="recommend-list">
                     <div class="inner">
-                        <br><br><br><br><br><br>
-                        <p></p>
-                        <p></p>
+                        <div class="home_board" th:each="board : ${boardList}">
+                           <a class="home_board_link" th:href="@{/board/}+${board.boardId}">
+                              <div class="home_board_div">
+                                 <span th:text=${board.boardSubtitle1}></span>
+                                 <span class="versus">VS</span>
+                                 <span th:text=${board.boardSubtitle2}></span>
+                              </div>
+                           </a>
+                        </div>
                     </div>
                 </div>
             </div>
+         <div class="home_board_bottom">
+         </div>
 
             <hr>
 
             <div class="category">
                 <h4 class="title">전체 카테고리</h4>
                 <ul class="all-category">
-                    <li><a href="/search.html?q=연애·심리" onclick="setPlatformGtag('연애', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-heart2.png" class="category-icon">연애</a></li>
-                    <li><a href="/search.html?q=퀴즈·능력고사" onclick="setPlatformGtag('퀴즈·능력고사', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-quiz2.png" class="category-icon">퀴즈</a></li>
-                    <li><a href="/search.html?q=짤뽑기" onclick="setPlatformGtag('짤뽑기', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-draw2.png" class="category-icon">랜덤</a></li>
-                    <li><a href="/search.html?q=유형테스트" onclick="setPlatformGtag('유형테스트', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-user2.png" class="category-icon">유형</a></li>
-                    <li><a href="/search.html?q=미궁·방탈출" onclick="setPlatformGtag('미궁·방탈출', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-clock2.png" class="category-icon">시간</a></li>
-                    <li><a href="/sn/intro.html" onclick="setPlatformGtag('스낵테스트', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-snack2.png" class="category-icon">음식</a></li>
+                    <li><a href="/search/1" onclick="setPlatformGtag('연애', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-heart2.png" class="category-icon">연애</a></li>
+                    <li><a href="/search/2"><img src="/img/fashion.png" class="category-icon">패션</a></li>
+                    <li><a href="/search/3" onclick="setPlatformGtag('미궁·방탈출', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-clock2.png" class="category-icon">시간</a></li>
+                    <li><a href="/search/4" onclick="setPlatformGtag('스낵테스트', 'main', '전체 카테고리 버튼');"><img src="https://cdn.banggooso.com/assets/images/category-icons/category-snack2.png" class="category-icon">음식</a></li>
+                    <li><a href="/search/5"><img src="/img/sports.png" class="category-icon">스포츠</a></li>
+                    <li><a href="/search/6"><img src="/img/cartoon.png" class="category-icon">만화</a></li>
                 </ul>
             </div>
 

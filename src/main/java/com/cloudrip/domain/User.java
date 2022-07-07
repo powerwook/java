@@ -43,7 +43,7 @@ public class User {
 	private String roles; //ROLE_USER=일반사용자,ROLE_ADMIN=관리자
 	
 	
-	@Column(unique=true)
+	@Column(nullable=false)
 	private String email;
 	
 	@Column(nullable=false)
@@ -55,7 +55,7 @@ public class User {
 	@Column(unique=true)
 	private String nickname;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "nickname")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	private List<Review> reviews = new ArrayList<Review>();
 	
 	private LocalDate userRegdate;

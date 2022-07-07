@@ -25,4 +25,11 @@ public class CategoryService {
 	public Category findByCategoryName(String categoryName) {
 		return categoryRepository.findByCategoryName(categoryName);
 	}
+	
+	public Category create(String categoryName) {
+		Category category = new Category();
+		category.setCategoryName(categoryName);
+		categoryRepository.save(category);
+		return category;
+	}
 }

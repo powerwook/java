@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,14 +41,15 @@ public class ReviewService {
 		
 		Review review = new Review();
 		review.setBoard(board);
-		review.setNickname(user);
+		review.setUser(user);
 		review.setReviewContent(reviewContent);
 		review.setReviewDebate(reviewDebate);
 		review.setReviewHit(0l);
+		review.setReviewEli(0l);
+		review.setReviewFlt(0l);
 		System.out.println(LocalDateTime.now());
 		review.setReviewRegdate(LocalDateTime.now());
 		review.setReviewTime(reviewTime);
-		
 		reviewRepository.save(review);
 		
 	}
@@ -74,6 +78,24 @@ public class ReviewService {
 		Review review = reviewRepository.findByReviewId(reviewId);
 		reviewRepository.delete(review);
 		System.out.println("나는 리뷰닷"+review);
+	}
+	
+	public Page<Review> findByReviewContentContaining(Pageable pageable,String reviewContent){
+		return reviewRepository.findByReviewContentContaining(pageable, reviewContent);
+	}
+	
+	public void deleteReviewAll(PrincipalDetails principalDetails) {
+		User user = principalDetails.getUser();
+		User findUser =  userRepository.findByProviderId(user.getProviderId());
+		for (Review review : findUser.getReviews()) {
+			reviewRepository.delete(review);
+		}
+	}
+	
+	public void updateFilter(Long id,Long filter) {
+		Review review = reviewRepository.findByReviewId(id);
+		review.setReviewFlt(filter);
+		reviewRepository.save(review);
 	}
 	
 	

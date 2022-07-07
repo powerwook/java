@@ -42,30 +42,29 @@ public class BoardController {
 //		return "board";
 //	}
 	
-	@GetMapping ("/form")
-	public String form(Model model) {
-		model.addAttribute("board",new Board());		
-		return "board/form";
-	}
-	
-	@PostMapping("/form")
-	public String insertBoard(@ModelAttribute("board") Board board, Model model) {
-		Board boardEntity = boardService.insertBoard(board);
-		model.addAttribute("board", boardEntity);
-		return "redirect:/board";
-	}
-	
+//	@GetMapping ("/form")
+//	public String form(Model model) {
+//		model.addAttribute("board",new Board());		
+//		return "board/form";
+//	}
 	@GetMapping("/{boardId}")
 	public String board(@PathVariable("boardId") Long boardId, Model model
 			,@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		Board board = boardService.findByBoardId(boardId);
 		board.setBoardView(board.getBoardView()+1);
 		List<Review> reviewList = board.getReviews();
-		User user= principalDetails.getUser();
-		model.addAttribute("board", board);
-		model.addAttribute("reviewList", reviewList);
-		model.addAttribute("user", user);
-		return "board";
-	}
+		
+		try {
+			User user= principalDetails.getUser();
+			model.addAttribute("user", user);
+		}catch(Exception e) {
+			String unLoginUser = "로그인 한 사용자만 게시물을 볼 수 있습니다.";
+			model.addAttribute("msg",  unLoginUser);
+			return "categoryAlert";
+		}
+			model.addAttribute("board", board);
+			model.addAttribute("reviewList", reviewList);
+			return "board";
+		}
 	
 }

@@ -14,10 +14,12 @@ import javax.persistence.Table;
 import javax.transaction.Transactional;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name="category")
+@ToString(exclude="boards")
 @Transactional
 public class Category {
 	

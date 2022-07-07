@@ -38,9 +38,11 @@ public class SearchController {
 	public String next(@PathVariable Long categoryId, Model model) {			
 		Category category = categoryService.findByCategoryId(categoryId);
 		List<Board> board = category.getBoards();
-		System.out.println(board.size());
 		
 		System.out.println("next입니다.");
+		System.out.println("===========================");
+		System.out.println(board);
+		System.out.println("===========================");
 		model.addAttribute("boards", board);
 		return "search";
 	}

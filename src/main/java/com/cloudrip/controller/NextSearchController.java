@@ -31,17 +31,20 @@ public class NextSearchController {
 	
 	@RequestMapping(value="",method=RequestMethod.GET)
 	public String form(@RequestParam("key") String categoryId, Model model) {			
-		if(categoryId=="") {
+		//사용자가 공백을 입력한다면
+		if(categoryId=="") { 
 			String msg = "검색어를 입력해주세요.";
 			model.addAttribute("msg",msg);
 			return "categoryAlert";
 		} 
-		else if(categoryId.chars().allMatch(Character :: isDigit)) { //숫자면 
+		//사용자가 숫자로 검색한다면
+		else if(categoryId.chars().allMatch(Character :: isDigit)) {  
 			Category category = categoryService.findByCategoryId(Long.parseLong(categoryId));
 			List<Board> board = category.getBoards();
 			model.addAttribute("boards", board);
-			return "nextsearch";
+			return "search";
 		}
+		//사용자가 이름으로 검색한다면 
 		else {
 			Category category = categoryService.findByCategoryName(categoryId);
 			if(category == null) {
@@ -51,13 +54,8 @@ public class NextSearchController {
 			}
 			List<Board> board = category.getBoards();
 			model.addAttribute("boards", board);
-			return "nextsearch";
+			return "search";
 		}
 	}
-//	@RequestMapping(value="",method=RequestMethod.GET)
-//	public String search(@RequestParam("key") String key, Model model) {			
-//		List<Board> searchList = boardService.search(key, key, key);
-//		model.addAttribute("boards", searchList);
-//		return "nextsearch";
-//	}
+	
 }

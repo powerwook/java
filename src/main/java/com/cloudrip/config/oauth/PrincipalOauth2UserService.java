@@ -55,13 +55,20 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 		String email = oAuth2UserInfo.getEmail();
 		String role="";
 		System.out.println(username);
-		if(username.equals("강진호")) {
+		//강진호
+		if(email.equals("ryh278278@gmail.com")) {
 			role ="ROLE_ADMIN";
-		}else if(username.equals("이진구")) {
+		//이진구
+		}else if(email.equals("dlwlsrn14@gmail.com")) {
 			role ="ROLE_ADMIN";
-		}else if(username.equals("고유찬")) {
+		//김동규
+		}else if(email.equals("ko2045@naver.com")) {
 			role ="ROLE_ADMIN";
-		}else if(username.equals("김동규")) {
+		//김현욱
+		}else if(email.equals("powerwook@naver.com")) {
+			role ="ROLE_ADMIN";
+		//고유찬
+		}else if(email.equals("redronsean@naver.com")) {
 			role ="ROLE_ADMIN";
 		}
 		else {

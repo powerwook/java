@@ -55,7 +55,7 @@ public class ImageService {
 		System.out.println(imageUploadDto.getFile().getOriginalFilename());
 		String imageFileName = directory+"/"+uuid+imageUploadDto.getFile().getOriginalFilename();
 //		로컬에저장
-		File convertFile = new File("D:\\upload"+"/"+uuid+"_"+imageUploadDto.getFile().getOriginalFilename());
+		File convertFile = new File("upload"+"/"+uuid+"_"+imageUploadDto.getFile().getOriginalFilename());
 		try {
 			convertFile.createNewFile();
 			FileOutputStream fos = new FileOutputStream(convertFile);

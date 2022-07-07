@@ -9,7 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cloudrip.config.oauth.PrincipalDetails;
+import com.cloudrip.domain.Review;
 import com.cloudrip.domain.User;
+import com.cloudrip.repository.ReviewRepository;
 import com.cloudrip.repository.UserRepository;
 
 @Service
@@ -17,6 +19,9 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -63,11 +68,13 @@ public class UserService {
 	
 	public void deleteUser(String providerId) {
 		User user = userRepository.findByProviderId(providerId);
-		if(user ==null) {
-			System.out.println("찾고자 하는 유저가 없습니다.");
-		}else {
+		List<Review> UserReviewList =user.getReviews();
+//			사용자가 쓴 리뷰가 있다면 그 리뷰들을 먼저 삭제해줘야 함. 
+			if(UserReviewList!=null) {
+				for (Review review : UserReviewList) {
+					reviewRepository.delete(review);
+				}
+			}
 			userRepository.delete(user);
 		}
-	}
-
 }

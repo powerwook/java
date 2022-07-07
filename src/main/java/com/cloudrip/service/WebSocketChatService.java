@@ -14,9 +14,12 @@ import javax.websocket.server.ServerEndpoint;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.cloudrip.config.oauth.PrincipalDetails;
 import com.cloudrip.domain.Board;
+import com.cloudrip.domain.User;
 
 
 @Service
@@ -29,6 +32,7 @@ public class WebSocketChatService {
 	
 	private static BoardService boardService;
 	
+	private static UserService userService;
 	@Autowired
 	public void setReviewService(ReviewService reviewService) {
 		WebSocketChatService.reviewService= reviewService;
@@ -38,20 +42,23 @@ public class WebSocketChatService {
 	public void setBoardService(BoardService boardService) {
 		WebSocketChatService.boardService=boardService;
 	}
+	@Autowired
+	public void setUserService(UserService userService) {
+		WebSocketChatService.userService=userService;
+	}
 	
 	@OnMessage
 	public void onMessage(String msg, Session sesssion) throws Exception {
 		System.out.println(msg);
 		try {
-			
-		JSONObject jObject = new JSONObject(msg);
-		String boardId = jObject.getString("board");
-		String reviewContent = jObject.getString("reviewContent");
-		String reviewDebate = jObject.getString("reviewDebate");
-		String nickname = jObject.getString("nickname");
-		Board board = WebSocketChatService.boardService.findByBoardId(Long.parseLong(boardId));
-		System.out.println(board);
-		WebSocketChatService.reviewService.reviewInsert(reviewContent,reviewDebate,nickname,board);
+			JSONObject jObject = new JSONObject(msg);
+			String boardId = jObject.getString("board");
+			String reviewContent = jObject.getString("reviewContent");
+			String reviewDebate = jObject.getString("reviewDebate");
+			String nickname = jObject.getString("nickname");
+			Board board = WebSocketChatService.boardService.findByBoardId(Long.parseLong(boardId));
+			System.out.println(board);
+			WebSocketChatService.reviewService.reviewInsert(reviewContent,reviewDebate,nickname,board);
 		}catch(JSONException e) {
 			e.printStackTrace();
 		}

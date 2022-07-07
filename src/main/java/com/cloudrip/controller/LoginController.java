@@ -39,15 +39,6 @@ public class LoginController {
 		}
 	}
 	
-//	@PostMapping("/login")
-//	public String loginPost(User user) {
-//		userService.create(user.getProvider(),user.getProviderId()
-//				,user.getNickname(),user.getPassword()
-//				,user.getEmail(),user.getRoles()
-//				,user.getUsername());
-//		return "login";
-//	}
-//	
 	@PostMapping("/signout")
 	public String signout(@RequestBody String signout) {
 		signout = signout.replace("providerId=","");

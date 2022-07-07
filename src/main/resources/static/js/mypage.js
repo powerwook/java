@@ -10,7 +10,8 @@ const mypagePencil = document.getElementById("mypage_pencil");
 const mypageForm = document.getElementById("mypage_form");
 const mypageLogoutButton = document.getElementById("mypage_logout_button");
 const mypageCaution = document.getElementById("caution");
-
+const mypageCommentFilter = document.getElementById("mypage_comment_filter");
+const mypageFilterModal = document.getElementById("mypage_filter_modal");
 const mypageSignoutButton = document.getElementById("mypage_signout_button");
 
 	console.log(mypageSignoutButton);
@@ -25,19 +26,28 @@ if(mypageSignoutButton!=null){
 	})
 }
 
-
+//logout 모달
 if(mypageLogout!==null){
 	mypageLogout.addEventListener("click",()=>{
 	    modalLayout.style.display="block";
 	    mypageLogoutModal.style.display="block";
 	});
 }
+//signout 모달
 if(mypageMemberOut!==null){
 	mypageMemberOut.addEventListener("click",()=>{
 	    modalLayout.style.display="block";
 	    mypageMemberModal.style.display="block";
 	});
 }
+//filter 모달
+if(mypageCommentFilter!==null){
+	mypageCommentFilter.addEventListener("click",()=>{
+	    modalLayout.style.display="block";
+	    mypageFilterModal.style.display="block";
+	});
+}
+
 if(mypageModify!==null){
 	
 	mypageModify.addEventListener("click", ()=>{
