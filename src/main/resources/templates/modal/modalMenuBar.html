@@ -1,32 +1,28 @@
-  <!-- 홈 모달 -->
+<!-- 홈 모달 -->
            <nav th:fragment="modalFragment" id="nav_bar" class="home-nav-bar">
+                 
+                 <div class="hello-word" th:if="${#authentication.name} != 'anonymousUser'">
+                    <b sec:authentication="name"/>님 안녕하세요
+                 </div>
+                 <div class="home-tab"></div>
                <div class="home-login">
-                    <button class="home-logout" sec:authorize="isAuthenticated()" id="home_logout" type="button" onclick="location.href='/logout'">로그아웃</button>
-                   <a sec:authorize="${isAnonymous()}" href="/login">로그인</a>
+                    <button class="home-logout" sec:authorize="isAuthenticated()" id="home_logout" type="button" onclick="location.href='/logout'"><p class="menu-font">로그아웃</p></button>
+                   <a sec:authorize="${isAnonymous()}" href="/login">
+                      <p class="menu-font">로그인</p></a>
                </div>
                <div class="home-tab"></div>
-               <div class="home-board">
+               <div class="home-search">
                    <ul>
-                       <li><a href="/search">검색하기</a></li>
+                       <li><a href="/search"><p class="menu-font">검색하기</p></a></li>
                    </ul>
                </div>
                <div class="home-tab"></div>
                <div class="home-my-page">
-                   <a class="home-mypage-link" href="/mypage">나의 밸런스</a>
+                   <a class="home-mypage-link" href="/mypage"><p class="menu-font">나의 밸런스</p></a>
                </div>
                <div class="home-tab"></div>
                <div sec:authorize="hasRole('ROLE_ADMIN')" class="home-admin">
-                   <a class="home-mypage-link" href="/admin/board">관리자 페이지</a>
+                   <a class="home-mypage-link" href="/admin"><p class="menu-font">관리자 페이지</p></a>
                </div>
+               <div class="home-tab"></div>
            </nav>
-       <div class="mypage-logout-modal" id="mypage_logout_modal">
-            <form action="" class="mypage-logoutform">
-                 <div class="mypage-logout-div">
-                     <span class="mypage-logout-text">로그아웃 하시겠습니까?</span>
-                 </div>
-                 <div class="mypage-button-group">
-                     <button class="mypage-logout-button">취소</button>
-                     <button id="mypage_logout_button" class="mypage-logout-button" type="button" onclick="location.href='/logout'">확인</button>
-                 </div>
-             </form>
-       </div>

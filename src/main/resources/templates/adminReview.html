@@ -5,10 +5,11 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BELLTOKER</title>
+	<link rel="icon" size="16x16" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/review.css">
+    <link rel="stylesheet" href="/css/admin.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/home_modal.js"></script>
     <script th:inline="javascript">
@@ -67,73 +68,91 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                 </nav>
             </header>
             <!-- Header -->
+            <div class="admin">
+                 <div class="admin-control-top">
+		               <div style="display : inherit;">
+		                  <a th:href="@{/admin/}"> <img class="left-arrow"
+		                        src="/img/leftarrow.svg" alt="검색아이콘" />
+		                  </a><h2>리뷰 관리</h2>
+		               </div>
+		               <div>
+		                  <h4>
+		                  total : <span th:text="${reviews.totalElements}"></span> <!-- 전체를 알아서 받아와줌 -->
+		                  </h4>
+		               </div>
+            	 </div>
+            	  <form id="admin_user_searchForm" class="searchForm" th:action="@{/admin/review/}" method="GET">
+	                     <!-- <select id="userSearch" name="userSearch">
+	                        <option>-</option>
+	                        <option value="nickname">닉네임</option>
+	                        <option value="email">이메일</option>
+	                        <option value="roles">권한</option>
+	                     </select> -->
+	                     <label for="search" class="sr-only">검색</label> 
+	                     <input type="text" id="search" name="reviewSearch" size="30" th:value="${param.search}"/>
+	                     <button type="submit">검색</button>
+	                     
+	                 <a type="button" th:if="@{ROLE_ADMIN}" href="#"> 
+	                     <img src="/img/plus.png" class="admin-image" alt="추가"></a>
+	                 <a type="button" th:if=@{ROLE_ADMIN} th:onclick="reviewEliUpdate();">
+	                     <img src="/img/update.png" class="admin-image" alt="수정"></a>
+	                 <a type="button" th:if=@{ROLE_ADMIN} th:onclick="deleteValue();">
+	                       <img src="/img/delete.png" class="admin-image" alt="삭제"></a>
+	             </form>
+	         </div>
+            <table class="table">
+               <thead>
+                  <tr>
+                  	 <th>번호</th>
+                     <th>게시판 제목</th>
+                     <th>닉네임</th>
+                     <th>내용</th>
+                     <th>필터링 여부</th>
+                     <th>날짜</th>
+                     <th><input type="checkbox" id="checkAll" name="checkAll"/></th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr th:each="review, num : ${reviews}">
+                     <td th:text="${num.count}"></td>
+                     <td th:text="${review.board.boardTitle}"></td>
+                     <td th:text="${review.user.nickname}"></td>
+                     <td><a th:href="@{../board/}+${review.board.boardId}" th:text="${review.reviewContent}"></a></td>
+                     <td th:text="${review.reviewFlt}"></td>
+                     <td th:text="${review.reviewRegdate}"></td>
+                     <td><input type="checkbox" name="checkRow" th:value="${review.reviewId}"/></td>
+                  </tr>
+               </tbody>
+             
+          	</table>
             
-            <div class="review-container">
-	            <div class="review-title">
-	                <h3>&nbsp;내가 쓴 리뷰</h3>
-	                
-	            
-	            </div>
-	            
-	            <form id="review_form">
-		            <div id="review_content" class="review-content">
-		            	<div id="review_content_detail" th:each="review : ${reviews}" class="review-content-detail">
-			            	<strong>Nickname</strong>
-			            	<small th:text="|보드번호 : ${review.board.boardId}|"></small>
-			            	<small th:text="${review.reviewRegdate}"></small>
-			            	<div id="review_id_div">
-		            			<input type="hidden" id="review_id" th:value="${review.reviewId}" />
-				            	<span th:text="|${review.reviewId}번째${review.reviewContent}|"></span>
-				            	<button th:reviewId="${review.reviewId}" type="button" class="delete-button"
-				            	th:onclick="reviewDelete(this.getAttribute('reviewId'))">삭제</button>
-			            	</div>
-	            		</div>
-            		</div>
-	            </form>
-	            
-	            <nav aria-label="Page navigation">
-						<ul class="pagination justify-content-center">
-							<li class="page-item"
-								th:classappend="${1 == reviews.pageable.pageNumber + 1}? 'disabled'">
-								<a class="page-link" href="#"
-								th:href="@{/admin/review(page=${reviews.pageable.pageNumber - 1})}" 
-								tabindex="-1" aria-disabled="true">Previous</a>
-							</li>
-							<!-- 이전으로 갈 페이지 없게끔 // th:classappend 특정 조건일때만 비활성화를 시켜줌  -->
-							<!-- i == boards.pageable.pageNumber(i 값이 ? 일치했을때' disabled'" 되어 th:text="${i}"에 넘겨줌 (1페이지를 눌르면 1버튼이 꺼지게함)) -->
-							<!--  -->
-							<li class="page-item"
-								th:classappend="${i == reviews.pageable.pageNumber + 1}? 'disabled'" 
-								th:each="i : ${#numbers.sequence(startPage, endPage)}"><a
-								class="page-link" href="#" th:href="@{/admin/review(page=${i - 1})}"
-								th:text="${i}">1</a></li>
-							<li class="page-item"
-								th:classappend="${reviews.totalPages == reviews.pageable.pageNumber + 1}? 'disabled'">
-								<a class="page-link" href="#"
-								th:href="@{/admin/review(page=${reviews.pageable.pageNumber + 1})}">Next</a>
-								<!-- th:href="@{/list(page=${boards.pageable.pageNumber  + 1}) 다음 페이지로 갈수 있게끔 함  -->
-								<!-- class="page-link" href="#" th:href="@{/list(page=${i - 1})}" th:text="${i}">1</a></li>  페이지 시작을 0으로 하게끔 함-->
-							</li>
-						</ul>
-					</nav>
-	    	</div>
+            <nav aria-label="Page navigation">
+					<ul class="pagination justify-content-center">
+						<li class="page-item"
+							th:classappend="${1 == reviews.pageable.pageNumber + 1}? 'disabled'">
+							<a class="page-link" href="#"
+							th:href="@{/admin/review(page=${reviews.pageable.pageNumber - 1})}" 
+							tabindex="-1" aria-disabled="true">Previous</a>
+						</li>
+						<!-- 이전으로 갈 페이지 없게끔 // th:classappend 특정 조건일때만 비활성화를 시켜줌  -->
+						<!-- i == boards.pageable.pageNumber(i 값이 ? 일치했을때' disabled'" 되어 th:text="${i}"에 넘겨줌 (1페이지를 눌르면 1버튼이 꺼지게함)) -->
+						<!--  -->
+						<li class="page-item"
+							th:classappend="${i == reviews.pageable.pageNumber + 1}? 'disabled'" 
+							th:each="i : ${#numbers.sequence(startPage, endPage)}"><a
+							class="page-link" href="#" th:href="@{/admin/review(page=${i - 1})}"
+							th:text="${i}">1</a></li>
+						<li class="page-item"
+							th:classappend="${reviews.totalPages == reviews.pageable.pageNumber + 1}? 'disabled'">
+							<a class="page-link" href="#"
+							th:href="@{/admin/review(page=${reviews.pageable.pageNumber + 1})}">Next</a>
+							<!-- th:href="@{/list(page=${boards.pageable.pageNumber  + 1}) 다음 페이지로 갈수 있게끔 함  -->
+							<!-- class="page-link" href="#" th:href="@{/list(page=${i - 1})}" th:text="${i}">1</a></li>  페이지 시작을 0으로 하게끔 함-->
+						</li>
+					</ul>
+			</nav>
 
 
-            <footer class="footer">
-                <div>
-                    <a href="">
-                        <img src="/img/instagram.svg">
-                    </a>
-                    <a href="">
-                        <img src="/img/facebook.svg">
-                    </a>
-                    <a href="">
-                        <img src="/img/twitter.svg">
-                    </a>
-                    <p> 밸런스의 대장! 밸토커! </p>
-                    <p>Copyright © Your Website 2022</p>
-                </div>
-            </footer>
 
            
              <!-- 홈 모달 -->
@@ -142,5 +161,91 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
         <div id="modal_layout" class="home-modal-layout"></div>
 </div>
 
+<script>
+   function deleteValue() {
+        
+        var valueArr = new Array();
+        var list = $("input[name='checkRow']");
+        
+        for(var i = 0; i < list.length; i++) {
+           if(list[i].checked) {
+              valueArr.push(list[i].value);
+           }
+        }
+        
+        if (valueArr.length == 0) {
+           alert("선택된 항목이 없습니다.");
+        } else {
+           console.log(valueArr);
+           if(confirm("정말 삭제하시겠습니까?")) {
+              $.ajax({
+                 url : "review/delete",
+                 type : 'POST',
+                 traditional : true,
+                 data : {
+                    valueArr : valueArr
+                 },
+                 success : function(jdata) {
+                    if(jdata=1) {
+                       alert("삭제 성공");
+                       location.replace("review");
+                    } else {
+                       alert("삭제 실패");
+                    }
+                 }
+              });
+           } else {
+                 return false;
+           }
+        }
+     }
 
+   function reviewEliUpdate() {
+        var categoryValue = $("input:checkbox[name='checkRow']").val();
+        var checkRow = $("input:checkbox[name='checkRow']:checked");
+        
+        if(checkRow.length < 1) {
+           alert("항목을 선택해주세요.");
+           return false;
+        } else {
+        	
+      	   var valueArr = new Array();
+           var list = $("input[name='checkRow']");
+           var checkRowValue = checkRow.val();
+           for(var i = 0; i < list.length; i++) {
+               if(list[i].checked) {
+                  valueArr.push(list[i].value);
+               }
+            }
+            
+            if (valueArr.length == 0) {
+               alert("선택된 항목이 없습니다.");
+            } else {
+               console.log(valueArr);
+               if(confirm("정말 삭제하시겠습니까?")) {
+                  $.ajax({
+                     url : "review/update/",
+                     type : 'POST',
+                     traditional : true,
+                     data : {
+                        valueArr : valueArr
+                     },
+                     success : function(jdata) {
+                        if(jdata=1) {
+                           alert("삭제 성공");
+                           location.replace("review");
+                        } else {
+                           alert("삭제 실패");
+                        }
+                     }
+                  });
+               } else {
+                     return false;
+               }
+            }
+        }
+        
+   }
+   </script>
 </body>
+</html>

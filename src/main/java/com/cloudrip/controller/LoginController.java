@@ -34,9 +34,9 @@ public class LoginController {
 			User user = principalDetails.getUser();
 		} catch (Exception e) {
 			return "login";
-		}{
-			return "againgLoginAlert";
 		}
+		
+		return "againLoginAlert";
 	}
 	
 	@PostMapping("/signout")

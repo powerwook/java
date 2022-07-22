@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BELLTOKER</title>
+<link rel="icon" size="16x16" href="/img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/css/admin.css">
+<script src="/js/home_modal.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+
+<body>
+   <div class="layout">
+      <div class="layout-content">
+         <header class="board-header">
+                <nav class="board-nav">
+                    <button id="modal_button" type="button" style="background-color:#FFFFFF;"> 
+                        <img src="/img/menu.svg" class="menu-image">
+                    </button>
+                    <a href="/" class="main-logo">
+                        <h1>BELLTOKER</h1> <h2 class="main-logo-admin">(ADMIN)</h2>
+                        <!--<img src="/img/main.jpg" class="main-logo-image">-->
+                    </a>
+
+                    <div class="header-right">
+                        <a href="/search" class="header-link">
+                            <img src="/img/search.svg" class="header-image1">
+                        </a>
+
+                        <a href="/mypage" class="header-link">
+                            <img src="/img/profile.svg" class="header-image2">
+                        </a>
+                    </div>
+                </nav>
+            </header>
+         
+         <div class="admin">
+            <div class="admin-control-top">
+               <div style="display : inherit;">
+                  <a th:href="@{/admin/}"> <img class="left-arrow"
+                        src="/img/leftarrow.svg" alt="검색아이콘" />
+                  </a><h2>카테고리 관리</h2>
+               </div>
+               <div>
+                  <h4>
+                  total : <span th:text="${categorys.totalElements}"></span> <!-- 전체게시판을 알아서 받아와줌 -->
+                  </h4>
+               </div>
+            </div>
+            
+            <form class="searchForm" th:action="@{/admin/category/}" method="GET"> <!-- 검색창에 변수값을 전달하기위해 // 알아서 searchText 파라미터값이 들어감 -->
+               <label for="search" class="sr-only">검색</label> 
+               <input type="text" id="search" name="search" size="30" th:value="${param.search}"/>
+               <button type="submit">검색</button>
+               
+               <a type="button" th:if="@{ROLE_ADMIN}" th:href="@{/admin/category/insert}"> 
+                  <img src="/img/plus.png" class="admin-image" alt="추가"></a>
+               <a type="button" th:if=@{ROLE_ADMIN} th:onclick="categoryUpdate();">
+                  <img src="/img/update.png" class="admin-image" alt="수정"></a>
+               <a type="button" th:if=@{ROLE_ADMIN} th:onclick="deleteValue();">
+                  <img src="/img/delete.png" class="admin-image" alt="삭제"></a>
+            </form>
+         </div>
+         
+         <table class="table">
+               <thead>
+                  <tr>
+                     <th>번호</th>
+                     <th>ID</th>
+                     <th>이름</th>
+                     <th><input type="checkbox" id="checkAll" name="checkAll"/></th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr th:each="category, num : ${categorys}">
+                     <td th:text="${num.count}"></td>
+                     <td th:text="${category.categoryId}"></td>
+                     <td th:text="${category.categoryName}"></td>
+                     <td><input type="checkbox" name="checkRow" th:value="${category.categoryId}"/></td>
+                  </tr>
+               </tbody>
+            </table>
+               <!-- 페이지 소스  --> 
+               
+             <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                     <li class="page-item"
+                        th:classappend="${1 == categorys.pageable.pageNumber + 1}? 'disabled'">
+                        <a class="page-link" href="#"
+                        th:href="@{/admin/category/(page=${categorys.pageable.pageNumber - 1}, search=${param.search})}" 
+                        tabindex="-1" aria-disabled="true">Previous</a>
+                     </li>
+                     <li class="page-item"
+                        th:classappend="${i == categorys.pageable.pageNumber + 1}? 'disabled'" 
+                        th:each="i : ${#numbers.sequence(startPage, endPage)}"><a
+                        class="page-link" href="#" th:href="@{/admin/category/(page=${i - 1}, search=${param.search})}"
+                        th:text="${i}">1</a></li>
+                     <li class="page-item"
+                        th:classappend="${categorys.totalPages == categorys.pageable.pageNumber + 1}? 'disabled'">
+                        <a class="page-link" href="#"
+                        th:href="@{/admin/category/(page=${categorys.pageable.pageNumber + 1}, search=${param.search})}">Next</a>
+                     </li>
+                  </ul>
+            </nav>
+         
+         <!-- 홈 모달 -->
+           <nav th:replace="modal/modalMenuBar :: modalFragment"></nav>
+           
+      </div>
+      <div id="modal_layout" class="home-modal-layout"></div>
+   </div>
+   
+      <script>
+   function deleteValue() {
+        
+        var valueArr = new Array();
+        var list = $("input[name='checkRow']");
+        
+        for(var i = 0; i < list.length; i++) {
+           if(list[i].checked) {
+              valueArr.push(list[i].value);
+           }
+        }
+        
+        if (valueArr.length == 0) {
+           alert("선택된 항목이 없습니다.");
+        } else {
+           console.log(valueArr);
+           if(confirm("정말 삭제하시겠습니까?")) {
+              $.ajax({
+                 url : "category/delete",
+                 type : 'POST',
+                 traditional : true,
+                 data : {
+                    valueArr : valueArr
+                 },
+                 success : function(jdata) {
+                    if(jdata=1) {
+                       alert("삭제 성공");
+                       location.replace("category");
+                    } else {
+                       alert("삭제 실패");
+                    }
+                 }
+              });
+           } else {
+                 return false;
+           }
+        }
+     }
+    
+    function categoryUpdate() {
+         var categoryValue = $("input:checkbox[name='checkRow']").val();
+         var checkRow = $("input:checkbox[name='checkRow']:checked");
+         
+         
+         if(checkRow.length > 1) {
+            alert("항목을 하나만 선택해주세요.");
+            return false;
+         } else if(checkRow.length < 1) {
+            alert("항목을 선택해주세요.");
+            return false;
+         } else {
+            var checkRowValue = checkRow.val();
+            
+            window.location.href = "/admin/category/update/" + checkRowValue
+         }
+         
+    }
+   </script>
+</body>
+</html>

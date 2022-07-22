@@ -3,10 +3,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link th:if="${categorys}" rel="stylesheet" media="screen" href="/css/search.css">
-    <link th:unless="${categorys}" rel="stylesheet" media="screen" href="/css/list.css">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>BELLTOKER</title>
+   <link rel="icon" size="16x16" href="/img/favicon.ico">
+   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/search.css">
+   
 </head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <body>
@@ -15,42 +16,38 @@
         <div class="layout-content">
             <header class="search">
                 <form method='get' action="/nextsearch" autocomplete="off">
-                    <input class="search-field" placeholder="Search" type="text" value="" name="key"/>
-	                    <button class="search-icon-btn" type="submit" >
-	                    	<img class="search-icon" src="/img/search.svg" alt="검색아이콘"/>
-	                    </button>
-                    <button type="reset" class="cancel-btn">Cancel</button>
-                    <a href="javascript:history.back()">
-                    	<img class="left-arrow" src="/img/leftarrow.svg" alt="뒤로가기"/>
+                   <a href="javascript:history.back()">
+                   
+                       <img class="left-arrow" src="/img/leftarrow.svg" alt="뒤로가기"/>
                     </a> 
+                    <input class="search-field" placeholder="Search" type="text" value="" name="key"/>
+                       <button class="search-icon-btn" type="submit" >
+                          <img class="search-icon" src="/img/search.svg" alt="검색아이콘"/>
+                       </button>
+                    <button type="reset" class="cancel-btn">Cancel</button>
+                    
                 </form>
             </header>
-            <br>
-            <div >
-                <h4 th:text="${test}">                                              
+            <div class="recommend">
+                <h4 th:text="${test}">                                        
                 </h4>
             </div>
-            <div class="list">           	
-                <div th:each="c : ${categorys}" class="love">                              	
-                	<a th:text="${c.categoryName}" th:href="@{/search/}+${c.categoryId}"> 
-                	</a>
+            <div class="category_list">              
+                <div th:each="c : ${categorys}" class="love">                                 
+                   <a th:text="${c.categoryName}" th:href="@{/search/}+${c.categoryId}"> 
+                   </a>
                 </div>
             </div>
-            <ul class="wrapper">
-					<li class="item" th:each="board : ${boards}"
-						th:onclick="'location.href=\'../board/'+@{${board.boardId}}+'\''">
-						<div class="div1" th:text="${board.boardSubtitle1}"></div>
-						<div class="div2" th:text="${board.boardSubtitle2}"></div>
-			</li>
-            <!--
-            <div th:each="board : ${boards}" class="review-content-detail">            	
-	            <ul class="wrapper">
-	                <li class="item"><h1 th:text="${board.boardSubtitle1}"></h1></li>
-	                <li class="item"></li>
-	                <li class="item" ><h1 th:text="${board.boardSubtitle2}"></h1></li>      
-	            </ul>
-	        </div>
-	        -->
+            
+            <div class="board_list">
+            <div class="board_item" th:each="board : ${boards}"
+               th:onclick="'location.href=\'../board/'+@{${board.boardId}}+'\''">
+               <div class="subtitle1" th:text="${board.boardSubtitle1}"></div>
+               <div class="versus">
+                  <img src="/img/versus.png" width="65"></div>
+               <div class="subtitle2" th:text="${board.boardSubtitle2}"></div>
+            </div>
+         </div>
         </div>    
     </div>
 </body>

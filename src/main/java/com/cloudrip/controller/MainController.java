@@ -12,6 +12,7 @@ import com.cloudrip.config.oauth.PrincipalDetails;
 import com.cloudrip.domain.Board;
 import com.cloudrip.domain.Category;
 import com.cloudrip.domain.User;
+import com.cloudrip.scheduler.TutorialScheduler;
 import com.cloudrip.service.BoardService;
 import com.cloudrip.service.CategoryService;
 
@@ -21,11 +22,12 @@ public class MainController {
 	@Autowired
 	private BoardService boardService;
 	
+	
 	@GetMapping("/")
 	public String index(Model model) {
 		List<Board> boards = boardService.findTop5BoardList();
 	    model.addAttribute("boardList", boards);
-
+	    
 		return "home";
 	}
 }

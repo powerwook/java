@@ -4,7 +4,8 @@
         <meta http-equiv="Content-Type" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>BELLTOKER</title>
+		<link rel="icon" size="16x16" href="/img/favicon.ico">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/home.css">
         <link rel="stylesheet" href="/css/mypage.css">
@@ -74,7 +75,19 @@
 			}
 			reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
 		}
-
+		
+		function mypageBack() {
+			if(document.referrer == '' && window.location.host == "belltoker.com")  {
+				window.location.href = "http://belltoker.com:/";
+			}else if(document.referrer == '' && window.location.host == "belltoker.com:8080"){
+				window.location.href = "http://belltoker.com:8080/";
+			}else if(document.referrer == '' && window.location.host == "localhost:8080"){
+				window.location.href = "http://localhost:8080/";
+			}else{
+				history.back();
+			}
+			
+		}
        	</script>
 </head>
 <body>
@@ -86,9 +99,12 @@
                 <nav class="board-nav">
                     <button type="button" style="background-color:#FFFFFF;"
                     id="modal_button">
-                        <a href="javascript:history.back(-1)"> <img src="/img/left-arrow.png" id="menu_image" class="menu-image"></a>
+                        <a href="javascript:mypageBack();"> <img src="/img/left-arrow.png" id="menu_image" class="menu-image"></a>
                     </button>
-                    <h4 class="mypage-title">프로필 수정</h4>
+                    <a href="/" class="main-logo">
+                        <h1>BELLTOKER</h1>
+                        <!--<img src="/img/main.jpg" class="main-logo-image">-->
+                    </a>
                 </nav>
             </header>
         <!-- Header -->
@@ -96,7 +112,7 @@
             <div class="mypage-profile">
             <form id="mypage_image_form" class="mypage-image-form" enctype="multipart/form-data">
                 <div id="mypage_profile_box" class="mypage-profile-box">
-                    <img th:if="${image}" id="imageUploadPreview" class="mypage-profile-img" th:src="${image.postImageUrl}|" alt="fsdgsdgs님의 사진">
+                    <img th:if="${image}" id="imageUploadPreview" class="mypage-profile-img" th:src="${image.postImageUrl}" alt="fsdgsdgs님의 사진">
                     <img th:unless="${image}" id="imageUploadPreview" class="mypage-profile-img" src="/img/plamingo-my.png" alt="fsdgsdgs님의 사진">
                 	
                     <label for="pic_upload" class="pic-upload">
@@ -132,10 +148,37 @@
                     <span class="mypage-span">회원탈퇴</span>
                 </div>
                 <div class="home-tab"></div>
-                <div class="mypage-comment-filter" id="mypage_comment_filter"
-                sec:authorize="hasRole('ROLE_ADMIN')">
-                    <span class="mypage-span">악플 댓글 필터링</span>
-                </div>
+                <form action="mypage/filter" method="POST">
+                	<input type="hidden" name="on_off" value="on"/>
+	                <div class="mypage-comment-filter" id="mypage_comment_filter"
+	                sec:authorize="hasRole('ROLE_ADMIN')">
+	                    <button class="mypage-span" type="submit">악플 댓글 필터링 ON</button>
+	                </div>
+                </form>
+                <div class="home-tab"></div>
+                <form action="mypage/filter" method="POST">
+                	<input type="hidden" name="on_off" value="off"/>
+	                <div class="mypage-comment-filter" id="mypage_comment_filter"
+	                sec:authorize="hasRole('ROLE_ADMIN')">
+	                    <button class="mypage-span" type="submit">악플 댓글 필터링 OFF</button>
+	                </div>
+                </form>
+                <div class="home-tab"></div>
+                <form action="mypage/filter" method="POST">
+                	<input type="hidden" name="on_off" value="scheduleOn"/>
+	                <div class="mypage-comment-filter" id="mypage_comment_filter"
+	                sec:authorize="hasRole('ROLE_ADMIN')">
+	                    <button class="mypage-span" type="submit">신규 악플 댓글 1분 간격 필터링</button>
+	                </div>
+                </form>
+                <div class="home-tab"></div>
+                <form action="mypage/filter" method="POST">
+                	<input type="hidden" name="on_off" value="scheduleOff"/>
+	                <div class="mypage-comment-filter" id="mypage_comment_filter"
+	                sec:authorize="hasRole('ROLE_ADMIN')">
+	                    <button class="mypage-span" type="submit">신규 악플 댓글 1분 간격 필터링 취소</button>
+	                </div>
+                </form>
                 <div class="home-tab"></div>
             </div>
             
@@ -172,8 +215,9 @@
                 </form>
             </div>
             
-            <!-- comment-filter modal -->
-            <div class="mypage-logout-modal" id="mypage_filter_modal">
+           
+           <!-- comment-filter modal -->
+           <!--<div class="mypage-logout-modal" id="mypage_filter_modal">
                 <form id="mypage_signout_form" class="mypage-logoutform" action="mypage/filter" method="POST">
                     <div class="mypage-memberout-div">
                         <span class="mypage-memberout-text">필터링 하시겠습니까?</span>
@@ -183,8 +227,7 @@
                         <button id="mypage_signout_button" class="mypage-logout-button" type="submit">확인</button>
                     </div>
                 </form>
-            </div>
-            
+            </div> -->
             
         </div>
         <div id="modal_layout" class="home-modal-layout"></div>

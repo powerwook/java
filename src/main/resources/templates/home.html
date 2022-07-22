@@ -5,7 +5,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+   <title>BELLTOKER</title>
+   <link rel="icon" size="16x16" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/mypage.css">
@@ -15,8 +16,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body>
     <div class="layout">
         <div class="layout-content">
-        	
-        	<!-- Header -->
+           
+           <!-- Header -->
             <header class="board-header">
                 <nav class="board-nav">
                     <button id="modal_button" type="button" style="background-color:#FFFFFF;"> 
@@ -42,19 +43,22 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             
 
             <div class="home-content">
-                <h1 class="home-content-head">
-                    
-                    <span class="span-red">HOT</span>
-                    BALANCE
-                </h1>
+                <div class="home-content-background">
+                   <img src="/img/plamingo2.png"/>
+                </div>
                 <div class="recommend-list">
+                   <h1 class="home-content-head">
+                    
+                       <span class="span-red">HOT</span>
+                       BALANCE
+                   </h1>
                     <div class="inner">
                         <div class="home_board" th:each="board : ${boardList}">
                            <a class="home_board_link" th:href="@{/board/}+${board.boardId}">
                               <div class="home_board_div">
-                                 <span th:text=${board.boardSubtitle1}></span>
+                                 <span class="home_board_subtitle1" th:text=${board.boardSubtitle1}></span>
                                  <span class="versus">VS</span>
-                                 <span th:text=${board.boardSubtitle2}></span>
+                                 <span class="home_board_subtitle2" th:text=${board.boardSubtitle2}></span>
                               </div>
                            </a>
                         </div>
@@ -97,7 +101,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
            <!-- 홈 모달 -->
            <nav th:replace="modal/modalMenuBar :: modalFragment"></nav>
-        	
+           
     </div>
 
     <div id="modal_layout" class="home-modal-layout"></div>

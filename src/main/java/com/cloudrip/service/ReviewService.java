@@ -38,6 +38,7 @@ public class ReviewService {
 		User user = userRepository.findByNickname(nickname);
 		LocalDateTime now = LocalDateTime.now();
 		String reviewTime = now.getHour() + ":" + now.getMinute();
+		System.out.println(now+"!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		
 		Review review = new Review();
 		review.setBoard(board);
@@ -47,8 +48,7 @@ public class ReviewService {
 		review.setReviewHit(0l);
 		review.setReviewEli(0l);
 		review.setReviewFlt(0l);
-		System.out.println(LocalDateTime.now());
-		review.setReviewRegdate(LocalDateTime.now());
+		review.setReviewRegdate(now);
 		review.setReviewTime(reviewTime);
 		reviewRepository.save(review);
 		
@@ -80,8 +80,22 @@ public class ReviewService {
 		System.out.println("나는 리뷰닷"+review);
 	}
 	
+	public void eliDeleteReview(Long reviewId) {
+		Review review = reviewRepository.findByReviewId(reviewId);
+		review.setReviewEli(1l);
+		reviewRepository.save(review);
+	}
+	
 	public Page<Review> findByReviewContentContaining(Pageable pageable,String reviewContent){
 		return reviewRepository.findByReviewContentContaining(pageable, reviewContent);
+	}
+	
+	public Page<Review> findByReviewNoFltContaining(Pageable pageable){
+		return reviewRepository.findByReviewNoFltContaining(pageable);
+	}
+	
+	public Page<Review> findByReviewFltContaining(Pageable pageable){
+		return reviewRepository.findByReviewFltContaining(pageable);
 	}
 	
 	public void deleteReviewAll(PrincipalDetails principalDetails) {
@@ -92,11 +106,38 @@ public class ReviewService {
 		}
 	}
 	
-	public void updateFilter(Long id,Long filter) {
+	public void updateFilterOn(Long id,Long filter) {
 		Review review = reviewRepository.findByReviewId(id);
 		review.setReviewFlt(filter);
 		reviewRepository.save(review);
 	}
+	public void updateFilterOff() {
+		List<Review> reviewList = reviewRepository.findAll();
+		for (Review review : reviewList) {
+			review.setReviewFlt(0l);
+			reviewRepository.save(review);
+		}
+	}
+	public List<Review> findByReviewOneMinute(){
+		List<Review> reviewList = reviewRepository.findByReviewOneMinute();
+		return reviewList;
+	}
 	
+    public List<Review> findBestReview(Board board) {
+	   	return reviewRepository.findTop5ByBoardOrderByReviewHitDesc(board);
+    }
+    
+    
+    public void reviewHitAdd(Long reviewId) {
+    	Review review = reviewRepository.findByReviewId(reviewId);
+    	review.setReviewHit(review.getReviewHit()+1l);
+    	reviewRepository.save(review);
+    }
+    
+    public void reviewHitMinus(Long reviewId) {
+    	Review review = reviewRepository.findByReviewId(reviewId);
+    	review.setReviewHit(review.getReviewHit()-1l);
+    	reviewRepository.save(review);
+    }
 	
 }

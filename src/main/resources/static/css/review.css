@@ -1,51 +1,61 @@
 .review-container {
-	min-height : 72vh;
+   min-height : 72vh;
 }
 
 .review-title {
-	margin : 20px auto 20px auto;
+   margin : 20px auto 20px auto;
 }
 
 .review-button-area {
-	float : right;
+   float : right;
 }
 
 .review-button {
-	z-index:10;
-	background-color : #FFFFFF;
-	margin-right : 10px;
+   z-index:10;
+   background-color : #FFFFFF;
+   margin-right : 10px;
 }
 
 .delete-button {
-	background-color : #FFFFFF;
-	display : inline-block;
-	float : right;
-	margin-right : 10px;
+   background-color : #FFFFFF;
+   display : inline-block;
+   float : right;
+   margin-right : 10px;
 }
 
 
 .review-content {
-	padding-top : 10px;
-	width : 98%;
-	display : flex;
+   padding-top : 10px;
+   width : 98%;
+   display : flex;
     flex-wrap: wrap;
     border-collapse : collapse;
 }
 
 .review-content-detail{
-	width : 100%;
+   width : 100%;
     border : 1px solid lightgray;
     border-radius : 10px;
     padding : 3px;
     word-break:normal;
-	
+    margin-bottom : 1rem;
+   
 }
 
-.review-content-detail small {
+.small-left {
+   margin-left : 15px;
+}
+
+.small-right {
     margin-right : 15px;
     float : right;
 }
 .review-move{
-	z-index:5;
+   float : right;
+   margin-right : 10px;
+   z-index:5;
 }
 
+.review_id_div span {
+   margin-left : 10px;
+}

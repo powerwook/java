@@ -3,6 +3,7 @@ package com.cloudrip.config.oauth;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
@@ -87,7 +88,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 					.roles(role)
 					.provider(provider)
 					.nickname(username+random)
-					.userRegdate(LocalDate.now())
+					.userRegdate(LocalDateTime.now())
 					.provider_id(providerId)
 					.build();
 			userRepository.save(userEntity);

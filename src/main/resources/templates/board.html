@@ -5,7 +5,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BELLTOKER</title>
+   <link rel="icon" size="16x16" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/board.css">
@@ -42,19 +43,19 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                 <input type="hidden" th:value="${board.boardId}" id="boardId"/>
                 <h1 th:text="${board.boardTitle}" style="text-align : center;"></h1>
                 <div class="board-content">
-                	<div class="board-subtitle1">
-                		<h2 th:text="${board.boardSubtitle1}"></h2>
-                	</div>
-                	<div class="vsImage">
-                		<h2>VS</h2>
-                	</div>
-                	<div class="board-subtitle2">
-                		<h2 th:text="${board.boardSubtitle2}"></h2>
-                	</div>
+                   <div class="board-subtitle1">
+                      <h2 th:text="${board.boardSubtitle1}"></h2>
+                   </div>
+                   <div class="vsImage">
+                      <img src="/img/versus.png" alt="vs"/>
+                   </div>
+                   <div class="board-subtitle2">
+                      <h2 th:text="${board.boardSubtitle2}"></h2>
+                   </div>
                 </div>
             </div>
             <div class="board-contents">
-            	<p th:text="${board.boardContent}"></p>
+               <p th:text="${board.boardContent}"></p>
             </div>
             <div class="container" id="voting-box">
               <div class="left" onclick="addleft()">
@@ -80,27 +81,36 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             </div>
             -->
             <div>
-            	<button type="button" id="writeReview" onclick="reviewFocus()">댓글 쓰러 가기</button>
+               <button type="button" class="writeReview" id="writeReview" onclick="reviewFocus()">댓글 쓰러 가기</button>
+               
             </div>
             
             
-			<!-- Select -->
-			 <main class="chat" id="chat">
-              <div class="date-divider">
-                <span class="date-divider__text">Friday, June 17, 2022</span>
-              </div>
+         <!-- Select -->
+          <main class="chat" id="chat">
                          
               <!-- best review -->             
-              <div class="chat__message chat__message-best">
-                <span class="chat__message-body-best">
-                 BEST!!!
+              <div class="chat__message chat__message-best" style="display:flex; flex-direction : column;">
+                <span class="chat__message-body-best" id="best_review_open">
+                 BEST 리뷰 보기
                 </span>
+                <div id="best_reviewList" class="best_reviewList">
+                   <div th:each="bestReview : ${bestReviewList}">
+                      <div>
+	                     <span th:text="|${bestReview.reviewHit} likes|"></span>
+                         <span th:text="${bestReview.user.nickname}"></span>
+                         <span th:text="${bestReview.reviewContent}"></span>
+                      </div>
+                      
+                   </div>
+                   <button type="button" id="best_review_close" class="best_review_close">닫기</button>
+                </div>
               </div>
               <div id="chatdiv" class="chatdiv">
                     <div th:each="review : ${reviewList}" id="board_review">
                             
                       <div th:if="${review.reviewDebate == 'props'}" class="chat__message chat__message-from-me">
-                         <div th:if="${review.reviewEli == 1}">
+                         <div th:if="${review.reviewEli == 1}" class="filtered">
                             <span class="chat__message-time" th:text="${review.reviewTime}"></span>
                             <div class="chat__message-center">
                                <h3 class="chat__message-cors" th:text="${review.user.nickname}"></h3>
@@ -109,7 +119,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                                   작성자에 의해 삭제된 메세지입니다.</span>
                             </div>
                         </div>
-                        <div th:if="${review.reviewEli == 0 && review.reviewFlt == 1}">
+                        <div th:if="${review.reviewEli == 0 && review.reviewFlt == 1}" class="filtered">
                             <span class="chat__message-time" th:text="${review.reviewTime}"></span>
                             <div class="chat__message-center">
                                <h3 class="chat__message-cors" th:text="${review.user.nickname}"></h3>
@@ -118,264 +128,346 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                                   클릿봇에 의해 삭제된 메세지입니다.</span>
                             </div>
                         </div>
-                        <div th:if="${review.reviewEli == 0 && review.reviewFlt == 0}">
+                        <div th:if="${review.reviewEli == 0 && review.reviewFlt == 0}" class="filtered">
+                           <img id="review-hit-image" class="review_hit_image" src="/img/heart.png">
                            <span class="chat__message-time" th:text="${review.reviewTime}"></span>
                             <div class="chat__message-center">
                                <h3 class="chat__message-cors" th:text="${review.user.nickname}"></h3>
-                               <span class="chat__message-body" th:text="${review.reviewContent}"></span>
+                               <span th:ondblclick="'reviewHit('+${review.reviewId}+');'" th:id="${review.reviewId}" class="chat__message-body" th:text="${review.reviewContent}"></span>
                             </div>
                          </div>
                        </div>
                  
                       <div th:if="${review.reviewDebate == 'cors'}" class="chat__message chat__message-to-me">
-                         <div th:if="${review.reviewEli == 1}">
+                         <div th:if="${review.reviewEli == 1}" class="filtered">
                             <div class="chat__message-center">
                                <h3 class="chat__message-username" th:text="${review.user.nickname}"></h3>
-                               <span class="chat__message-body">
+                               <span class="chat__message-body chat_filtered">
                                <img src="https://cdn-icons-png.flaticon.com/512/87/87980.png"> 
                                   작성자에 의해 삭제된 메세지입니다.</span>
                             </div>
                             <span class="chat__message-time" th:text="${review.reviewTime}"></span>
                          </div>
-                         <div th:if="${review.reviewEli == 0 && review.reviewFlt == 1}">
+                         <div th:if="${review.reviewEli == 0 && review.reviewFlt == 1}" class="filtered">
                             <div class="chat__message-center">
                                <h3 class="chat__message-username" th:text="${review.user.nickname}"></h3>
-                               <span class="chat__message-body">
+                               <span class="chat__message-body chat_filtered">
                                <img src="https://cdn-icons-png.flaticon.com/512/87/87980.png"> 
                                   클릿봇에 의해 삭제된 메세지입니다.</span>
                             </div>
                             <span class="chat__message-time" th:text="${review.reviewTime}"></span>
                          </div>
-                         <div th:if="${review.reviewEli == 0 && review.reviewFlt == 0}">
+                         <div th:if="${review.reviewEli == 0 && review.reviewFlt == 0}" class="filtered">
                             <div class="chat__message-center">
                                <h3 class="chat__message-username" th:text="${review.user.nickname}"></h3>
-                               <span class="chat__message-body" th:text="${review.reviewContent}"></span>
+                               <span th:ondblclick="'reviewHit('+${review.reviewId}+');'" th:id="${review.reviewId}" class="chat__message-body" th:text="${review.reviewContent}"></span>
                             </div>
                             <span class="chat__message-time" th:text="${review.reviewTime}"></span>
+	                        <img id="review-hit-image" class="review_hit_image" src="/img/heart.png">
                          </div>
                       </div>
                 
                     </div>
                  </div>
             </main>
-	       	<!-- chat -->
-	         	
-	        <!--<form th:action="@{/board/review}" th:object="${review}" method="post"> -->
-	        <div class="type-message">
-	        	<div class="btn-group btn-group-chat-radio" data-toggle="buttons">
-	            	<label class="btn btn-default btn-default2" id="option1">
-	                	<input type="radio" id="options" name="options" value="cors" onclick="changecolor1();"/> 반대
-	            	</label>
-	            	<label class="btn btn-default btn-default2" id="option2">
-	            		<input type="radio" id="options" name="options" value="props" onclick="changecolor1();"/> 찬성
-	            	</label>
-	        	</div>
-	        	<div class="type-message__input">
-	            	<input type="text" id="reviewContent" name="reviewContent" autocomplete="off">
-	            		<i class="fa fa-smile-o fa-lg"></i>
-	            	<button type="button" id="reviewInsert">
-	            		<span class="record-message">enter</span>
-	            	</button>
-	        	</div>
-	        </div>
-	        <!--</form>-->
-	
-			<!-- Footer -->
-			<footer class="footer">
-				<div>
-					<a href=""> <img src="/img/instagram.svg">
-					</a> <a href=""> <img src="/img/facebook.svg">
-					</a> <a href=""> <img src="/img/twitter.svg">
-					</a>
-					<p>밸런스의 대장! 밸토커!</p>
-					<p>Copyright © Your Website 2022</p>
-				</div>
-			</footer>
-	         <!-- 홈 모달 -->
-	        <nav th:replace="modal/modalMenuBar :: modalFragment"></nav>
+             <!-- chat -->
+               
+           <!--<form th:action="@{/board/review}" th:object="${review}" method="post"> -->
+           <div class="type-message">
+              <div class="btn-group btn-group-chat-radio" data-toggle="buttons">
+                  <label class="btn btn-default btn-default2" id="option1">
+                      <input type="radio" id="options" name="options" value="cors" onclick="changecolor1();"/> 반대
+                  </label>
+                  <label class="btn btn-default btn-default2" id="option2">
+                     <input type="radio" id="options" name="options" value="props" onclick="changecolor1();"/> 찬성
+                  </label>
+              </div>
+              <div class="type-message__input">
+                  <input type="text" id="reviewContent" name="reviewContent" autocomplete="off">
+                     <i class="fa fa-smile-o fa-lg"></i>
+                  <button type="button" id="reviewInsert">
+                     <span class="record-message">enter</span>
+                  </button>
+              </div>
+           </div>
+           <!--</form>-->
+   
+         <!-- Footer -->
+         <footer class="footer">
+            <div>
+               <a href=""> <img src="/img/instagram.svg">
+               </a> <a href=""> <img src="/img/facebook.svg">
+               </a> <a href=""> <img src="/img/twitter.svg">
+               </a>
+               <p>밸런스의 대장! 밸토커!</p>
+               <p>Copyright © Your Website 2022</p>
+            </div>
+         </footer>
+            <!-- 홈 모달 -->
+           <nav th:replace="modal/modalMenuBar :: modalFragment"></nav>
 
-		</div>
-		<div id="modal_layout" class="home-modal-layout"></div>
-	</div>
-	
-	
-	 <script th:inline="javascript">
-	      window.onload =  setup();
-	      var pointA;
-	      var pointB;
-	      var totalVotes = pointA + pointB;
-	      function addleft(){
-	          pointB += 1;
-	          totalVotes += 1;
-	          updatePoints();
-	          console.log(pointA + ' '+ pointB);
-	      }
-	      function addright(){
-	          pointA += 1;
-	          totalVotes += 1;
-	          updatePoints();
-	          console.log(pointA + ' '+ pointB);
-	      }
-	      function updatePoints(){
-	          var percentA = (pointA / totalVotes) * 100;
-	          var percentB = (pointB / totalVotes) * 100;
-	          var size = percentA + "% " + percentB + "%";
-	          document.getElementById("size-one").innerHTML = Math.round(percentB) + '%';
-	          document.getElementById("size-two").innerHTML = Math.round(percentA) + '%';
-	          document.getElementById("voting-box").style.gridTemplateColumns=  percentA + "% " + percentB + "%";
-	          // document.getElementById("total-votes").innerHTML = "Total Votes Casted: " + totalVotes;
-	          // document.getElementById("total-left").innerHTML = "Option B: " + pointB;
-	          // document.getElementById("total-right").innerHTML = "Option A: " + pointA;
-	          // document.getElementById("host-name").innerHTML = "Hosted by: pragyakar";
-	      }
-	      function setup() {
-	          pointA = 1;
-	          pointB = 1;
-	          totalVotes = pointA + pointB;
-	          document.getElementById("option-one").innerHTML = "Option B";
-	          document.getElementById("option-two").innerHTML = "Option A";
-	          updatePoints();
-	      }
-	  	
-	      // 찬성 반대 컬러 변경
-	      function changecolor1() {
-	       let reviewDebate= $("input[name='options']:checked").val();
-	      
-	          if (reviewDebate=="props") {
-	              $('#option1')
-	              .css('color','black');
-	              $('#option2')
-	              .css('color','blue');
-	          }
-	          else if (reviewDebate=="cors") {
-	              $('#option1')
-	              .css('color','red');
-	              $('#option2')
-	              .css('color','black');
-	          }
-	      }
-	     
-	      function getId(id) {
-	      	return document.getElementById(id);
-	      }
-	      
-	      
-	
-	
-		$("#reviewContent").keydown(function(ev){
-			if(ev.keyCode == 13) {
-				// console.log(ev.keyCode);
-				send();
-			}
-		});
-		
-		reviewInsert.onclick = function(){
-			send();
-		}
-	  function send(){
-	         /*
-	         if($("#reviewContent").val().trim() != '' & reviewContent != undefined){
-	            
-	              var datetime = new Date(review["reviewRegdate"]);
-	              console.log(datetime);
-	              const hours = String(datetime.getHours()).padStart(2, "0");
-	                const minutes = String(datetime.getMinutes()).padStart(2, "0");
-	              
-	              let html = "";
-	              
-	              ws.onmessage = function(data){
-	               var review = JSON.parse(data);
-	            
-	               if (review.reviewDebate == "props") {
-	                   html += "<div class='chat__message chat__message-from-me'>";
-	                   html += "<span class='chat__message-time'>"+hours+":"+minutes+"</span>";
-	                   html += "  <div class='chat__message-center'>";
-	                   html += "<h3 class='chat__message-cors'>"+review.nickname+"</h3>";
-	                   html += "<span class='chat__message-body'>"+review.reviewContent+"</span>";
-	                   html += "</div></div>";
-	                   $("#board_review").html(html);
-	                }
-	                   
-	                 if (review.reviewDebate == "cors") {
-	                   html += "<div class='chat__message chat__message-to-me'>";
-	                   html += "<div class='chat__message-center'>";
-	                   html += "<h3 class='chat__message-username'>"+review.nickname+"</h3>";
-	                   html += "<span class='chat__message-body'>"+review.reviewContent+"</span>";
-	                   html += "</div>";
-	                   html += "<span class='chat__message-time'>"+hours+":"+minutes+"</span></div>";
-	                   $("#board_review").html(html);
-	                }
-	                $("#reviewContent").val() = '';
-	            }
-	            
-	         }*/
-	         
-	         if($("input[name='options']:checked").val() == undefined){
-	            alert("찬성, 반대를 골라주세요.");
-	            location.reload();
-	            
-	         }else if($("#reviewContent").val().trim() == ''){
-	            alert("댓글을 입력해 주세요.")
-	            location.reload();
-	            
-	         }else{var review = {};
-	            var boardId = $("#boardId").val()
-	            review["board"] = $("#boardId").val();
-	            review["reviewContent"] = $("#reviewContent").val();
-	            review["reviewDebate"] = $("input[name='options']:checked").val();
-	            review["nickname"] = $("#user").val();
-	            ws = new WebSocket("ws://" + location.host + "/board/" + boardId);
-	            let reviewTemp = JSON.stringify(review);
-	            ws.onopen = () => ws.send (reviewTemp);
-	            ws.onmessage = function(review){
-	               let html="";
-	               let jsonReview = review.data;
-	               let contact = JSON.parse(jsonReview);
-	               // console.log(contact);
-	               var datetime = new Date();
-	                 const hours = String(datetime.getHours()).padStart(2, "0");
-	                   const minutes = String(datetime.getMinutes()).padStart(2, "0");
-	               // console.log(contact["reviewDebate"]);
-	               if (contact["reviewDebate"] == "props") {
-	                   html += "<div class='chat__message chat__message-from-me'>";
-	                   html += "<span class='chat__message-time'>"+hours+":"+minutes+"</span>";
-	                   html += "  <div class='chat__message-center'>";
-	                   html += "<h3 class='chat__message-cors'>"+contact["nickname"]+"</h3>";
-	                   html += "<span class='chat__message-body'>"+contact["reviewContent"]+"</span>";
-	                   html += "</div></div>";
-	                }
-	                   
-	                 if (contact["reviewDebate"] == "cors") {
-	                   html += "<div class='chat__message chat__message-to-me'>";
-	                   html += "<div class='chat__message-center'>";
-	                   html += "<h3 class='chat__message-username'>"+contact["nickname"]+"</h3>";
-	                   html += "<span class='chat__message-body'>"+contact["reviewContent"]+"</span>";
-	                   html += "</div>";
-	                   html += "<span class='chat__message-time'>"+hours+":"+minutes+"</span></div>";
-	                }
-	                let chatdiv = getId("chatdiv");
-	                // console.log(chatdiv);
-	                // console.log(html);
-	                let boardReview = getId("board_review");
-	                let chat = getId("chat");
-	                if(boardReview==null){
-	                   $("#board_review").html(html);
-	                   location.reload();
-	                }else {
-	                   // console.log(boardReview);
-	                   
-	                   chat.insertAdjacentHTML("beforeend",html);
-	               }
-	               getId("reviewContent").value = '';
-	               chat.scrollTop = chat.scrollHeight;
-	            }
-	         }
-	      }
-		      
-		
-		function reviewFocus(){
-			document.getElementById("reviewContent").focus();
-		}
-	</script>
+      </div>
+      <div id="modal_layout" class="home-modal-layout"></div>
+   </div>
+   
+   
+    <script th:inline="javascript">
+          
+          var boardId = $("#boardId").val();
+          
+           var ws = new WebSocket("ws://" + location.host + "/board/" + boardId);
+           
+           function socketOpen() {
+             ws.onopen = function() {};
+           }
+          
+          window.unload = () => function() {
+                ws.close();
+          }
+          
+          
+         window.onload =  setup();
+         var pointA;
+         var pointB;
+         var totalVotes = pointA + pointB;
+         function addleft(){
+             pointB += 1;
+             totalVotes += 1;
+             updatePoints();
+             console.log(pointA + ' '+ pointB);
+         }
+         function addright(){
+             pointA += 1;
+             totalVotes += 1;
+             updatePoints();
+             console.log(pointA + ' '+ pointB);
+         }
+         function updatePoints(){
+             var percentA = (pointA / totalVotes) * 100;
+             var percentB = (pointB / totalVotes) * 100;
+             var size = percentA + "% " + percentB + "%";
+             document.getElementById("size-one").innerHTML = Math.round(percentB) + '%';
+             document.getElementById("size-two").innerHTML = Math.round(percentA) + '%';
+             document.getElementById("voting-box").style.gridTemplateColumns=  percentA + "% " + percentB + "%";
+             // document.getElementById("total-votes").innerHTML = "Total Votes Casted: " + totalVotes;
+             // document.getElementById("total-left").innerHTML = "Option B: " + pointB;
+             // document.getElementById("total-right").innerHTML = "Option A: " + pointA;
+             // document.getElementById("host-name").innerHTML = "Hosted by: pragyakar";
+         }
+         function setup() {
+             pointA = 1;
+             pointB = 1;
+             totalVotes = pointA + pointB;
+             document.getElementById("option-one").innerHTML = "";
+             document.getElementById("option-two").innerHTML = "";
+             updatePoints();
+         }
+        
+         // 찬성 반대 컬러 변경
+         function changecolor1() {
+          let reviewDebate= $("input[name='options']:checked").val();
+         
+             if (reviewDebate=="props") {
+                 $('#option1')
+                 .css('color','black');
+                 $('#option2')
+                 .css('color','blue');
+             }
+             else if (reviewDebate=="cors") {
+                 $('#option1')
+                 .css('color','red');
+                 $('#option2')
+                 .css('color','black');
+             }
+             
+                   socketOpen();
+         }
+        
+         function getId(id) {
+            return document.getElementById(id);
+         }
+         
+         
+   
+   
+      $("#reviewContent").keydown(function(ev){
+         if(ev.keyCode == 13) {
+            // console.log(ev.keyCode);
+            send();
+         }
+      });
+      
+      reviewInsert.onclick = function(){
+         send();
+      }
+     function send(){
+            /*
+            if($("#reviewContent").val().trim() != '' & reviewContent != undefined){
+               
+                 var datetime = new Date(review["reviewRegdate"]);
+                 console.log(datetime);
+                 const hours = String(datetime.getHours()).padStart(2, "0");
+                   const minutes = String(datetime.getMinutes()).padStart(2, "0");
+                 
+                 let html = "";
+                 
+                 ws.onmessage = function(data){
+                  var review = JSON.parse(data);
+               
+                  if (review.reviewDebate == "props") {
+                      html += "<div class='chat__message chat__message-from-me'>";
+                      html += "<span class='chat__message-time'>"+hours+":"+minutes+"</span>";
+                      html += "  <div class='chat__message-center'>";
+                      html += "<h3 class='chat__message-cors'>"+review.nickname+"</h3>";
+                      html += "<span class='chat__message-body'>"+review.reviewContent+"</span>";
+                      html += "</div></div>";
+                      $("#board_review").html(html);
+                   }
+                      
+                    if (review.reviewDebate == "cors") {
+                      html += "<div class='chat__message chat__message-to-me'>";
+                      html += "<div class='chat__message-center'>";
+                      html += "<h3 class='chat__message-username'>"+review.nickname+"</h3>";
+                      html += "<span class='chat__message-body'>"+review.reviewContent+"</span>";
+                      html += "</div>";
+                      html += "<span class='chat__message-time'>"+hours+":"+minutes+"</span></div>";
+                      $("#board_review").html(html);
+                   }
+                   $("#reviewContent").val() = '';
+               }
+               
+            }*/
+            
+            if($("input[name='options']:checked").val() == undefined){
+               alert("찬성, 반대를 골라주세요.");
+               location.reload();
+               
+            }else if($("#reviewContent").val().trim() == ''){
+               alert("댓글을 입력해 주세요.")
+               location.reload();
+               
+            }else{
+            
+            /*
+               var review = {};
+              var boardId = $("#boardId").val()
+              review["board"] = $("#boardId").val();
+              review["reviewContent"] = $("#reviewContent").val();
+              review["reviewDebate"] = $("input[name='options']:checked").val();
+              review["nickname"] = $("#user").val();
+              ws = new WebSocket("ws://" + location.host + "/board/" + boardId);
+              let reviewTemp = JSON.stringify(review);
+             ws.onopen = () => ws.send (reviewTemp); */
+             
+             
+             var review = {};
+              var boardId = $("#boardId").val();
+              review["board"] = $("#boardId").val();
+              review["reviewContent"] = $("#reviewContent").val();
+              review["reviewDebate"] = $("input[name='options']:checked").val();
+              review["nickname"] = $("#user").val();
+              let reviewTemp = JSON.stringify(review);
+              ws.send(reviewTemp);
+              
+              
+               ws.onmessage = function(review){
+                  let html="";
+                  let jsonReview = review.data;
+                  let contact = JSON.parse(jsonReview);
+                  // console.log(contact);
+                  var datetime = new Date();
+                    const hours = String(datetime.getHours()).padStart(2, "0");
+                      const minutes = String(datetime.getMinutes()).padStart(2, "0");
+                  // console.log(contact["reviewDebate"]);
+                  if (contact["reviewDebate"] == "props") {
+                      html += "<div class='chat__message chat__message-from-me'>";
+                      html += "<span class='chat__message-time'>"+hours+":"+minutes+"</span>";
+                      html += "  <div class='chat__message-center'>";
+                      html += "<h3 class='chat__message-cors'>"+contact["nickname"]+"</h3>";
+                      html += "<span class='chat__message-body'>"+contact["reviewContent"]+"</span>";
+                      html += "</div></div>";
+                   }
+                      
+                    if (contact["reviewDebate"] == "cors") {
+                      html += "<div class='chat__message chat__message-to-me'>";
+                      html += "<div class='chat__message-center'>";
+                      html += "<h3 class='chat__message-username'>"+contact["nickname"]+"</h3>";
+                      html += "<span class='chat__message-body'>"+contact["reviewContent"]+"</span>";
+                      html += "</div>";
+                      html += "<span class='chat__message-time'>"+hours+":"+minutes+"</span></div>";
+                   }
+                   let chatdiv = getId("chatdiv");
+                   // console.log(chatdiv);
+                   // console.log(html);
+                   let boardReview = getId("board_review");
+                   let chat = getId("chat");
+                   if(boardReview==null){
+                      $("#board_review").html(html);
+                      location.reload();
+                   }else {
+                      // console.log(boardReview);
+                      
+                      chat.insertAdjacentHTML("beforeend",html);
+                  }
+                  getId("reviewContent").value = '';
+                  chat.scrollTop = chat.scrollHeight;
+               }
+            }
+         }
+            
+      function reviewHit(e){
+    	  var boardId = $("#boardId").val();
+		  var reviewId = $("#"+e).attr("id");
+		  
+    	  var reviewHitImage = $("#"+e).parent('div').parent('div').children('img');
+    	  if (reviewHitImage.css("display") === "none"){
+    		  reviewHitImage.css("display", "block");
+    		  $.ajax({
+    			 type : "post",
+    			 url : "/board/" + boardId + "/reviewHitAdd/"+reviewId,
+    			 success : function() {
+    				 console.log(e + "좋아요 성공");
+    			 },
+    			 error : function(error) {
+    				 console.log(error);
+    			 }
+    		  });
+    	  }else if (reviewHitImage.css("display") === "block") {
+    		  reviewHitImage.css("display", "none");
+    		  $.ajax({
+     			 type : "post",
+     			 url : "/board/" + boardId + "/reviewHitMinus/"+reviewId,
+     			 success : function() {
+     				 console.log(e + "좋아요 삭제");
+     			 },
+     			 error : function(error) {
+     				 console.log(error);
+     			 }
+     		  });
+    	  } else {
+    		  console.log("error");
+    	  }
+    	  
+    	  
+    	 
+      }
+      function reviewFocus(){
+         document.getElementById("reviewContent").focus();
+      }
+      
+      $("#best_review_open").click(function() {
+         $("#best_reviewList").fadeIn();
+      });
+      
+      $("#best_review_close").click(function() {
+         $("#best_reviewList").fadeOut();
+      });
+      
+      
+      window.unload = function() {
+         ws.close();
+      }
+   </script>
+   <script src="/js/home_modal.js"></script>
 </body>
 </html>

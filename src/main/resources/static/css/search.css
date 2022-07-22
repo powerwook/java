@@ -7,7 +7,7 @@ html {
 
 body {
   height:100%;
-  font-family : Pretendard Variable, sans-serif;
+  font-family : 'Luckiest Guy', Pretendard Variable, sans-serif;
   font-size: 15px;
   line-height: 1.5;
   text-align: left;
@@ -17,9 +17,14 @@ body {
   background-color: white;
 }
 
-h4 { 
-	margin-left: 20px;
-	font-size: 30px;
+.recommend {
+   margin-top : 40px;
+}
+
+.recommend h4 { 
+   margin-left : 20px;
+   text-transform: uppercase;
+   font-weight : 1000;
 }
 
 address, article, aside, audio, body, button, canvas, caption, cite, 
@@ -46,18 +51,17 @@ table, tbody, td, textarea, tfoot, th, thead, time, tr, ul, video {
   padding-top: 0.1px;
 }
 
-input {
-  background-color: rgba(167, 160, 160, 0.589);
+
+.search input {
   border: none;
-  height: 50px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 20px;
   color: white;
   text-align: center;
   transition: 0.2s;
-  margin-top: 20px;
 }
-button {
+
+.search-icon-btn {
   background-color: transparent;
   border: none;
   outline: none;
@@ -80,7 +84,7 @@ input::placeholder {
 }
 
 .search {
-    margin: 20px;
+    margin: 20px 20px 20px 20px;
     position: relative;
     animation: slideDown 1s;
     animation-delay: 0.25s;
@@ -123,7 +127,7 @@ input::placeholder {
 
 .search .search-icon {
     position: relative;
-    right: 27px;
+    right: 35px;
     top: 13px;
     opacity: 0.3;
     margin-bottom: 23px;
@@ -132,11 +136,11 @@ input::placeholder {
 .search .left-arrow {
   position: absolute;
   left: 12px;
-  top: 5px;
+  top: 6px;
   opacity: 0.3;
 }
 
-.list {
+.category_list {
   display: flex;
   font-size: 14px;
   font-weight: 400;
@@ -144,96 +148,74 @@ input::placeholder {
   flex-wrap: wrap;
   -webkit-box-orient: horizontal;
   -webkit-box-align: center;
-  padding: 8px 8px;
-  margin-left: 5px;
+  margin : 20px 20px 0 20px;
+  align-items : center;
+  justify-content : start;
+  flex-wrap: wrap;
 
 }
 
-.list .love {
-  background : rgba(167, 160, 160, 0.589);
+.category_list .love {
+  background-color : #f98080;
   padding:7px 13px 7px 13px;
-  margin:10px 13px 0px 13px;
-  color: #000;
   border-radius: 10px;
-  width: 14%;
+  margin-bottom : 1rem;
+  margin-right : 1rem;
  
 }
-/* .list .love:nth-child(1){
+/* .category_list .love:nth-child(1){
   
 } */
 
-.list a{
+.category_list a{
   text-decoration: none;
-  color: black;
+  font-size : 16px;
+  font-weight : bold;
+  color: white;
   cursor: pointer;
- 
-  margin-left: 3px;
 }
 
-.item {
-  background-image: cover;
-  border:  1px solid rgba(167, 160, 160, 0.5);
-  text-align: center;
-  line-height: 130px;
+
+.board_list {
+   width : 100%;
 }
 
-.wrapper{
-  font-size: 0;
-  display: grid;
-  grid-template-columns: 40% 20% 40%;
-  grid-auto-rows: minmax(150px, auto);
-  grid-column-gap: 0px;
-  grid-row-gap: 18px;
-  padding: 24px;
-  
+.board_item {
+   height : 12rem;
+   margin : 15px 15px 0px 15px;
+   display : flex;
+   align-items : center;
+   text-align : center;
+   border : 3px solid grey;
+   border-radius : 20px;
+   cursor : pointer;
+   justify-content : space-between;
+   
 }
 
-/* photo */
-.wrapper .item {          
-  /* calc */
-  
-  background-size: cover;
-  background-position: center;
-  border-radius: 5px;
+.subtitle1 {
+   align-items : center;
+   min-width : 40%;
+   font-size : 24px;
+   white-space : normal;
+   word-break : normal;
+   
 }
 
-.wrapper .item:nth-child(1) {
-  background-image: url("");
+.subtitle2 {
+   align-items : center;
+   min-width : 40%;
+   font-size : 24px;
+   white-space : normal;
+   word-break : normal;
 }
-.wrapper .item:nth-child(2) {
-  background-image: url();
+
+.versus {
+   width : 20%
 }
-.wrapper .item:nth-child(3) {
-  background-image: url();
-}
-.wrapper .item:nth-child(4) {
-  background-image: url("/img/4.PNG");
-}
-.wrapper .item:nth-child(5) {
-  background-image: url("/img/vs.PNG");
-}
-.wrapper .item:nth-child(6) {
-  background-image: url("/img/6.PNG");
-}
-.wrapper .item:nth-child(7) {
-  background-image: url("/img/9.PNG");
-}
-.wrapper .item:nth-child(8) {
-  background-image: url("/img/vs.PNG");
-}
-.wrapper .item:nth-child(9) {
-  background-image: url("/img/7.PNG");
-}
-.wrapper .item:nth-child(10) {
-  background-image: url("/img/10.PNG");
-}
-.wrapper .item:nth-child(11) {
-  background-image: url("/img/vs.PNG");
-}
-.wrapper .item:nth-child(12) {
-  background-image: url("/img/12.PNG");
-}
-/* 
+
+
+
 .footer {
   width: 100%;
   text-align: center;
@@ -251,9 +233,4 @@ input::placeholder {
 
 .footer a {
   margin-right : 2rem;
-} */
-
-.item-img{
-  width: 200px;
-  height:300px;
-}
+} 

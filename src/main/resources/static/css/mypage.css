@@ -84,6 +84,7 @@ input:focus{
 }
 button{
     outline: none;
+    background-color: white;
 }
 .pic-upload{
     position: absolute;

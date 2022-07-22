@@ -78,7 +78,7 @@ table, tbody, td, textarea, tfoot, th, thead, time, tr, ul, video {
   background: #FFFF;
   position: relative;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
   border-radius: 10px;
   box-shadow: 0px 5px 10px -6px rgba(0, 0, 0, 0.5);
   overflow: hidden;
@@ -208,11 +208,11 @@ img {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .chat {
+  height : 100vh; 
   overflow-y : scroll;
   overflow-x : hidden;
   background-color: #f98080;
-  height: 80vmin;
-  padding-top: 15px;
+  padding-top: 10px;
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -241,8 +241,12 @@ img {
 .chat__message-from-me {
   justify-content: flex-end;
 }
+.chat__message-from-me img{
+	margin-right:5px;
+	margin-bottom: 3px;
+}
 .chat__message-to-me img {
-  align-self: flex-start;
+  margin-left:5px;
 }
 .chat__message .chat__message-cors {
   text-align : right;
@@ -276,11 +280,6 @@ img {
   border-radius: 5px;
   background-color: #ffffff;
   margin-right: 5px;
-}
-.chat__message-to-me img {
-  height: 35px;
-  border-radius: 50%;
-  margin-right: 10px;
 }
 .chat__message .chat__message-username {
   font-size: 12px;
@@ -419,11 +418,10 @@ li{
     text-align : right;
 }
 .vsImage {
-    height : 100%;
-    width : 10%;
+    width : 15%;
     margin-left: 1%;
     margin-right: 1%;
-    text-align : center;
+    
 }
 .board-subtitle2{
     height : 100%;
@@ -432,7 +430,8 @@ li{
     text-align : left;
 }
 .board-contents{
-    margin : 0px 20px 65px 20px;
+    margin : 0px 20px 0px 20px;
+    display : block;
 }
 .board-contents p {
     word-break : break-all;
@@ -450,6 +449,51 @@ li{
 
 
 .chat_filtered img{
-   width : 16px;
-   height : 16px;
+   width : 18px;
+   height : 18px;
+}
+
+
+
+.filtered {
+   display : flex;
+   align-items : flex-end;
+   position:relative;
+}
+
+.best_review{
+   cursor : pointer;
+}
+
+.best_reviewList {
+   margin-top : 5px;
+   padding : 2px 2px 4px 4px;
+   width : 100%;
+   border : 2px solid white;
+   border-radius : 9px;
+   background : #FFFFF1;
+   display : none;
+}
+
+.best_reviewList span {
+   padding : 2px;
+}
+
+.best_review_close {
+   background-color : #FFFFF1;
+   width : 450px;
+   margin : auto;
+   display : block;
+}
+
+
+.writeReview {
+   width : 100%;
+   padding : 1rem;
+}
+.review_hit_image{
+	border-radius:0%;
+	width:15px;
+	height:15px;
+	display:none;
 }

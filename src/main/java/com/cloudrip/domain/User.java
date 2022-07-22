@@ -1,6 +1,7 @@
 package com.cloudrip.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,7 +59,7 @@ public class User {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	private List<Review> reviews = new ArrayList<Review>();
 	
-	private LocalDate userRegdate;
+	private LocalDateTime userRegdate;
 
 	
 	@JoinColumn(name="image_id")
@@ -67,7 +68,7 @@ public class User {
 	
 	@Builder
 	public User(String provider_id, String provider, String roles, String email, String password, String username,
-			String nickname, List<Review> reviews, LocalDate userRegdate) {
+			String nickname, List<Review> reviews, LocalDateTime userRegdate) {
 		this.providerId = provider_id;
 		this.provider = provider;
 		this.roles = roles;
