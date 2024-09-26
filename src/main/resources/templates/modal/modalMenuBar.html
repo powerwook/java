@@ -1,0 +1,28 @@
+<!-- 홈 모달 -->
+           <nav th:fragment="modalFragment" id="nav_bar" class="home-nav-bar">
+                 
+                 <div class="hello-word" th:if="${#authentication.name} != 'anonymousUser'">
+                    <b sec:authentication="name"/>님 안녕하세요
+                 </div>
+                 <div class="home-tab"></div>
+               <div class="home-login">
+                    <button class="home-logout" sec:authorize="isAuthenticated()" id="home_logout" type="button" onclick="location.href='/logout'"><p class="menu-font">로그아웃</p></button>
+                   <a sec:authorize="${isAnonymous()}" href="/login">
+                      <p class="menu-font">로그인</p></a>
+               </div>
+               <div class="home-tab"></div>
+               <div class="home-search">
+                   <ul>
+                       <li><a href="/search"><p class="menu-font">검색하기</p></a></li>
+                   </ul>
+               </div>
+               <div class="home-tab"></div>
+               <div class="home-my-page">
+                   <a class="home-mypage-link" href="/mypage"><p class="menu-font">나의 밸런스</p></a>
+               </div>
+               <div class="home-tab"></div>
+               <div sec:authorize="hasRole('ROLE_ADMIN')" class="home-admin">
+                   <a class="home-mypage-link" href="/admin"><p class="menu-font">관리자 페이지</p></a>
+               </div>
+               <div class="home-tab"></div>
+           </nav>

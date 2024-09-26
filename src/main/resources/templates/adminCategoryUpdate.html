@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BELLTOKER</title>
+<link rel="icon" size="16x16" href="/img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/css/admin.css">
+<script src="/js/home_modal.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+
+<body>
+   <div class="layout">
+      <div class="layout-content">
+         <header class="board-header">
+                <nav class="board-nav">
+                    <button id="modal_button" type="button" style="background-color:#FFFFFF;"> 
+                        <img src="/img/menu.svg" class="menu-image">
+                    </button>
+                    <a href="/" class="main-logo">
+                        <h1>BELLTOKER</h1> <h2 class="main-logo-admin">(ADMIN)</h2>
+                        <!--<img src="/img/main.jpg" class="main-logo-image">-->
+                    </a>
+
+                    <div class="header-right">
+                        <a href="/search" class="header-link">
+                            <img src="/img/search.svg" class="header-image1">
+                        </a>
+
+                        <a href="/mypage" class="header-link">
+                            <img src="/img/profile.svg" class="header-image2">
+                        </a>
+                    </div>
+                </nav>
+            </header>
+         
+         <div class="admin">
+            <div class="admin-control-top">
+               <div style="display : inherit;">
+                  <a href="javascript:history.back(-1)"> <img class="left-arrow"
+                        src="/img/leftarrow.svg" alt="검색아이콘" />
+                  </a><h2>카테고리 변경</h2>
+               </div>
+            </div>
+         </div>
+         
+         <form class="categoryForm" id="categoryUpdateForm" th:action="@{/admin/category/update}" method="POST" th:object="${category}">
+            <input type="hidden" name="categoryId" th:value="${category.categoryId}"/>
+            <label for="categoryName">카테고리 이름</label>
+            <input type="text" name="categoryName" id="categoryName" th:value="${category.categoryName}"/>
+            
+            <div class="categoryDiv">
+               <input type="button" onclick="history.back();" value="취소"/>
+               <input type="button" onclick="updateCategory();" value="작성"/>
+            </div>
+         </form>
+         
+         <!-- 홈 모달 -->
+           <nav th:replace="modal/modalMenuBar :: modalFragment"></nav>
+           
+      </div>
+      <div id="modal_layout" class="home-modal-layout"></div>
+   </div>
+   <script>
+      function updateCategory() {
+         var categoryName = $("#categoryName").val();
+         
+         if(categoryName == null | categoryName == "" | categoryName == undefined) {
+            alert("카테고리 이름을 입력해주세요.");
+            return false;
+         } else {
+            alert("성공적으로 입력되었습니다.");
+            $("#categoryUpdateForm").submit();
+         }
+      }
+   </script>
+</body>
+</html>

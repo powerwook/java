@@ -1,40 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BELLTOKER</title>
+   <link rel="icon" size="16x16" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/review.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/home_modal.js"></script>
-     	<script type="text/javascript">
-       		function update( reviewId ,event){
-				event.preventDefault();
-			$.ajax({
-				type:"put",
-				contentType:"application/x-www-form-urlencoded; charset=utf-8",
-				url:"/mypage/review/"+reviewId,
-				data:reviewId,
-				dataType:'json',
-				cache:false,
-				timeout:5000,
-			}).done(res=>{
-				console.log(reviewId);
-			}).fail(error=>{
-				console.log(reviewId);
-			});
-			
-		};
-		</script>
+    <script th:inline="javascript">
+    function reviewDelete(reviewId){
+      ws = new WebSocket("ws://" + location.host + "/mypage/review");
+      ws.onmessage =function(){
+         reviewButton=$("[reviewId="+reviewId+"]").parent("div").parent("div");
+         reviewButton.remove();
+      }
+      ws.onopen =() => ws.send(
+         reviewId
+      );
+   }
+      function reviewDeleteAll(){
+            console.log("hello");
+         let reviewForm = $("#review_form");
+         reviewForm.remove();
+      $.ajax({
+         type:"post",
+         contentType:"application/x-www-form-urlencoded; charset=utf-8",
+         url:"/mypage/review/deleteAll",
+         cache:false,
+         timeout:5000,
+      }).done(res=>{
+      }).fail(error=>{
+      });
+      
+   };
+
+    </script>
 </head>
 <body>
     <div class="layout">
         <div class="layout-content">
-        	
-        	<!-- Header -->
+           
+           <!-- Header -->
             <header class="board-header">
                 <nav class="board-nav">
                     <button id="modal_button" type="button" style="background-color:#FFFFFF;"> 
@@ -49,7 +60,7 @@
                         <a href="/search" class="header-link">
                             <img src="/img/search.svg" class="header-image1">
                         </a>
-
+   
                         <a href="/mypage" class="header-link">
                             <img src="/img/profile.svg" class="header-image2">
                         </a>
@@ -59,34 +70,33 @@
             <!-- Header -->
             
             <div class="review-container">
-	            <div class="review-title">
-	                <h3>&nbsp;내가 쓴 리뷰</h3>
-	                
-	                <div class="review-button-area">
-	                	<button type="button" class="review-button">선택삭제</button>/ 
-	            		<button type="button" class="review-button">전체삭제</button>
-	                </div>
-	            
-	            </div>
-	            <form id="review_form">
-		            <div class="review-content">
-		            	<div th:each="review : ${reviews}" class="review-content-detail">
-			            	<strong>Nickname</strong>
-			            	<small th:text="|보드번호 : ${review.boardId}|"></small>
-			            	<small th:text="${review.reviewRegdate}"></small>
-			            	<div>
-				            	<span th:text="${review.reviewContent}"></span>
-				            	<button type="submitp" class="delete-button"
-				            	th:reviewId="${review.reviewId}"
-		            	th:onclick="update(this.getAttribute('reviewId'),event)">삭제</button>
-			            	</div>
-	            		</div>
-            		</div>
-	            </form>
-	            	
-	            
-	            
-	    	</div>
+               <div class="review-title">
+                   <a href="javascript:history.back();" style="text-decoration : none;"> <img class="left-arrow"
+                              src="/img/leftarrow.svg" alt="검색아이콘" />
+                     </a><span style="font-size:26px;">내가 쓴 리뷰</span>
+               </div>
+                 <div class="review-button-area">
+                  <button type="button" class="review-button"
+                  onclick="reviewDeleteAll();">전체삭제</button>
+                </div>
+                
+                <form id="review_form">
+               <div id="review_content" class="review-content">
+                  <div id="review_content_detail" class="review-content-detail"
+                  th:if="${review}" th:each="review,num : ${reviews}"  >
+                     <small class ="small-left" th:text="|${review.board.boardSubtitle1} VS ${review.board.boardSubtitle2}|"></small>
+                     <small class ="small-right" th:text="${review.reviewRegdate}"></small>
+                     <div class="review_id_div">
+                        <span th:text="| ${review.reviewContent}|"></span>
+                        <button th:reviewId="${review.reviewId}" type="button" class="delete-button"
+                              th:onclick="reviewDelete(this.getAttribute('reviewId'))">삭제</button>
+                       <a class="review-move" th:href="@{../board/}+${review.board.boardId}">게시판 이동</a>
+                     </div>
+                  </div>
+                 </div>
+               </form>
+               
+          </div>
 
 
             <footer class="footer">
@@ -106,29 +116,8 @@
             </footer>
 
            
-            <!-- 홈 모달 -->
-           <nav id="nav_bar" class="home-nav-bar">
-                <div class="home-login">
-                    <a href="/login">로그인</a>
-                </div>
-                <div class="home-tab"></div>
-                <div class="home-board">
-                    <div class="home-board-menu">
-                        <img class="home-board-img" src="/img/down-arrow.png" >
-                        <h3>게시판</h3>
-                    </div>
-                    <ul>
-                        <li>연애</li>
-                        <li>음식</li>
-                        <li>재미</li>
-                        <li>모두보기</li>
-                    </ul>
-                </div>
-                <div class="home-tab"></div>
-                <div class="home-my-page">
-                    <a class="home-mypage-link" href="/mypage">나의 밸런스</a>
-                </div>
-            </nav>
+          <!-- 홈 모달 -->
+           <nav th:replace="modal/modalMenuBar :: modalFragment"></nav>
         </div>
         <div id="modal_layout" class="home-modal-layout"></div>
 </div>

@@ -1,69 +1,53 @@
 <!DOCTYPE html>
-<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" media="screen" href="/css/search.css">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>BELLTOKER</title>
+   <link rel="icon" size="16x16" href="/img/favicon.ico">
+   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/search.css">
+   
 </head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<style>
-
-</style>
 <body>
     <!-- 검색영역 -->
     <div class="layout">
         <div class="layout-content">
             <header class="search">
-                <form>
-                    <input class="search-field" placeholder="Search" type="text"/>
-                    <a href="/search/next">
-                    <img class="search-icon" src="/img/search.svg" alt="검색아이콘"/>
-                    </a>
-                    <button class="cancel-btn">Cancel</button>
-                    <a href="javascript:history.back(-1)">
-                    <img class="left-arrow" src="/img/leftarrow.svg" alt="검색아이콘"/>
+                <form method='get' action="/nextsearch" autocomplete="off">
+                   <a href="javascript:history.back()">
+                   
+                       <img class="left-arrow" src="/img/leftarrow.svg" alt="뒤로가기"/>
                     </a> 
+                    <input class="search-field" placeholder="Search" type="text" value="" name="key"/>
+                       <button class="search-icon-btn" type="submit" >
+                          <img class="search-icon" src="/img/search.svg" alt="검색아이콘"/>
+                       </button>
+                    <button type="reset" class="cancel-btn">Cancel</button>
+                    
                 </form>
             </header>
-            <br>
-            <div>
-                <ul>
-                    <h4>추천 검색어 </h4>                           
-                </ul>
+            <div class="recommend">
+                <h4 th:text="${test}">                                        
+                </h4>
             </div>
-            <div class="list">
-                    <div class="love"><a href="/search/next">연애</a></div>
-                    <div class="love"><a href="#">퀴즈</a></div>
-                    <div class="love"><a href="#">랜덤</a></div>
-                    <div class="love"><a href="#">유형</a></div>
-                    <div class="love"><a href="#">시간</a></div>
-            </div>
-            <div class="list">
-                <div class="love"><a href="#">연애</a></div>
-                <div class="love"><a href="#">퀴즈</a></div>
-                <div class="love"><a href="#">랜덤</a></div>
-                <div class="love"><a href="#">유형</a></div>
-                <div class="love"><a href="#">시간</a></div>
-            </div>
-            <!-- <footer class="footer">
-                <div>
-                    <a href="">
-                        <img src="/img/instagram.svg">
-                    </a>
-                    <a href="">
-                        <img src="/img/facebook.svg">
-                    </a>
-                    <a href="">
-                        <img src="/img/twitter.svg">
-                    </a>
-                    <p> 밸런스의 대장! 밸토커! </p>
-                    <p>Copyright © Your Website 2022</p>
+            <div class="category_list">              
+                <div th:each="c : ${categorys}" class="love">                                 
+                   <a th:text="${c.categoryName}" th:href="@{/search/}+${c.categoryId}"> 
+                   </a>
                 </div>
-            </footer> -->
- 
+            </div>
+            
+            <div class="board_list">
+            <div class="board_item" th:each="board : ${boards}"
+               th:onclick="'location.href=\'../board/'+@{${board.boardId}}+'\''">
+               <div class="subtitle1" th:text="${board.boardSubtitle1}"></div>
+               <div class="versus">
+                  <img src="/img/versus.png" width="65"></div>
+               <div class="subtitle2" th:text="${board.boardSubtitle2}"></div>
+            </div>
+         </div>
         </div>    
     </div>
 </body>

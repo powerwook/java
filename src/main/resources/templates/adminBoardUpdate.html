@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BELLTOKER</title>
+<link rel="icon" size="16x16" href="/img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/css/admin.css">
+<script src="/js/home_modal.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+
+<body>
+   <div class="layout">
+      <div class="layout-content">
+         <header class="board-header">
+                <nav class="board-nav">
+                    <button id="modal_button" type="button" style="background-color:#FFFFFF;"> 
+                        <img src="/img/menu.svg" class="menu-image">
+                    </button>
+                    <a href="/" class="main-logo">
+                        <h1>BELLTOKER</h1> <h2 class="main-logo-admin">(ADMIN)</h2>
+                        <!--<img src="/img/main.jpg" class="main-logo-image">-->
+                    </a>
+
+                    <div class="header-right">
+                        <a href="/search" class="header-link">
+                            <img src="/img/search.svg" class="header-image1">
+                        </a>
+
+                        <a href="/mypage" class="header-link">
+                            <img src="/img/profile.svg" class="header-image2">
+                        </a>
+                    </div>
+                </nav>
+            </header>
+         
+         <div class="admin">
+            <div class="admin-control-top">
+               <div style="display : inherit;">
+                  <a href="javascript:history.back(-1)"> <img class="left-arrow"
+                        src="/img/leftarrow.svg" alt="검색아이콘" />
+                  </a><h2>보드 추가</h2>
+               </div>
+            </div>
+         </div>
+         
+         <form id="boardUpdateForm" th:action="@{/admin/board/update}" method="POST" th:object="${board}">
+            <input type="hidden" name="boardId" th:value="${board.boardId}"/>
+            <label for="categorySelect">카테고리</label>
+            <select id="categorySelect" name="categorySelect" class="categorySelect">
+               <option value="-">-</option>
+               <option th:each="category : ${categoryList}" 
+                  th:text="${category.categoryName}" 
+                  th:value="${category.categoryName}" 
+                  th:selected="${category.categoryName eq board.category.categoryName}">
+               </option>
+            </select>
+            <label for="boardTitle">게시물 제목</label>
+            <input type="text" name="boardTitle" id="boardTitle" th:value="${board.boardTitle}"/>
+            
+            <div class="board-content">
+               <div>
+                  <label for="boardSubtitle1">제목1</label>
+                  <input type="text" name="boardSubtitle1" id="boardSubtitle1" th:value="${board.boardSubtitle1}"/>
+               </div>
+               
+               <div>
+                  <img src="/img/versus.png" alt="VS"/>
+               </div>
+                  
+               <div>
+                  <label for="boardSubtitle2">제목2</label>
+                  <input type="text" name="boardSubtitle2" id="boardSubtitle2" th:value="${board.boardSubtitle2}"/>
+               </div>
+            </div>
+            
+            <div>
+               <label for="boardView">조회수</label>
+               <input type="text" name="boardView" id="boardView" th:value="${board.boardView}"/>
+            </div>
+            <div>
+               <label for="boardRegdate">조회수</label>
+               <input type="datetime-local" name="boardRegdate" id="boardRegdate" th:value="${board.boardRegdate}"/>
+            </div>
+            
+            
+            <div>
+               <textarea class="boardTextarea" name="boardContent" id="boardContent" th:text="${board.boardContent}" th:value="${board.boardContent}"></textarea>
+            </div>
+            
+            <input type="button" onclick="history.back();" value="취소"/>
+            <input type="button" onclick="updateBoard();" value="작성"/>
+         </form>
+         
+         <!-- 홈 모달 -->
+           <nav th:replace="modal/modalMenuBar :: modalFragment"></nav>
+           
+      </div>
+      <div id="modal_layout" class="home-modal-layout"></div>
+   </div>
+   <script th:inline="javascript">
+      /*
+      $(document).ready(fucntion() {
+      
+         var categoryValue = [[${board.category.categoryName}]]
+         var categorySelect = document.getElementById("categorySelect");
+         
+         for(i=0; i<categorySelect.options.length; i++) {
+            if(categorySelect.options[i].value == categoryValue) {
+               categorySelect.options[i].selected;
+               break;
+            }
+         }
+         
+      })
+      */
+      
+      function updateBoard() {
+      
+         var boardTitle = $("#boardTitle").val();
+         var boardSubtitle1 = $("#boardSubtitle1").val();
+         var boardSubtitle2 = $("#boardSubtitle2").val();
+         var boardContent = $("#boardContent").val();
+         /*
+         var categorySelect = document.getElementById("categorySelect");
+         var categoryName = categorySelect.options[categorySelect.selectedIndex].value();
+         */
+         var categoryName = $("select[name='categorySelect'] option:selected").val();
+         
+         if(boardTitle == null | boardTitle == "") {
+            alert("게시물 제목을 입력해주세요.");
+            return false;
+         } else if(categoryName == "-" | categoryName == null | categoryName == "") {
+            alert("카테고리를 선택해주세요.");
+            return false;
+         } else if(boardSubtitle1 == "" | boardSubtitle1 == null) {
+            alert("1번 제목을 입력해주세요.");
+            return false;
+         } else if(boardSubtitle2 == "" | boardSubtitle2 == null) {
+            alert("2번 제목를 입력해주세요.");
+            return false;
+         } else if(boardContent == "" | boardContent == null) {
+            alert("게시물 내용을 입력해주세요.");
+            return false;
+         }else {
+            alert("성공적으로 변경되었습니다.");
+            
+            $("#boardUpdateForm").submit();
+            
+            /*
+            var board = {};
+            board["boardTitle"] = boardTitle;
+            board["boardSubtitle1"] = boardSubtitle1;
+            board["boardSubtitle2"] = boardSubtitle2;
+            board["boardContent"] = boardContent;
+            
+            
+            console.log(categoryName);
+            console.log(board);
+            $.ajax({
+               type : "POST",
+               url : "board/insert",
+               data : categoryName,
+               success : function(data) {
+                  alert("성공적으로 입력되었습니다.");
+                  console.log(data);
+               },
+               error : function(request, status, error) {
+                  console.log("code:"request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+               }
+            });
+            
+            */
+         }
+      }
+      
+      
+   </script>
+</body>
+</html>

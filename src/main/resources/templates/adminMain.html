@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BELLTOKER</title>
+<link rel="icon" size="16x16" href="/img/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/css/admin.css">
+<script src="/js/home_modal.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+
+<body>
+   <div class="layout">
+      <div class="layout-content">
+         <header class="board-header">
+                <nav class="board-nav">
+                    <button id="modal_button" type="button" style="background-color:#FFFFFF;"> 
+                        <img src="/img/menu.svg" class="menu-image">
+                    </button>
+                    <a href="/" class="main-logo">
+                        <h1>BELLTOKER</h1> <h2 class="main-logo-admin">(ADMIN)</h2>
+                        <!--<img src="/img/main.jpg" class="main-logo-image">-->
+                    </a>
+
+                    <div class="header-right">
+                        <a href="/search" class="header-link">
+                            <img src="/img/search.svg" class="header-image1">
+                        </a>
+
+                        <a href="/mypage" class="header-link">
+                            <img src="/img/profile.svg" class="header-image2">
+                        </a>
+                    </div>
+                </nav>
+            </header>
+            
+            
+         
+         <div class="admin">
+            <div class="admin-list">
+               <span><img src="/img/user.png"/></span>
+               <a th:href="@{/admin/user}">유저 관리</a>
+               <span></span>
+            </div>
+            <div class="admin-list">
+               <span><img src="/img/menu.png"/></span>
+               <a th:href="@{/admin/category}">카테고리 관리</a>
+               <span></span>
+            </div>
+            <div class="admin-list">
+               <span><img src="/img/board.png"/></span>
+               <a th:href="@{/admin/board}">보드 관리</a>
+               <span></span>
+            </div>
+            <div class="admin-list">
+               <span><img src="/img/review.png"/></span>
+               <a th:href="@{/admin/review}">리뷰 관리</a>
+               <span></span>
+            </div>
+         </div>
+         
+         
+         <!-- 홈 모달 -->
+      	<nav th:replace="modal/modalMenuBar :: modalFragment"></nav>
+      </div>
+      <div id="modal_layout" class="home-modal-layout"></div>
+      
+   </div>
+</body>
+</html>

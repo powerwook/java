@@ -3,11 +3,13 @@ package com.cloudrip.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import com.cloudrip.config.oauth.PrincipalOauth2UserService;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
@@ -17,9 +19,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.csrf().disable();
 		
 		http.authorizeRequests()
-		.antMatchers("/mypage").access("hasRole('ROLE_USER')")
-		.antMatchers("/add").access("hasRole('ROLE_ADMIN')")
-		.antMatchers("/list").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/mypage","/mypage/review").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+		.antMatchers("/admin/board","/admin/review","/admin/board/add").access("hasRole('ROLE_ADMIN')")
 		.anyRequest().permitAll()
 		.and()
 		.logout()
@@ -32,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.and()
 		.oauth2Login()
 		.loginPage("/login")
+		.defaultSuccessUrl("/",false)
 		.userInfoEndpoint()
 		.userService(principalOauth2UserService);
 		

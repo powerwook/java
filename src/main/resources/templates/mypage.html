@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <meta http-equiv="Content-Type" charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>BELLTOKER</title>
+		<link rel="icon" size="16x16" href="/img/favicon.ico">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/home.css">
         <link rel="stylesheet" href="/css/mypage.css">
@@ -24,7 +25,6 @@
 			let search={}
 			search["nickname"]=$("#mypage_edit_nickname").val();
 			let pencilImg = document.getElementById("mypage_pencil");
-			console.log(pencilImg.src);
 			if(pencilImg.src==="https://cdn.poomang.com/icons/ico_edit_txt.svg"){
 			$.ajax({
 				type:"POST",
@@ -42,6 +42,52 @@
 			});
 			}
 		}
+		
+		function imageChoose(obj) {
+			let f = obj.files[0];
+
+			if (!f.type.match("image.*")) {
+				alert("이미지를 등록해야 합니다.");
+				return;
+			}
+
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				$("#imageUploadPreview").attr("src", e.target.result);
+				
+				let formData =$("#mypage_image_form")[0];
+				$.ajax({
+					type:"POST",
+					enctype:"multipart/form-data",
+					url:"/mypage/image",
+					data:new FormData(formData),formData,
+					processData:false,
+					contentType:false,
+					cache:false,
+					timeout:1000,
+					success:function(data){
+						console.log(data);
+					},
+					error:function(e){
+						console.log(e);
+					}
+				});
+			}
+			reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
+		}
+		
+		function mypageBack() {
+			if(document.referrer == '' && window.location.host == "belltoker.com")  {
+				window.location.href = "http://belltoker.com:/";
+			}else if(document.referrer == '' && window.location.host == "belltoker.com:8080"){
+				window.location.href = "http://belltoker.com:8080/";
+			}else if(document.referrer == '' && window.location.host == "localhost:8080"){
+				window.location.href = "http://localhost:8080/";
+			}else{
+				history.back();
+			}
+			
+		}
        	</script>
 </head>
 <body>
@@ -53,21 +99,31 @@
                 <nav class="board-nav">
                     <button type="button" style="background-color:#FFFFFF;"
                     id="modal_button">
-                        <a href="javascript:history.back(-1)"> <img src="/img/left-arrow.png" id="menu_image" class="menu-image"></a>
+                        <a href="javascript:mypageBack();"> <img src="/img/left-arrow.png" id="menu_image" class="menu-image"></a>
                     </button>
-                    <h4 class="mypage-title">프로필 수정</h4>
+                    <a href="/" class="main-logo">
+                        <h1>BELLTOKER</h1>
+                        <!--<img src="/img/main.jpg" class="main-logo-image">-->
+                    </a>
                 </nav>
             </header>
         <!-- Header -->
             <div class="home-tab"></div>
             <div class="mypage-profile">
-                <div class="mypage-profile-box">
-                    <img class="mypage-profile-img" src="img/plamingo-my.png" alt="fsdgsdgs님의 사진">
+            <form id="mypage_image_form" class="mypage-image-form" enctype="multipart/form-data">
+                <div id="mypage_profile_box" class="mypage-profile-box">
+                    <img th:if="${image}" id="imageUploadPreview" class="mypage-profile-img" th:src="${image.postImageUrl}" alt="fsdgsdgs님의 사진">
+                    <img th:unless="${image}" id="imageUploadPreview" class="mypage-profile-img" src="/img/plamingo-my.png" alt="fsdgsdgs님의 사진">
+                	
                     <label for="pic_upload" class="pic-upload">
-                        <input class="mypage-profile-edit" type="file" name="pic_upload" id="pic_upload">
-                        <img class="mypage-camera-img" src="img/camera.png">
                     </label>
+                    
+                        <input class="mypage-profile-edit" type="file" name="file" id="pic_upload" onchange="imageChoose(this)" />
+                        
+                        <img class="mypage-camera-img" src="img/camera.png"/>
+                    <h1 th:field="${image}"></h1>
                 </div>
+                </form>
                 <div class="mypage-edit">
                 	<form id="mypage_form" action="/mypage" method="POST">
                     	<input id="mypage_edit_nickname" class="mypage-edit-nickname" name="nickname" type="text" placeholder="익명의 망이" th:value="${user?.nickname}"
@@ -92,7 +148,42 @@
                     <span class="mypage-span">회원탈퇴</span>
                 </div>
                 <div class="home-tab"></div>
+                <form action="mypage/filter" method="POST">
+                	<input type="hidden" name="on_off" value="on"/>
+	                <div class="mypage-comment-filter" id="mypage_comment_filter"
+	                sec:authorize="hasRole('ROLE_ADMIN')">
+	                    <button class="mypage-span" type="submit">악플 댓글 필터링 ON</button>
+	                </div>
+                </form>
+                <div class="home-tab"></div>
+                <form action="mypage/filter" method="POST">
+                	<input type="hidden" name="on_off" value="off"/>
+	                <div class="mypage-comment-filter" id="mypage_comment_filter"
+	                sec:authorize="hasRole('ROLE_ADMIN')">
+	                    <button class="mypage-span" type="submit">악플 댓글 필터링 OFF</button>
+	                </div>
+                </form>
+                <div class="home-tab"></div>
+                <form action="mypage/filter" method="POST">
+                	<input type="hidden" name="on_off" value="scheduleOn"/>
+	                <div class="mypage-comment-filter" id="mypage_comment_filter"
+	                sec:authorize="hasRole('ROLE_ADMIN')">
+	                    <button class="mypage-span" type="submit">신규 악플 댓글 1분 간격 필터링</button>
+	                </div>
+                </form>
+                <div class="home-tab"></div>
+                <form action="mypage/filter" method="POST">
+                	<input type="hidden" name="on_off" value="scheduleOff"/>
+	                <div class="mypage-comment-filter" id="mypage_comment_filter"
+	                sec:authorize="hasRole('ROLE_ADMIN')">
+	                    <button class="mypage-span" type="submit">신규 악플 댓글 1분 간격 필터링 취소</button>
+	                </div>
+                </form>
+                <div class="home-tab"></div>
             </div>
+            
+            
+            <!-- logout modal -->
             <div class="mypage-logout-modal" id="mypage_logout_modal">
                 <form action="" class="mypage-logoutform">
                     <div class="mypage-logout-div">
@@ -105,6 +196,7 @@
                 </form>
             </div>
 
+            <!-- signout modal -->
             <div class="mypage-logout-modal" id="mypage_member_modal">
                 <form th:object="${user}" id="mypage_signout_form" class="mypage-logoutform" action="/signout" method="POST">
                     <div class="mypage-memberout-div">
@@ -122,6 +214,21 @@
                     </div>
                 </form>
             </div>
+            
+           
+           <!-- comment-filter modal -->
+           <!--<div class="mypage-logout-modal" id="mypage_filter_modal">
+                <form id="mypage_signout_form" class="mypage-logoutform" action="mypage/filter" method="POST">
+                    <div class="mypage-memberout-div">
+                        <span class="mypage-memberout-text">필터링 하시겠습니까?</span>
+                    </div>
+                    <div class="mypage-button-group">
+                        <button class="mypage-logout-button" onclick="location.href='/mypage'" type="button">취소</button>
+                        <button id="mypage_signout_button" class="mypage-logout-button" type="submit">확인</button>
+                    </div>
+                </form>
+            </div> -->
+            
         </div>
         <div id="modal_layout" class="home-modal-layout"></div>
     </div>

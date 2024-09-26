@@ -1,10 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Luckiest+Guy);
 
+html { 
+  height:100%;
+}
 
 
 body {
   height:100%;
-  font-family : Pretendard Variable, sans-serif;
+  font-family : 'Luckiest Guy', Pretendard Variable, sans-serif;
   font-size: 15px;
   line-height: 1.5;
   text-align: left;
@@ -14,9 +17,19 @@ body {
   background-color: white;
 }
 
+.recommend {
+   margin-top : 40px;
+}
+
+.recommend h4 { 
+   margin-left : 20px;
+   text-transform: uppercase;
+   font-weight : 1000;
+}
+
 address, article, aside, audio, body, button, canvas, caption, cite, 
 code, dd, del, div, dl, dt, em, fieldset, figcaption, figure, footer, 
-form, h1, h2, h3, h4, h5, h6, header, html, img, input, ins, label, 
+form, h1, h2, h3, h5, h6, header, html, img, input, ins, label, 
 legend, li, mark, nav, ol, p, pre a, section, span, strong, summary, 
 table, tbody, td, textarea, tfoot, th, thead, time, tr, ul, video {
     margin: 0;
@@ -25,30 +38,30 @@ table, tbody, td, textarea, tfoot, th, thead, time, tr, ul, video {
     vertical-align: baseline;
 }
 
+
 .layout {
-  height : 100%;
+  height : 100vh;
 }
 
 .layout-content {
   max-width : 500px;
-  min-height: 100%;
+  min-height: 100vh;
   margin: 0 auto;
   background-color : white;
   padding-top: 0.1px;
 }
 
-input {
-  background-color: rgba(167, 160, 160, 0.589);
+
+.search input {
   border: none;
-  height: 50px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 20px;
   color: white;
   text-align: center;
   transition: 0.2s;
-  margin-top: 20px;
 }
-button {
+
+.search-icon-btn {
   background-color: transparent;
   border: none;
   outline: none;
@@ -69,8 +82,9 @@ input::placeholder {
   color: palevioletred;
   text-align: center;
 }
+
 .search {
-    margin: 20px;
+    margin: 20px 20px 20px 20px;
     position: relative;
     animation: slideDown 1s;
     animation-delay: 0.25s;
@@ -113,18 +127,20 @@ input::placeholder {
 
 .search .search-icon {
     position: relative;
-    right: 27px;
+    right: 35px;
     top: 13px;
     opacity: 0.3;
+    margin-bottom: 23px;
 }
+
 .search .left-arrow {
   position: absolute;
   left: 12px;
-  top: 5px;
+  top: 6px;
   opacity: 0.3;
 }
 
-.list {
+.category_list {
   display: flex;
   font-size: 14px;
   font-weight: 400;
@@ -132,91 +148,74 @@ input::placeholder {
   flex-wrap: wrap;
   -webkit-box-orient: horizontal;
   -webkit-box-align: center;
-  padding: 8px 11px;
-  margin: 0px 0px 0 0;
-  
+  margin : 20px 20px 0 20px;
+  align-items : center;
+  justify-content : start;
+  flex-wrap: wrap;
+
 }
 
-.list .love {
-  background : rgba(167, 160, 160, 0.589);
+.category_list .love {
+  background-color : #f98080;
   padding:7px 13px 7px 13px;
-  margin:0px 13px 0px 13px;
-  color: #000;
   border-radius: 10px;
+  margin-bottom : 1rem;
+  margin-right : 1rem;
  
 }
-.list .love:nth-child(1){
-  margin-left: 30px;
-}
-.list a{
+/* .category_list .love:nth-child(1){
+  
+} */
+
+.category_list a{
   text-decoration: none;
-  color: black;
+  font-size : 16px;
+  font-weight : bold;
+  color: white;
   cursor: pointer;
 }
 
-.item {
-  background-image: cover;
-  border:  1px solid rgba(167, 160, 160, 0.5);
 
-}
-
-.wrapper{
-  font-size: 0;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-auto-rows: minmax(150px, auto);
-  grid-column-gap: 0px;
-  grid-row-gap: 18px;
-  padding: 50px;
-  
+.board_list {
+   width : 100%;
 }
 
-/* photo */
-.wrapper .item {          
-  /* calc */
-  
-  background-size: cover;
-  background-position: center;
-  border-radius: 5px;
+.board_item {
+   height : 12rem;
+   margin : 15px 15px 0px 15px;
+   display : flex;
+   align-items : center;
+   text-align : center;
+   border : 3px solid grey;
+   border-radius : 20px;
+   cursor : pointer;
+   justify-content : space-between;
+   
 }
 
-.wrapper .item:nth-child(1) {
-  background-image: url("/img/1.png");
+.subtitle1 {
+   align-items : center;
+   min-width : 40%;
+   font-size : 24px;
+   white-space : normal;
+   word-break : normal;
+   
 }
-.wrapper .item:nth-child(2) {
-  background-image: url("/img/100억원수vs100억빛이상형.png");
+
+.subtitle2 {
+   align-items : center;
+   min-width : 40%;
+   font-size : 24px;
+   white-space : normal;
+   word-break : normal;
 }
-.wrapper .item:nth-child(3) {
-  background-image: url("/img/양치vs.샤워.png");
+
+.versus {
+   width : 20%
 }
-.wrapper .item:nth-child(4) {
-  background-image: url("/img/4.PNG");
-}
-.wrapper .item:nth-child(5) {
-  background-image: url("/img/vs.PNG");
-}
-.wrapper .item:nth-child(6) {
-  background-image: url("/img/6.PNG");
-}
-.wrapper .item:nth-child(7) {
-  background-image: url("/img/9.PNG");
-}
-.wrapper .item:nth-child(8) {
-  background-image: url("/img/vs.PNG");
-}
-.wrapper .item:nth-child(9) {
-  background-image: url("/img/7.PNG");
-}
-.wrapper .item:nth-child(10) {
-  background-image: url("/img/10.PNG");
-}
-.wrapper .item:nth-child(11) {
-  background-image: url("/img/vs.PNG");
-}
-.wrapper .item:nth-child(12) {
-  background-image: url("/img/12.PNG");
-}
-/* 
+
+
+
 .footer {
   width: 100%;
   text-align: center;
@@ -234,9 +233,4 @@ input::placeholder {
 
 .footer a {
   margin-right : 2rem;
-} */
-
-.item-img{
-  width: 200px;
-  height:300px;
-}
+} 

@@ -1,7 +1,13 @@
 package com.cloudrip.config.oauth;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -48,7 +54,28 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 		String username = oAuth2UserInfo.getName();
 		String password = bCryptPasswordEncoder.encode("겟인데어"); 
 		String email = oAuth2UserInfo.getEmail();
-		String role = "ROLE_USER";
+		String role="";
+		System.out.println(username);
+		//강진호
+		if(email.equals("ryh278278@gmail.com")) {
+			role ="ROLE_ADMIN";
+		//이진구
+		}else if(email.equals("dlwlsrn14@gmail.com")) {
+			role ="ROLE_ADMIN";
+		//김동규
+		}else if(email.equals("ko2045@naver.com")) {
+			role ="ROLE_ADMIN";
+		//김현욱
+		}else if(email.equals("powerwook@naver.com")) {
+			role ="ROLE_ADMIN";
+		//고유찬
+		}else if(email.equals("redronsean@naver.com")) {
+			role ="ROLE_ADMIN";
+		}
+		else {
+			role = "ROLE_USER";
+		}
+		
 		User userEntity = userRepository.findByProviderId(providerId);
 		System.out.println(userEntity);
 		int randomint = (int) (Math.random()*100000);
@@ -61,12 +88,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 					.roles(role)
 					.provider(provider)
 					.nickname(username+random)
-					.userRegdate(LocalDate.now())
+					.userRegdate(LocalDateTime.now())
 					.provider_id(providerId)
 					.build();
 			userRepository.save(userEntity);
 		}else {
 			System.out.println("당신은 이미 로그인을 한 적이 있습니다.");
+			
 		}
 		return new PrincipalDetails(userEntity, oAuth2User.getAttributes());
 	}

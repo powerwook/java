@@ -68,7 +68,10 @@ table, tbody, td, textarea, tfoot, th, thead, time, tr, ul, video {
 .board-header {
     display :block;
 }
-
+.category-icon{
+   width:44px;
+   height:44px;
+}
 .board-nav {
     display : flex;
     margin : 0 auto;
@@ -129,7 +132,7 @@ img {
     margin : 0;
 }
 
-.board-content {
+.home-content {
     /* position : absolute;
     left : 35%;
     background-color: transparent;
@@ -141,19 +144,70 @@ img {
     height: 100%;
     overflow: hidden;
     left: 0;
-    background: url(/img/plamingo.png);
-    background-repeat: no-repeat;
     z-index: 10;
     
-    
 }
-.board-content-head {
+
+
+.home-content-background {
+}
+
+.home-content-head {
     text-align: left;
     font-size: 28px;
     color: rgb(19, 18, 18);
-    margin-top: 315px;
-    margin-left: 10px;
+    margin-left: 1.5rem;
+    padding : 0.5rem;
 }
+
+.inner {
+   display : flex;
+}
+
+.home_board {
+   display : flex;
+   flex-direction : column;
+   min-height : 150px;
+   
+   
+   
+}
+
+.home_board_link {
+   margin-left : 13px;
+   border : 0.3rem solid #222;
+   border-radius : 8px;
+   background-color : white;
+   width : 8.5rem;
+   height : 15rem;
+}
+
+.home_board_div {
+   padding : 10px 4px;
+   height : 100%;
+   position : relative;
+   white-space : normal;
+   word-break : normal;
+   display :flex;
+   flex-direction : column;
+   text-align : center;
+   justify-content : space-between;
+   overflow : hidden;
+}
+
+
+.versus {
+   font-style : Luckiest Guy;
+   font-size : 20px;
+}
+
+/*
+.home_board_bottom {
+   background-color : #f98080;
+   height : 30px;
+
+}
+*/
 
 .span-red {
     color: rgb(245, 65, 130);
@@ -162,6 +216,9 @@ img {
 .recommend-list{
     position : relative;
     z-index:2;
+    padding-top : 2rem;
+    padding-bottom : 2rem;
+    background-color : #f98080;
 }
 
 
@@ -229,6 +286,25 @@ img {
     background-color: white;
     animation:moveNavBar 0.2s linear forwards;
   }
+  .home-login{
+    margin:5px 0px 5px 10px;
+    color:rgba(0,0,0,0.9);
+ }
+ .home-admin{
+    margin:5px 0px 0px 10px;
+    color:rgba(0,0,0,0.9);
+ }
+  .home-logout{
+  background-color: white;
+  }
+  .home-search{
+    margin:5px 0px 5px 10px; 
+    color:rgba(0,0,0,0.9);
+  }
+  .home-my-page{
+     margin:5px 0px 0px 10px;
+    color:rgba(0,0,0,0.9);
+  }
   .home-modal-layout{
       top:0;
       width: 100%;
@@ -279,6 +355,7 @@ img {
 .modal-close{
     animation:closeNavBar 0.2s linear forwards ;   
 }
+
 .home-board-img{
     margin-top: 5px;
     width:20px;
@@ -290,8 +367,49 @@ img {
 .home-tab{
     width:100%;
     height:1px;
-    background-color: rgba(0,0,0,0.1);
+    margin:0px 10px 0px 10px;
+    background-color: rgba(0,0,0,0.05);
 }
 li{
     list-style: none;
 }
+
+
+.menu-font {
+   font-size : 20px;
+
+}
+
+.hello-word{
+   font-size : 20px;
+   margin : 5px 0 0 10px;
+   padding : 10px 0 10px 0;
+}
+
+@media (max-width:400px){
+	.home_board_link{
+		margin-left: 1px;
+		width:7rem;
+	}
+	.home_board_subtitle1{
+		font-size: 13px;
+	}
+	.home_board_subtitle2{
+		font-size: 13px;
+	}
+}
+
+@media (min-width:401px) and (max-width:490px){
+	.home_board_link{
+		margin-left: 1px;
+		width:8rem;
+	}
+	.home_board_subtitle1{
+		font-size: 13px;
+	}
+	.home_board_subtitle2{
+		font-size: 13px;
+	}
+}
+
+
